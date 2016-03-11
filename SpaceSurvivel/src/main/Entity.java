@@ -38,4 +38,9 @@ public class Entity {
 
 	}
 
+	public void onSpawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -8,8 +8,8 @@ import processing.core.PApplet;
 
 public class Game {
 	PApplet app;
-	public static final int gridW = 64;
-	public static final int gridH = 64;
+	public static final int gridW = 50;
+	public static final int gridH = 40;
 	public static final float gridSize = 50;
 	float zoom = 1;
 	float xOffset = 0;
@@ -32,10 +32,14 @@ public class Game {
 					isInside[i][j] = true;
 			}
 		}
-		buildings[10][10] = new Building(this, 10, 10);
-		entities.add(new Entity(this, 15, 15));
+
 		input = new Input(this);
 		ContentListHandler.setup(app);
+		ContentListHandler.load();
+
+		build("farm", 11, 11);
+		entities.add(new Entity(this, 15, 15));
+
 		System.out.println("Game.Game()");
 	}
 
@@ -65,6 +69,17 @@ public class Game {
 				if (buildings[i][j] != null)
 					buildings[i][j].draw(app);
 			}
+		}for (int i = 0; i < toAdd.size(); i++) {
+			entities.add(toAdd.get(i));
+			toAdd.get(i).onSpawn();
+			toAdd.remove(i);
+		}
+		for (int i = 0; i < toRemove.size(); i++) {
+			Entity entity = toRemove.get(i);
+			if (entity != null) {
+				entities.remove(entity);
+				toRemove.remove(i);
+			}
 		}
 		for (Entity entity : entities) {
 			entity.update();
@@ -79,7 +94,7 @@ public class Game {
 		try {
 			name = ContentListHandler.getContent().getString(name);
 			Class<?> clazz = Class.forName(name);
-			Constructor<?> ctor = clazz.getConstructor(String[].class);
+			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
 			Building b;
 			b = (Building) ctor.newInstance(new Object[] { this, i, j });
 			buildings[i][j] = b;
@@ -92,7 +107,7 @@ public class Game {
 		try {
 			name = ContentListHandler.getContent().getString(name);
 			Class<?> clazz = Class.forName(name);
-			Constructor<?> ctor = clazz.getConstructor(String[].class);
+			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
 			Entity e;
 			e = (Entity) ctor.newInstance(new Object[] { this, i, j });
 			toAdd.add(e);

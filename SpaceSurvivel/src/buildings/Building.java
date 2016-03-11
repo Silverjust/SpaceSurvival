@@ -4,7 +4,7 @@ import States.State;
 import main.Game;
 import processing.core.PApplet;
 
-public class Building {
+public abstract class Building {
 
 	private int x;
 	private int y;

@@ -40,6 +40,7 @@ public class Commands {
 					
 				}
 			}
+			game.app.delay(100);
 			if (noError) {
 				System.out.println("done");
 			}
