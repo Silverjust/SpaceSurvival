@@ -1,6 +1,5 @@
 package main;
 
-import java.io.Console;
 import java.util.Scanner;
 
 import processing.core.PApplet;
@@ -20,12 +19,14 @@ public class Commands {
 			boolean noError = true;
 			if (scanInput.hasNextLine()) {
 				try {
-
 					command = scanInput.nextLine();
 					String[] c = PApplet.splitTokens(command, " ");
 					switch (c[0]) {
 					case "build":
 						game.build(Integer.parseInt(c[1]), Integer.parseInt(c[2]));
+						break;
+					case "spawn":
+						game.spawn(Integer.parseInt(c[1]), Integer.parseInt(c[2]));
 						break;
 
 					default:

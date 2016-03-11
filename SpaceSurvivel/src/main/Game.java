@@ -1,8 +1,7 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
+
 
 import processing.core.PApplet;
 
@@ -14,13 +13,13 @@ public class Game {
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
-	private Block[][] blocks = new Block[gridW][gridH];
+	private Building[][] buildings = new Building[gridW][gridH];
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private Input input;
 
 	public Game(PApplet app) {
 		this.app = app;
-		blocks[10][10] = new Block(this, 10, 10);
+		buildings[10][10] = new Building(this, 10, 10);
 		entities.add(new Entity(this, 15, 15));
 		input = new Input(this);
 
@@ -43,8 +42,8 @@ public class Game {
 		}
 		for (int i = 0; i < gridW; i++) {
 			for (int j = 0; j < gridH; j++) {
-				if (blocks[i][j] != null)
-					blocks[i][j].draw(app);
+				if (buildings[i][j] != null)
+					buildings[i][j].draw(app);
 			}
 		}
 		for (Entity entity : entities) {
@@ -56,7 +55,9 @@ public class Game {
 	}
 
 	public void build(int i, int j) {
-		blocks[i][j] = new Block(this, i, j);
+		buildings[i][j] = new Building(this, i, j);
 	}
-
+	public void spawn(int i, int j) {
+		entities.add(new Entity(this, i, j));
+	}
 }

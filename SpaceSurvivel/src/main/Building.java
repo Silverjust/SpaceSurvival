@@ -2,13 +2,13 @@ package main;
 
 import processing.core.PApplet;
 
-public class Block {
+public class Building {
 
 	private int x;
 	private int y;
 	private Game game;
 
-	public Block(Game game, int x, int y) {
+	public Building(Game game, int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.game=game;
