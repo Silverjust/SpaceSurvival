@@ -9,7 +9,7 @@ public class Entity {
 	private float y;
 	private float xt;
 	private float yt;
-	private float speed=0.5f;
+	private float speed=0.3f;
 	public Entity(Game game,int x, int y) {
 		this.game=game;
 		this.x = x;

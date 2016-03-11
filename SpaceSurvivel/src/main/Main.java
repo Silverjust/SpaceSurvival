@@ -3,7 +3,6 @@ package main;
 import javax.swing.JFrame;
 
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PFont;
 
 @SuppressWarnings("serial")
@@ -20,11 +19,13 @@ public class Main extends PApplet {
 
 	PFont font;
 	private Game game;
+	private Commands commands;
 
 	@Override
 	public void setup() {
 		size(displayWidth, displayHeight, P2D);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		frame.addWindowListener(new Listener(this));
 		frame.setResizable(true);
 		frame.setTitle("test");
 		// frame.addWindowListener(new Listener());
@@ -37,7 +38,8 @@ public class Main extends PApplet {
 		noSmooth();
 
 		game = new Game(this);
-
+		commands = new Commands(game);
+		thread("commands");
 	}
 
 	@Override
@@ -48,6 +50,10 @@ public class Main extends PApplet {
 	@Override
 	public void keyPressed() {
 
+	}
+
+	public void commands() {
+		commands.loop();
 	}
 
 	@Override

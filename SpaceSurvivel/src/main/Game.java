@@ -1,12 +1,14 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
 
 import processing.core.PApplet;
 
 public class Game {
 	PApplet app;
-	static final  int gridW = 64;
+	static final int gridW = 64;
 	static final int gridH = 64;
 	static final float gridSize = 50;
 	float zoom = 1;
@@ -20,11 +22,13 @@ public class Game {
 		this.app = app;
 		blocks[10][10] = new Block(this, 10, 10);
 		entities.add(new Entity(this, 15, 15));
-		input = new Input(this, app);
+		input = new Input(this);
+
 		System.out.println("Game.Game()");
 	}
 
 	public void update() {
+		input.update();
 		app.clear();
 		app.background(100);
 		app.pushMatrix();
@@ -48,6 +52,11 @@ public class Game {
 			entity.draw(app);
 		}
 		app.popMatrix();
+
+	}
+
+	public void build(int i, int j) {
+		blocks[i][j] = new Block(this, i, j);
 	}
 
 }

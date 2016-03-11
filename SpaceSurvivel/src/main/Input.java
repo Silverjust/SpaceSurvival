@@ -20,9 +20,10 @@ public class Input {
 	int doubleClickStart;
 	private boolean isMPressedOutOfFocus;
 
-	public Input(Game game, PApplet app) {
-		this.app = app;
+	public Input(Game game) {
+
 		this.game = game;
+		this.app = game.app;
 		app.registerMethod("mouseEvent", this);
 		app.registerMethod("keyEvent", this);
 
@@ -70,15 +71,15 @@ public class Input {
 	}
 
 	public void mousePressed() {// ********************************************************
-		
+
 	}
 
 	public void mouseReleased() {// ********************************************************
-		
+
 	}
 
 	public void mouseDragged() {// ********************************************************
-		
+
 	}
 
 	public void mouseMoved() {// ********************************************************
@@ -86,7 +87,6 @@ public class Input {
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {// ********************************************************
-		
 
 	}
 
