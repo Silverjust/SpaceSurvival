@@ -1,5 +1,7 @@
-package main;
+package buildings;
 
+import States.State;
+import main.Game;
 import processing.core.PApplet;
 
 public class Building {
@@ -7,6 +9,7 @@ public class Building {
 	private int x;
 	private int y;
 	private Game game;
+	private State state;
 
 	public Building(Game game, int x, int y) {
 		this.x = x;
@@ -15,6 +18,7 @@ public class Building {
 	}
 
 	public void update() {
+		state.update();
 	}
 
 	public void draw(PApplet app) {
