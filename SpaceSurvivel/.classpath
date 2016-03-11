@@ -2,9 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/gluegen-2.3-b886-20150829-windows-amd64/jar/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/gluegen-2.3-b886-20150829-windows-amd64/jar/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/jogl-2.3-b1431-20150831-windows-amd64/jar/jogl-all.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/jogl-2.3-b1431-20150831-windows-amd64/jar/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/core.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/G4P.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/eclipse-workspace/lib/Path_Finder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
