@@ -2,9 +2,31 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/gluegen-2.3-b886-20150829-windows-amd64/jar/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/gluegen-2.3-b886-20150829-windows-amd64/jar/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/jogl-2.3-b1431-20150831-windows-amd64/jar/jogl-all.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/eclipse/libraries/jogl-2.3-b1431-20150831-windows-amd64/jar/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/core.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/G4P.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jl1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jsminim.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/jssc.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/minim.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/net.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/Path_Finder.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/serial.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
