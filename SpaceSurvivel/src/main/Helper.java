@@ -48,7 +48,7 @@ public class Helper {
 		if (c == null) {
 			return true;
 		}
-		for (Unit e : arrlist) {
+		for (Entity e : arrlist) {
 			if (c.isAssignableFrom(e.getClass())) {
 				return true;
 			}
@@ -62,7 +62,7 @@ public class Helper {
 			return 0;
 		}
 		int i = 0;
-		for (Unit e : arrlist) {
+		for (Entity e : arrlist) {
 			if (c.isAssignableFrom(e.getClass())) {
 				i++;
 			}
@@ -74,8 +74,10 @@ public class Helper {
 	static public class Timer {
 		public int cooldown;
 		private int cooldownTimer;
+		private GameTime time;
 
-		public Timer() {
+		public Timer(GameTime time) {
+			this.time=time;
 		}
 
 		public Timer(int cooldown) {
@@ -83,20 +85,20 @@ public class Helper {
 		}
 
 		public void startCooldown() {
-			cooldownTimer = GameTime.getMillis() + cooldown;
+			cooldownTimer = time.getMillis() + cooldown;
 		}
 
 		public boolean isNotOnCooldown() {
-			return cooldownTimer <= GameTime.getMillis();
+			return cooldownTimer <= time.getMillis();
 		}
 
 		public float getCooldownPercent() {
-			float f = 1 - (float) (cooldownTimer - GameTime.getMillis()) / cooldown;
+			float f = 1 - (float) (cooldownTimer - time.getMillis()) / cooldown;
 			return f > 1 || f < 0 ? 1 : f;
 		}
 
 		public float getTimeLeft() {
-			return (cooldownTimer - GameTime.getMillis());
+			return (cooldownTimer - time.getMillis());
 		}
 
 	}

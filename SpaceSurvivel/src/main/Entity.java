@@ -1,8 +1,8 @@
 package main;
 
-import States.State;
-import States.Work;
 import processing.core.PApplet;
+import states.BuildingWork;
+import states.State;
 
 public abstract class Entity {
 
@@ -19,7 +19,8 @@ public abstract class Entity {
 
 	public abstract void draw(PApplet app);
 
-	protected void setState(State a) {
+	public void setState(State a) {
+		a.startState(this);
 		this.state = a;
 	}
 
@@ -28,12 +29,21 @@ public abstract class Entity {
 	public abstract float getY();
 
 	/** empty */
-	public void Statefinished(Work work) {
+	public void Statefinished(BuildingWork work) {
 
 	}
 
 	public State getState() {
 		return state;
+	}
+
+	/** empty */
+	public void onSpawn() {
+
+	}
+
+	protected String getStateName() {
+		return state.getClass().getSimpleName();
 	}
 
 }

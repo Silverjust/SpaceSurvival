@@ -1,17 +1,18 @@
 package buildings;
 
-import main.Unit;
-import States.Work;
+import states.BuildingWait;
+import states.BuildingWork;
 import main.Entity;
 import main.Game;
+import main.Human;
 
 public abstract class Building extends Entity {
 
 	public int x;
 	public int y;
-	protected Work build;
-	protected Work busy;
-	protected Work broken;
+	protected BuildingWork build;
+	protected BuildingWork busy;
+	protected BuildingWait broken;
 
 	public Building(Game game, int x, int y) {
 		super(game);
@@ -29,17 +30,16 @@ public abstract class Building extends Entity {
 	}
 
 	@Override
-	public void Statefinished(Work work) {
+	public void Statefinished(BuildingWork work) {
 		if (work == build) {
 			setState(busy);
 		}
 	}
 
 	public void callWorker() {
-		for (Unit e : game.getEntities()) {
-			if (!e.hasWork()) {
-				System.out.println("Building.callWorker()" + e);
-				e.setTarget(this);
+		for (Entity e : game.getEntities()) {
+			if (e instanceof Human && !((Human) e).hasWork()) {
+				((Human) e).setTarget(this);
 			}
 		}
 	}

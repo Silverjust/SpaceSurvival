@@ -1,16 +1,17 @@
 package buildings;
 
-import States.Work;
 import processing.core.PApplet;
+import states.BuildingWait;
+import states.BuildingWork;
 import main.Game;
 
 public class Farm extends Building {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
-		build = new Work().setWorkers(1).setW(100);
-		busy = new Work();
-		broken = new Work();
+		build = new BuildingWork().setWorkers(1).setW(100);
+		busy = new BuildingWork();
+		broken = new BuildingWait();
 		setState(build);
 	}
 

@@ -21,7 +21,8 @@ public class Game {
 	ArrayList<Unit> toAdd = new ArrayList<Unit>();
 	ArrayList<Unit> toRemove = new ArrayList<Unit>();
 	private Input input;
-	private Updater updater;
+	Updater updater;
+	private GameTime gameTime;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -37,6 +38,7 @@ public class Game {
 		updater = new Updater(this);
 		ContentListHandler.setup(app);
 		ContentListHandler.load();
+		gameTime=new GameTime(this);
 
 		build("farm", 11, 11);
 		getEntities().add(new Human(this, 15, 15));
@@ -47,7 +49,7 @@ public class Game {
 	public void update() {
 		input.update();
 		updater.update();
-		
+
 		app.clear();
 		app.background(0, 0, 100);
 		app.pushMatrix();
@@ -73,7 +75,7 @@ public class Game {
 					buildings[i][j].draw(app);
 			}
 		}
-		for (Unit entity : getEntities()) {
+		for (Entity entity : getEntities()) {
 
 			entity.draw(app);
 		}

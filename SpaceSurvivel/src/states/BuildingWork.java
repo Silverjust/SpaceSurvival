@@ -1,26 +1,26 @@
-package States;
+package states;
 
 import java.util.ArrayList;
 
 import main.Entity;
 import main.Unit;
 
-public class Work extends State {
+public class BuildingWork extends State {
 
 	ArrayList<Unit> workers = new ArrayList<Unit>();
 	private int workerNeeded = 1;
 	private int Wmax, W = 0;
 
-	public Work() {
+	public BuildingWork() {
 		super();
 	}
 
-	public Work setWorkers(int n) {
+	public BuildingWork setWorkers(int n) {
 		workerNeeded = n;
 		return this;
 	}
 
-	public Work setW(int i) {
+	public BuildingWork setW(int i) {
 		Wmax = i;
 		return this;
 	}
