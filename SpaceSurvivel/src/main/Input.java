@@ -19,6 +19,9 @@ public class Input {
 	int doubleClickIntervall;
 	int doubleClickStart;
 	private boolean isMPressedOutOfFocus;
+	private float screenSpeed = 30;
+	private int strgKey=PConstants.CONTROL;
+	private int shiftKey=PConstants.SHIFT;
 
 	public Input(Game game) {
 
@@ -31,7 +34,6 @@ public class Input {
 	}
 
 	public void update() {// ********************************************************
-		int screenSpeed = 30;
 		int rimSize = 10;
 		if (app.focused && !isMPressedOutOfFocus) {
 			if (Helper.isMouseOver(app, 0, 0, rimSize, app.height) && game.xOffset < 0)
@@ -49,23 +51,37 @@ public class Input {
 
 	public void keyPressed() {// ********************************************************
 
-		/*
-		 * if (app.keyCode == SettingHandler.setting.strg) { strgMode = true; }
-		 * if (app.keyCode == SettingHandler.setting.shift) { shiftMode = true;
-		 * }
-		 */
+		if (app.keyCode == strgKey) {
+			strgMode = true;
+		}
+		if (app.keyCode == shiftKey) {
+			shiftMode = true;
+		}
 
+		if (app.focused && !isMPressedOutOfFocus) {
+			if (app.key == 'a' && game.xOffset < 0)
+				game.xOffset += screenSpeed;
+			if (app.key == 'd' && -game.xOffset + app.width <= main.Game.gridSize * main.Game.gridW * game.zoom)
+				game.xOffset -= screenSpeed;
+			if (app.key == 'w' && game.yOffset < 0)
+				game.yOffset += screenSpeed;
+			if (app.key == 's' && -game.yOffset + app.height <= main.Game.gridSize * main.Game.gridH * game.zoom)
+				game.yOffset -= screenSpeed;
+		}
 		// System.out.println(app.key);
 
 	}
 
 	public void keyReleased() {
 		// ********************************************************
-		/*
-		 * if (app.keyCode == SettingHandler.setting.strg) { strgMode = false; }
-		 * if (app.keyCode == SettingHandler.setting.shift) { shiftMode = false;
-		 * }
-		 */}
+
+		if (app.keyCode == strgKey) {
+			strgMode = false;
+		}
+		if (app.keyCode == shiftKey) {
+			shiftMode = false;
+		}
+	}
 
 	public void mouseClicked() {// ********************************************************
 	}
