@@ -21,13 +21,13 @@ public class Updater {
 			game.toAdd.remove(i);
 		}
 		for (int i = 0; i < game.toRemove.size(); i++) {
-			Entity entity = game.toRemove.get(i);
+			Unit entity = game.toRemove.get(i);
 			if (entity != null) {
 				game.getEntities().remove(entity);
 				game.toRemove.remove(i);
 			}
 		}
-		for (Entity entity : game.getEntities()) {
+		for (Unit entity : game.getEntities()) {
 			entity.update();
 
 		}

@@ -1,12 +1,18 @@
 package States;
 
-public class State {
-	public void update() {
-	}
+import main.Entity;
 
-	public boolean hasNotEnoughWorker() {
+public class State {
+	public boolean needsWorker() {
 		
 		return false;
 	}
+
+	public void update(Entity e) {
+	}
+
+	
+
+	
 
 }

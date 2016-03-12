@@ -3,7 +3,6 @@ package main;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-import buildings.Building;
 import processing.core.PApplet;
 
 public class Game {
@@ -14,13 +13,13 @@ public class Game {
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
-	Building[][] buildings = new Building[gridW][gridH];
+	Entity[][] buildings = new Entity[gridW][gridH];
 	private boolean[][] isInside = new boolean[gridW][gridH];
 	private boolean[][] isUsed = new boolean[gridW][gridH];
 
-	private ArrayList<Entity> entities = new ArrayList<Entity>();
-	ArrayList<Entity> toAdd = new ArrayList<Entity>();
-	ArrayList<Entity> toRemove = new ArrayList<Entity>();
+	private ArrayList<Unit> entities = new ArrayList<Unit>();
+	ArrayList<Unit> toAdd = new ArrayList<Unit>();
+	ArrayList<Unit> toRemove = new ArrayList<Unit>();
 	private Input input;
 	private Updater updater;
 
@@ -40,7 +39,7 @@ public class Game {
 		ContentListHandler.load();
 
 		build("farm", 11, 11);
-		getEntities().add(new Entity(this, 15, 15));
+		getEntities().add(new Human(this, 15, 15));
 
 		System.out.println("Game.Game()");
 	}
@@ -74,7 +73,7 @@ public class Game {
 					buildings[i][j].draw(app);
 			}
 		}
-		for (Entity entity : getEntities()) {
+		for (Unit entity : getEntities()) {
 
 			entity.draw(app);
 		}
@@ -88,8 +87,8 @@ public class Game {
 			name = ContentListHandler.getContent().getString(name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Building b;
-			b = (Building) ctor.newInstance(new Object[] { this, i, j });
+			Entity b;
+			b = (Entity) ctor.newInstance(new Object[] { this, i, j });
 			buildings[i][j] = b;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,15 +100,15 @@ public class Game {
 			name = ContentListHandler.getContent().getString(name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Entity e;
-			e = (Entity) ctor.newInstance(new Object[] { this, i, j });
+			Unit e;
+			e = (Unit) ctor.newInstance(new Object[] { this, i, j });
 			toAdd.add(e);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public ArrayList<Entity> getEntities() {
+	public ArrayList<Unit> getEntities() {
 		return entities;
 	}
 }

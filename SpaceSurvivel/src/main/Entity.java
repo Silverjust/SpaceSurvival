@@ -1,59 +1,39 @@
 package main;
 
-import buildings.Building;
+import States.State;
+import States.Work;
 import processing.core.PApplet;
 
-public class Entity {
+public abstract class Entity {
 
-	private Game game;
-	private float x;
-	private float y;
-	private float xt;
-	private float yt;
-	private float speed=0.3f;
-	private boolean hasWork;
-	public Entity(Game game,int x, int y) {
-		this.game=game;
-		this.x = x;
-		this.y = y;
-		createRandomTarget();
-		
+	protected Game game;
+	private State state;
+
+	public Entity(Game game) {
+		this.game = game;
 	}
 
 	public void update() {
-		x= x + (xt - x) / PApplet.dist(x, y, xt, yt) * speed;
-		y= y + (yt - y) / PApplet.dist(x, y, xt, yt) * speed;
-		if(PApplet.dist(x, y, xt, yt)<5){
-			createRandomTarget();
-		}
-			
+		getState().update(this);
 	}
 
-	private void createRandomTarget() {
-		hasWork=false;
-		xt=game.app.random(0, 64);
-		yt=game.app.random(0, 64);
+	public abstract void draw(PApplet app);
+
+	protected void setState(State a) {
+		this.state = a;
 	}
 
-	public void draw(PApplet app) {
-		app.fill(100);
-		app.ellipse(x * game.gridSize + 25, y * game.gridSize + 25, 40, 40);
+	public abstract float getX();
+
+	public abstract float getY();
+
+	/** empty */
+	public void Statefinished(Work work) {
 
 	}
 
-	public void onSpawn() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean hasWork() {
-		return hasWork;
-	}
-
-	public void setTarget(Building b) {
-		hasWork=true;
-		xt=b.getX();
-		yt=b.getY();
+	public State getState() {
+		return state;
 	}
 
 }

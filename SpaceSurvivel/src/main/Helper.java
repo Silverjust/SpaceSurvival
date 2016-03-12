@@ -44,11 +44,11 @@ public class Helper {
 		return b;
 	}
 
-	public static boolean listContainsInstanceOf(Class<?> c, ArrayList<Entity> arrlist) {
+	public static boolean listContainsInstanceOf(Class<?> c, ArrayList<Unit> arrlist) {
 		if (c == null) {
 			return true;
 		}
-		for (Entity e : arrlist) {
+		for (Unit e : arrlist) {
 			if (c.isAssignableFrom(e.getClass())) {
 				return true;
 			}
@@ -57,12 +57,12 @@ public class Helper {
 		return false;
 	}
 
-	public static int listContainsInstancesOf(Class<?> c, ArrayList<Entity> arrlist) {
+	public static int listContainsInstancesOf(Class<?> c, ArrayList<Unit> arrlist) {
 		if (c == null) {
 			return 0;
 		}
 		int i = 0;
-		for (Entity e : arrlist) {
+		for (Unit e : arrlist) {
 			if (c.isAssignableFrom(e.getClass())) {
 				i++;
 			}
