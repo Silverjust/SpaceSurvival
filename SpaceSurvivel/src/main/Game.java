@@ -38,7 +38,7 @@ public class Game {
 		ContentListHandler.load();
 
 		build("farm", 11, 11);
-		entities.add(new Entity(this, 15, 15));
+		getEntities().add(new Entity(this, 15, 15));
 
 		System.out.println("Game.Game()");
 	}
@@ -70,18 +70,18 @@ public class Game {
 					buildings[i][j].draw(app);
 			}
 		}for (int i = 0; i < toAdd.size(); i++) {
-			entities.add(toAdd.get(i));
+			getEntities().add(toAdd.get(i));
 			toAdd.get(i).onSpawn();
 			toAdd.remove(i);
 		}
 		for (int i = 0; i < toRemove.size(); i++) {
 			Entity entity = toRemove.get(i);
 			if (entity != null) {
-				entities.remove(entity);
+				getEntities().remove(entity);
 				toRemove.remove(i);
 			}
 		}
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			entity.update();
 			entity.draw(app);
 		}
@@ -114,5 +114,9 @@ public class Game {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<Entity> getEntities() {
+		return entities;
 	}
 }

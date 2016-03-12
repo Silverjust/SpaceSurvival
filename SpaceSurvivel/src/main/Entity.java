@@ -1,5 +1,6 @@
 package main;
 
+import buildings.Building;
 import processing.core.PApplet;
 
 public class Entity {
@@ -10,6 +11,7 @@ public class Entity {
 	private float xt;
 	private float yt;
 	private float speed=0.3f;
+	private boolean hasWork;
 	public Entity(Game game,int x, int y) {
 		this.game=game;
 		this.x = x;
@@ -41,6 +43,16 @@ public class Entity {
 	public void onSpawn() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public boolean hasWork() {
+		return hasWork;
+	}
+
+	public void setTarget(Building b) {
+		hasWork=true;
+		xt=b.getX();
+		yt=b.getY();
 	}
 
 }
