@@ -30,6 +30,7 @@ public class Entity {
 	}
 
 	private void createRandomTarget() {
+		hasWork=false;
 		xt=game.app.random(0, 64);
 		yt=game.app.random(0, 64);
 	}

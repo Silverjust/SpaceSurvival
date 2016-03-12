@@ -1,6 +1,7 @@
 package buildings;
 
-import States.Animation;
+import States.State;
+import main.Entity;
 import main.Game;
 import processing.core.PApplet;
 
@@ -9,7 +10,7 @@ public abstract class Building {
 	protected int x;
 	protected int y;
 	protected Game game;
-	protected Animation state;
+	protected State state;
 
 	public Building(Game game, int x, int y) {
 		this.x = x;
@@ -19,6 +20,19 @@ public abstract class Building {
 
 	public void update() {
 		state.update();
+		if (state.hasNotEnoughWorker()) {
+			System.out.println("Building.update()call");
+			callWorker();
+		}
+	}
+
+	void callWorker() {
+		for (Entity e : game.getEntities()) {
+			if (!e.hasWork()) {
+				System.out.println("Building.callWorker()"+e);
+				e.setTarget(this);
+			}
+		}
 	}
 
 	public void draw(PApplet app) {
@@ -27,7 +41,7 @@ public abstract class Building {
 
 	}
 
-	protected void setAnimation(Animation a) {
+	protected void setAnimation(State a) {
 		state = a;
 	}
 

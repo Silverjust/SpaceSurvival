@@ -14,14 +14,15 @@ public class Game {
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
-	private Building[][] buildings = new Building[gridW][gridH];
+	Building[][] buildings = new Building[gridW][gridH];
 	private boolean[][] isInside = new boolean[gridW][gridH];
 	private boolean[][] isUsed = new boolean[gridW][gridH];
 
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
-	private ArrayList<Entity> toAdd = new ArrayList<Entity>();
-	private ArrayList<Entity> toRemove = new ArrayList<Entity>();
+	ArrayList<Entity> toAdd = new ArrayList<Entity>();
+	ArrayList<Entity> toRemove = new ArrayList<Entity>();
 	private Input input;
+	private Updater updater;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -34,6 +35,7 @@ public class Game {
 		}
 
 		input = new Input(this);
+		updater = new Updater(this);
 		ContentListHandler.setup(app);
 		ContentListHandler.load();
 
@@ -45,6 +47,8 @@ public class Game {
 
 	public void update() {
 		input.update();
+		updater.update();
+		
 		app.clear();
 		app.background(0, 0, 100);
 		app.pushMatrix();
@@ -69,20 +73,9 @@ public class Game {
 				if (buildings[i][j] != null)
 					buildings[i][j].draw(app);
 			}
-		}for (int i = 0; i < toAdd.size(); i++) {
-			getEntities().add(toAdd.get(i));
-			toAdd.get(i).onSpawn();
-			toAdd.remove(i);
-		}
-		for (int i = 0; i < toRemove.size(); i++) {
-			Entity entity = toRemove.get(i);
-			if (entity != null) {
-				getEntities().remove(entity);
-				toRemove.remove(i);
-			}
 		}
 		for (Entity entity : getEntities()) {
-			entity.update();
+
 			entity.draw(app);
 		}
 		app.popMatrix();
