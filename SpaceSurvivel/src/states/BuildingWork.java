@@ -3,6 +3,7 @@ package states;
 import java.util.ArrayList;
 
 import main.Entity;
+import main.Human;
 import main.Unit;
 
 public class BuildingWork extends State {
@@ -44,8 +45,7 @@ public class BuildingWork extends State {
 	}
 
 	public void addWorker(Entity e) {
-		if (needsWorker())
-			workers.add((Unit) e);
+
 	}
 
 	public float getProgress() {
@@ -59,10 +59,18 @@ public class BuildingWork extends State {
 
 	@Override
 	public void onEnd(Entity e) {
+		for (Unit unit : workers) {
+			unit.setState(((Human)unit).wait, this);
+		}
 		workers.clear();
 	}
 
 	public ArrayList<Unit> getWorkers() {
 		return workers;
+	}
+
+	public void registerAsWorker(Unit u) {
+		if (needsWorker())
+			workers.add((Unit) u);
 	}
 }
