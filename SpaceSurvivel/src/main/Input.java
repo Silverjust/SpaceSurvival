@@ -102,8 +102,9 @@ public class Input {
 
 	}
 
-	public void mouseWheelMoved(MouseWheelEvent e) {// ********************************************************
-
+	public void mouseWheelMoved(MouseEvent event) {// ********************************************************
+		if (event.getCount()==1 && game.zoom>=0.5) game.zoom-=0.1;
+		if (event.getCount()==-1 && game.zoom<=1.5) game.zoom+=0.1;
 	}
 
 	public void keyEvent(KeyEvent event) {
@@ -138,6 +139,9 @@ public class Input {
 				break;
 			case MouseEvent.MOVE:
 				mouseMoved();
+				break;
+			case MouseEvent.WHEEL:
+				mouseWheelMoved(event);
 				break;
 			default:
 				break;

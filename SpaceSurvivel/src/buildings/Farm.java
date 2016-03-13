@@ -30,6 +30,10 @@ public class Farm extends Building {
 		if (getState() instanceof BuildingWork) {
 			app.text(getStateName() + ((BuildingWork) getState()).getProgress(), x * Game.gridSize + 5,
 					y * Game.gridSize + 5);
+			app.fill(180,150);
+			app.rect(x*Game.gridSize, y*Game.gridSize-15, Game.gridSize, 5);
+			app.fill(0,255,0);
+			app.rect(x*Game.gridSize, y*Game.gridSize-15, Game.gridSize*((BuildingWork) getState()).getProgress(), 5);
 		}
 	}
 
