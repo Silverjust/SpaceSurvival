@@ -16,12 +16,17 @@ public class HumanGotoWork extends State {
 	@Override
 	public void update(Entity e) {
 		if (e instanceof Human && PApplet.dist(e.getX(), e.getY(), target.getX(), target.getY()) < 1) {
-			e.setState(((Human) e).work);
+			if (target.getState().needsWorker()) {
+				e.setState(((Human) e).work, this);
+				((Human) e).work.setTarget(target);
+			} else {
+				e.setState(((Human) e).wait, this);
+			}
 		}
 	}
 
 	@Override
-	public void startState(Entity e) {
+	public void onStart(Entity e) {
 		((Unit) e).canMove = true;
 	}
 }

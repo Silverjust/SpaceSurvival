@@ -8,13 +8,18 @@ public class State {
 		return false;
 	}
 
-	/** empty 
-	 * @param e TODO*/
-	public void startState(Entity e) {
+	/** empty */
+	public void onStart(Entity e) {
+	}/** empty */
+	public void onEnd(Entity e) {
 	}
 
 	/** empty */
 	public void update(Entity e) {
 	}
+
+	
+
+	
 
 }

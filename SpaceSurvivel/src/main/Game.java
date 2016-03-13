@@ -22,7 +22,7 @@ public class Game {
 	ArrayList<Unit> toRemove = new ArrayList<Unit>();
 	private Input input;
 	Updater updater;
-	private GameTime gameTime;
+	public GameTime gameTime;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -38,10 +38,12 @@ public class Game {
 		updater = new Updater(this);
 		ContentListHandler.setup(app);
 		ContentListHandler.load();
-		gameTime=new GameTime(this);
+		gameTime = new GameTime(this);
 
 		build("farm", 11, 11);
 		getEntities().add(new Human(this, 15, 15));
+		getEntities().add(new Human(this, 16, 15));
+		getEntities().add(new Human(this, 17, 15));
 
 		System.out.println("Game.Game()");
 	}

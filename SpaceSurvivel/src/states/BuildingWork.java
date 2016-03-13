@@ -9,7 +9,8 @@ public class BuildingWork extends State {
 
 	ArrayList<Unit> workers = new ArrayList<Unit>();
 	private int workerNeeded = 1;
-	private int Wmax, W = 0;
+	private int Wmax;
+	private float W = 0;
 
 	public BuildingWork() {
 		super();
@@ -25,6 +26,10 @@ public class BuildingWork extends State {
 		return this;
 	}
 
+	public void addW(float w) {
+		W += w;
+	}
+
 	@Override
 	public boolean needsWorker() {
 		return workers.size() < workerNeeded;
@@ -32,8 +37,32 @@ public class BuildingWork extends State {
 
 	@Override
 	public void update(Entity e) {
-		if (W >= Wmax)
+		if (W >= Wmax) {
+			W = 0;
 			e.Statefinished(this);
+		}
 	}
 
+	public void addWorker(Entity e) {
+		if (needsWorker())
+			workers.add((Unit) e);
+	}
+
+	public float getProgress() {
+		if (Wmax == 0)
+			return 1;
+		if (W > Wmax)
+			return 1;
+
+		return W / Wmax;
+	}
+
+	@Override
+	public void onEnd(Entity e) {
+		workers.clear();
+	}
+
+	public ArrayList<Unit> getWorkers() {
+		return workers;
+	}
 }

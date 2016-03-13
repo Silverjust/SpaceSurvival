@@ -3,30 +3,35 @@ package main;
 import processing.core.PApplet;
 import states.HumanCarry;
 import states.HumanGotoWork;
+import states.HumanWait;
 import states.HumanWork;
 import states.State;
 
 public class Human extends Unit {
 
 	protected boolean hasWork;
-	public State work;
+	public HumanWork work;
 	State carry;
 	HumanGotoWork gotoWork;
+	public HumanWait wait;
+
 	public Human(Game game, int x, int y) {
 		super(game, x, y);
 		speed = 0.3f;
-		work = new HumanWork();
+		wait = new HumanWait();
+		work = new HumanWork(game);
 		carry = new HumanCarry();
 		gotoWork = new HumanGotoWork();
 		createRandomTarget();
+		setState(wait, this);
 	}
 
 	@Override
 	public void update() {
+
 		super.update();
-		System.out.println("Human.update()"+canMove);
 		if (canMove) {
-			if (PApplet.dist(x, y, xt, yt) < 5) {
+			if (PApplet.dist(x, y, xt, yt) < 0.5) {
 				createRandomTarget();
 			}
 		}
@@ -39,12 +44,18 @@ public class Human extends Unit {
 
 	}
 
+	public float getW() {
+		// TODO Auto-generated method stub
+		return 10;
+	}
+
 	public void setTarget(Entity b) {
-		hasWork = true;
-		setState(gotoWork);
-		gotoWork.setTarget(b);
-		xt = b.getX();
-		yt = b.getY();
+			hasWork = true;
+			setState(gotoWork, this);
+			gotoWork.setTarget(b);
+			xt = b.getX();
+			yt = b.getY();
+		
 	}
 
 	private void createRandomTarget() {

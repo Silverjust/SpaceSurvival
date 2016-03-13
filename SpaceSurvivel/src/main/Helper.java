@@ -77,11 +77,12 @@ public class Helper {
 		private GameTime time;
 
 		public Timer(GameTime time) {
-			this.time=time;
+			this.time = time;
 		}
 
-		public Timer(int cooldown) {
+		public Timer(GameTime time, int cooldown) {
 			this.cooldown = cooldown;
+			this.time = time;
 		}
 
 		public void startCooldown() {

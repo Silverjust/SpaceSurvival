@@ -19,8 +19,12 @@ public abstract class Entity {
 
 	public abstract void draw(PApplet app);
 
-	public void setState(State a) {
-		a.startState(this);
+	public void setState(State a, Object o) {
+		if (state != null)
+			state.onEnd(this);
+		if (a == null)
+			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
+		a.onStart(this);
 		this.state = a;
 	}
 
@@ -45,5 +49,7 @@ public abstract class Entity {
 	protected String getStateName() {
 		return state.getClass().getSimpleName();
 	}
+
+	
 
 }

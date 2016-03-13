@@ -5,6 +5,7 @@ import states.BuildingWork;
 import main.Entity;
 import main.Game;
 import main.Human;
+import main.Unit;
 
 public abstract class Building extends Entity {
 
@@ -32,16 +33,24 @@ public abstract class Building extends Entity {
 	@Override
 	public void Statefinished(BuildingWork work) {
 		if (work == build) {
-			setState(busy);
+			setState(busy, this);
 		}
 	}
 
 	public void callWorker() {
 		for (Entity e : game.getEntities()) {
-			if (e instanceof Human && !((Human) e).hasWork()) {
+			if (e instanceof Human && !((Human) e).hasWork() && getState().needsWorker()) {
 				((Human) e).setTarget(this);
 			}
 		}
+	}
+
+	public boolean registerAsWorker(Unit u) {
+		if (((BuildingWork) getState()).needsWorker()) {
+			((BuildingWork) getState()).addWorker(u);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

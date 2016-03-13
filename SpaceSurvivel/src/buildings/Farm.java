@@ -9,18 +9,28 @@ public class Farm extends Building {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
-		build = new BuildingWork().setWorkers(1).setW(100);
-		busy = new BuildingWork();
+		build = new BuildingWork().setWorkers(2).setW(100);
+		busy = new BuildingWork().setWorkers(1).setW(110);
 		broken = new BuildingWait();
-		setState(build);
+		setState(build, this);
+	}
+
+	@Override
+	public void update() {
+		super.update();
 	}
 
 	@Override
 	public void draw(PApplet app) {
-		app.fill(10);
+		if (getState() == build)
+			app.fill(10);
+		else
+			app.fill(100);
 		app.rect(x * Game.gridSize + 5, y * Game.gridSize + 5, 40, 40);
+		if (getState() instanceof BuildingWork) {
+			app.text(getStateName() + ((BuildingWork) getState()).getWorkers().size(), x * Game.gridSize + 5,
+					y * Game.gridSize + 5);
+		}
 	}
-
-	
 
 }
