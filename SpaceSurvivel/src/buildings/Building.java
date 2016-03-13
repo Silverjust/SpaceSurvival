@@ -45,13 +45,6 @@ public abstract class Building extends Entity {
 		}
 	}
 
-	public boolean registerAsWorker(Unit u) {
-		if (((BuildingWork) getState()).needsWorker()) {
-			((BuildingWork) getState()).addWorker(u);
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public float getX() {

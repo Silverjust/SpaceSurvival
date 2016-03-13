@@ -1,6 +1,7 @@
 package main;
 
 import processing.core.PApplet;
+import states.BuildingWork;
 import states.HumanCarry;
 import states.HumanGotoWork;
 import states.HumanWait;
@@ -50,12 +51,14 @@ public class Human extends Unit {
 	}
 
 	public void setTarget(Entity b) {
-			hasWork = true;
-			setState(gotoWork, this);
-			gotoWork.setTarget(b);
-			xt = b.getX();
-			yt = b.getY();
-		
+if(b.getState().needsWorker()){
+	((BuildingWork)b.getState()).registerAsWorker(this);
+		hasWork = true;
+		setState(gotoWork, this);
+		gotoWork.setTarget(b);
+		xt = b.getX();
+		yt = b.getY();}
+
 	}
 
 	private void createRandomTarget() {
