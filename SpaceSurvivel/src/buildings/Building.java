@@ -1,56 +1,65 @@
 package buildings;
 
-import States.State;
+import states.BuildingWait;
+import states.BuildingWork;
 import main.Entity;
 import main.Game;
-import processing.core.PApplet;
+import main.Human;
+import main.Unit;
 
-public abstract class Building {
+public abstract class Building extends Entity {
 
-	protected int x;
-	protected int y;
-	protected Game game;
-	protected State state;
+	public int x;
+	public int y;
+	protected BuildingWork build;
+	protected BuildingWork busy;
+	protected BuildingWait broken;
 
 	public Building(Game game, int x, int y) {
+		super(game);
 		this.x = x;
 		this.y = y;
 		this.game = game;
 	}
 
+	@Override
 	public void update() {
-		state.update();
-		if (state.hasNotEnoughWorker()) {
-			System.out.println("Building.update()call");
+		if (getState().needsWorker()) {
 			callWorker();
+		}
+		super.update();
+	}
+
+	@Override
+	public void Statefinished(BuildingWork work) {
+		if (work == build) {
+			setState(busy, this);
 		}
 	}
 
-	void callWorker() {
+	public void callWorker() {
 		for (Entity e : game.getEntities()) {
-			if (!e.hasWork()) {
-				System.out.println("Building.callWorker()"+e);
-				e.setTarget(this);
+			if (e instanceof Human && !((Human) e).hasWork() && getState().needsWorker()) {
+				((Human) e).setTarget(this);
 			}
 		}
 	}
 
-	public void draw(PApplet app) {
-		app.fill(10);
-		app.rect(x * Game.gridSize + 5, y * Game.gridSize + 5, 40, 40);
-
+	public boolean registerAsWorker(Unit u) {
+		if (((BuildingWork) getState()).needsWorker()) {
+			((BuildingWork) getState()).addWorker(u);
+			return true;
+		}
+		return false;
 	}
 
-	protected void setAnimation(State a) {
-		state = a;
-	}
-
+	@Override
 	public float getX() {
 		return x;
 	}
 
+	@Override
 	public float getY() {
 		return y;
 	}
-
 }

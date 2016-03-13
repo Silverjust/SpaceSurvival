@@ -44,7 +44,7 @@ public class Helper {
 		return b;
 	}
 
-	public static boolean listContainsInstanceOf(Class<?> c, ArrayList<Entity> arrlist) {
+	public static boolean listContainsInstanceOf(Class<?> c, ArrayList<Unit> arrlist) {
 		if (c == null) {
 			return true;
 		}
@@ -57,7 +57,7 @@ public class Helper {
 		return false;
 	}
 
-	public static int listContainsInstancesOf(Class<?> c, ArrayList<Entity> arrlist) {
+	public static int listContainsInstancesOf(Class<?> c, ArrayList<Unit> arrlist) {
 		if (c == null) {
 			return 0;
 		}
@@ -74,29 +74,32 @@ public class Helper {
 	static public class Timer {
 		public int cooldown;
 		private int cooldownTimer;
+		private GameTime time;
 
-		public Timer() {
+		public Timer(GameTime time) {
+			this.time = time;
 		}
 
-		public Timer(int cooldown) {
+		public Timer(GameTime time, int cooldown) {
 			this.cooldown = cooldown;
+			this.time = time;
 		}
 
 		public void startCooldown() {
-			cooldownTimer = GameTime.getMillis() + cooldown;
+			cooldownTimer = time.getMillis() + cooldown;
 		}
 
 		public boolean isNotOnCooldown() {
-			return cooldownTimer <= GameTime.getMillis();
+			return cooldownTimer <= time.getMillis();
 		}
 
 		public float getCooldownPercent() {
-			float f = 1 - (float) (cooldownTimer - GameTime.getMillis()) / cooldown;
+			float f = 1 - (float) (cooldownTimer - time.getMillis()) / cooldown;
 			return f > 1 || f < 0 ? 1 : f;
 		}
 
 		public float getTimeLeft() {
-			return (cooldownTimer - GameTime.getMillis());
+			return (cooldownTimer - time.getMillis());
 		}
 
 	}

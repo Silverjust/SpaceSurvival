@@ -3,7 +3,6 @@ package main;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-import buildings.Building;
 import processing.core.PApplet;
 
 public class Game {
@@ -14,15 +13,16 @@ public class Game {
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
-	Building[][] buildings = new Building[gridW][gridH];
+	Entity[][] buildings = new Entity[gridW][gridH];
 	private boolean[][] isInside = new boolean[gridW][gridH];
 	private boolean[][] isUsed = new boolean[gridW][gridH];
 
-	private ArrayList<Entity> entities = new ArrayList<Entity>();
-	ArrayList<Entity> toAdd = new ArrayList<Entity>();
-	ArrayList<Entity> toRemove = new ArrayList<Entity>();
+	private ArrayList<Unit> entities = new ArrayList<Unit>();
+	ArrayList<Unit> toAdd = new ArrayList<Unit>();
+	ArrayList<Unit> toRemove = new ArrayList<Unit>();
 	private Input input;
-	private Updater updater;
+	Updater updater;
+	public GameTime gameTime;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -38,9 +38,12 @@ public class Game {
 		updater = new Updater(this);
 		ContentListHandler.setup(app);
 		ContentListHandler.load();
+		gameTime = new GameTime(this);
 
 		build("farm", 11, 11);
-		getEntities().add(new Entity(this, 15, 15));
+		getEntities().add(new Human(this, 15, 15));
+		getEntities().add(new Human(this, 16, 15));
+		getEntities().add(new Human(this, 17, 15));
 
 		System.out.println("Game.Game()");
 	}
@@ -48,7 +51,7 @@ public class Game {
 	public void update() {
 		input.update();
 		updater.update();
-		
+
 		app.clear();
 		app.background(0, 0, 100);
 		app.pushMatrix();
@@ -88,8 +91,8 @@ public class Game {
 			name = ContentListHandler.getContent().getString(name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Building b;
-			b = (Building) ctor.newInstance(new Object[] { this, i, j });
+			Entity b;
+			b = (Entity) ctor.newInstance(new Object[] { this, i, j });
 			buildings[i][j] = b;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,15 +104,15 @@ public class Game {
 			name = ContentListHandler.getContent().getString(name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Entity e;
-			e = (Entity) ctor.newInstance(new Object[] { this, i, j });
+			Unit e;
+			e = (Unit) ctor.newInstance(new Object[] { this, i, j });
 			toAdd.add(e);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public ArrayList<Entity> getEntities() {
+	public ArrayList<Unit> getEntities() {
 		return entities;
 	}
 }

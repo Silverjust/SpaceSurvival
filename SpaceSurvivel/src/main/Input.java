@@ -20,8 +20,8 @@ public class Input {
 	int doubleClickStart;
 	private boolean isMPressedOutOfFocus;
 	private float screenSpeed = 30;
-	private int strgKey=PConstants.CONTROL;
-	private int shiftKey=PConstants.SHIFT;
+	private int strgKey = PConstants.CONTROL;
+	private int shiftKey = PConstants.SHIFT;
 
 	public Input(Game game) {
 
@@ -36,14 +36,14 @@ public class Input {
 	public void update() {// ********************************************************
 		int rimSize = 10;
 		if (app.focused && !isMPressedOutOfFocus) {
-			if (Helper.isMouseOver(app, 0, 0, rimSize, app.height) && game.xOffset < 0)
+			if (Helper.isMouseOver(app, -5, -5, rimSize, app.height) && game.xOffset < 0)
 				game.xOffset += screenSpeed;
-			if (Helper.isMouseOver(app, app.width - rimSize, 0, app.width, app.height)
+			if (Helper.isMouseOver(app, app.width - rimSize, -5, app.width, app.height)
 					&& -game.xOffset + app.width <= main.Game.gridSize * main.Game.gridW * game.zoom)
 				game.xOffset -= screenSpeed;
-			if (Helper.isMouseOver(app, 0, 0, app.width, rimSize) && game.yOffset < 0)
+			if (Helper.isMouseOver(app, -5, -5, app.width, rimSize) && game.yOffset < 0)
 				game.yOffset += screenSpeed;
-			if (Helper.isMouseOver(app, 0, app.height - rimSize, app.width, app.height)
+			if (Helper.isMouseOver(app, -5, app.height - rimSize, app.width, app.height)
 					&& -game.yOffset + app.height <= main.Game.gridSize * main.Game.gridH * game.zoom)
 				game.yOffset -= screenSpeed;
 		}
