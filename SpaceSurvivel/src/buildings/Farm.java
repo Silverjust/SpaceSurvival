@@ -10,7 +10,7 @@ public class Farm extends Building {
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
 		build = new BuildingWork().setWorkers(2).setW(100);
-		busy = new BuildingWork().setWorkers(1).setW(110);
+		busy = new BuildingWork().setWorkers(1).setW(200);
 		broken = new BuildingWait();
 		setState(build, this);
 	}
@@ -28,7 +28,7 @@ public class Farm extends Building {
 			app.fill(100);
 		app.rect(x * Game.gridSize + 5, y * Game.gridSize + 5, 40, 40);
 		if (getState() instanceof BuildingWork) {
-			app.text(getStateName() + ((BuildingWork) getState()).getWorkers().size(), x * Game.gridSize + 5,
+			app.text(getStateName() + ((BuildingWork) getState()).getProgress(), x * Game.gridSize + 5,
 					y * Game.gridSize + 5);
 		}
 	}
