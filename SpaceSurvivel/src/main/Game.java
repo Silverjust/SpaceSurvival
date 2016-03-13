@@ -20,6 +20,7 @@ public class Game {
 	private ArrayList<Unit> entities = new ArrayList<Unit>();
 	ArrayList<Unit> toAdd = new ArrayList<Unit>();
 	ArrayList<Unit> toRemove = new ArrayList<Unit>();
+	ArrayList<Ressource> ressources = new ArrayList<Ressource>();
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
@@ -44,7 +45,8 @@ public class Game {
 		getEntities().add(new Human(this, 15, 15));
 		getEntities().add(new Human(this, 16, 15));
 		getEntities().add(new Human(this, 17, 15));
-
+		ressources.add(new Ressource("Metall"));
+		ressources.get(0).addAmount(500);
 		System.out.println("Game.Game()");
 	}
 
