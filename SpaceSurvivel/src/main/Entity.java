@@ -1,5 +1,7 @@
 package main;
 
+import java.lang.reflect.Constructor;
+import buildings.GUIpannel;
 import processing.core.PApplet;
 import states.BuildingWork;
 import states.State;
@@ -52,10 +54,7 @@ public abstract class Entity {
 
 	/** empty */
 	public void startGui() {
-		
-		
-	}
 
-	
+	}
 
 }

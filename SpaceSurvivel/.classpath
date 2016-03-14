@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="data"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/core.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/G4P.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/G4P.jar" sourcepath="/G4P"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-linux-amd64.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse/libraries/gluegen-rt-natives-linux-armv6hf.jar"/>

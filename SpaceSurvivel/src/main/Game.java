@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import buildings.GUIpannel;
 import processing.core.PApplet;
 
 //commentar
@@ -26,6 +27,7 @@ public class Game {
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
+	public GUIpannel pannel;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -119,5 +121,10 @@ public class Game {
 
 	public ArrayList<Unit> getEntities() {
 		return entities;
+	}
+
+	public void disposePannel() {
+		pannel.dispose();
+		pannel = null;
 	}
 }

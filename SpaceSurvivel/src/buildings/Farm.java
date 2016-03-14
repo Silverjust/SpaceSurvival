@@ -4,6 +4,9 @@ import processing.core.PApplet;
 import states.BuildingWait;
 import states.BuildingWork;
 import main.Game;
+import g4p_controls.GButton;
+import g4p_controls.GCheckbox;
+import g4p_controls.GEvent;
 
 public class Farm extends Machine {
 
@@ -38,8 +41,29 @@ public class Farm extends Machine {
 					Game.gridSize * ((BuildingWork) getState()).getProgress(), 5);
 		}
 	}
-@Override
-public void startGui() {
-	game.app.rect(10,10,20,10);
-}
+
+	@Override
+	public void startGui() {
+		game.pannel = new Pannel();
+	}
+
+	public class Pannel extends GUIpannel {
+
+		private GButton close;
+
+		public Pannel() {
+			close = new GButton(game.app, 100, 100, 200, 100);
+			close.addEventHandler(this, "handleButtonEvents");
+		}
+
+		public void handleButtonEvents(GButton button, GEvent event) {
+			game.disposePannel();
+		}
+
+		@Override
+		public void dispose() {
+			close.dispose();
+		}
+
+	}
 }
