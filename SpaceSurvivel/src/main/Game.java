@@ -2,6 +2,7 @@ package main;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import processing.core.PApplet;
 
@@ -20,7 +21,7 @@ public class Game {
 	private ArrayList<Unit> entities = new ArrayList<Unit>();
 	ArrayList<Unit> toAdd = new ArrayList<Unit>();
 	ArrayList<Unit> toRemove = new ArrayList<Unit>();
-	ArrayList<Ressource> ressources = new ArrayList<Ressource>();
+	private HashMap<Ressources, Ressource> ressources = new HashMap<Ressources, Ressource>();
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
@@ -45,8 +46,7 @@ public class Game {
 		getEntities().add(new Human(this, 15, 15));
 		getEntities().add(new Human(this, 16, 15));
 		getEntities().add(new Human(this, 17, 15));
-		ressources.add(new Ressource("Metall"));
-		ressources.get(0).addAmount(500);
+		addToRessource(Ressources.METALL, 500);
 		System.out.println("Game.Game()");
 	}
 
@@ -112,6 +112,12 @@ public class Game {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void addToRessource(Ressources res, int amount) {
+		if (!ressources.containsKey(res))
+			ressources.put(res, new Ressource(res));
+		ressources.get(res).addAmount(amount);
 	}
 
 	public ArrayList<Unit> getEntities() {
