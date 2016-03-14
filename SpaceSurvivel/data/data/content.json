@@ -1,6 +1,7 @@
 {
 "entities":
 	{
-	"farm":"buildings.Farm"
+	"farm":"buildings.Farm",
+	"storage":"buildings.Storage"
 	}
 }

@@ -4,7 +4,7 @@ public class Ressource {
 	String name;
 	private float amount;
 
-	public Ressource(Ressources metall) {
+	public Ressource(ResNames metall) {
 		this.name = metall.getName();
 		this.amount = 0;
 

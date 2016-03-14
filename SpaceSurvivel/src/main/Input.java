@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.Toolkit;
-import java.awt.event.MouseWheelEvent;
-
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.event.KeyEvent;

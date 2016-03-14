@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import processing.core.PApplet;
+
 //commentar
 public class Game {
 	public PApplet app;
@@ -21,7 +22,7 @@ public class Game {
 	private ArrayList<Unit> entities = new ArrayList<Unit>();
 	ArrayList<Unit> toAdd = new ArrayList<Unit>();
 	ArrayList<Unit> toRemove = new ArrayList<Unit>();
-	private HashMap<Ressources, Ressource> ressources = new HashMap<Ressources, Ressource>();
+	private RessourceHandler ressourceHandler = new RessourceHandler();
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
@@ -43,10 +44,11 @@ public class Game {
 		gameTime = new GameTime(this);
 
 		build("farm", 11, 11);
+		build("storage", 20, 11);
 		getEntities().add(new Human(this, 15, 15));
 		getEntities().add(new Human(this, 16, 15));
 		getEntities().add(new Human(this, 17, 15));
-		addToRessource(Ressources.METALL, 500);
+		ressourceHandler.addToRessource(ResNames.METALL, 500);
 		System.out.println("Game.Game()");
 	}
 
@@ -91,6 +93,7 @@ public class Game {
 
 		try {
 			name = ContentListHandler.getContent().getString(name);
+			System.out.println("build " + name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
 			Entity b;
@@ -112,12 +115,6 @@ public class Game {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void addToRessource(Ressources res, int amount) {
-		if (!ressources.containsKey(res))
-			ressources.put(res, new Ressource(res));
-		ressources.get(res).addAmount(amount);
 	}
 
 	public ArrayList<Unit> getEntities() {

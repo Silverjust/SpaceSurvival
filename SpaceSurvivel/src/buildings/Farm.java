@@ -5,10 +5,11 @@ import states.BuildingWait;
 import states.BuildingWork;
 import main.Game;
 
-public class Farm extends Building {
+public class Farm extends Machine {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
+		collect = new BuildingWork().setWorkers(2).setW(100);
 		build = new BuildingWork().setWorkers(2).setW(100);
 		busy = new BuildingWork().setWorkers(1).setW(200);
 		broken = new BuildingWait();
@@ -30,10 +31,11 @@ public class Farm extends Building {
 		if (getState() instanceof BuildingWork) {
 			app.text(getStateName() + ((BuildingWork) getState()).getProgress(), x * Game.gridSize + 5,
 					y * Game.gridSize + 5);
-			app.fill(180,150);
-			app.rect(x*Game.gridSize, y*Game.gridSize-15, Game.gridSize, 5);
-			app.fill(0,255,0);
-			app.rect(x*Game.gridSize, y*Game.gridSize-15, Game.gridSize*((BuildingWork) getState()).getProgress(), 5);
+			app.fill(180, 150);
+			app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
+			app.fill(0, 255, 0);
+			app.rect(x * Game.gridSize, y * Game.gridSize - 15,
+					Game.gridSize * ((BuildingWork) getState()).getProgress(), 5);
 		}
 	}
 @Override
