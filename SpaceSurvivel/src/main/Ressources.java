@@ -2,7 +2,7 @@ package main;
 
 public enum Ressources {
 
-	METALL("Metall");
+	METALL("Metall"),WASSER("Wasser"),NAHRUNG("Nahrung");
 
 	private String name;
 

@@ -50,6 +50,12 @@ public abstract class Entity {
 		return state.getClass().getSimpleName();
 	}
 
+	/** empty */
+	public void startGui() {
+		
+		
+	}
+
 	
 
 }

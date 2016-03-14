@@ -7,7 +7,7 @@ import java.util.HashMap;
 import processing.core.PApplet;
 
 public class Game {
-	PApplet app;
+	public PApplet app;
 	public static final int gridW = 50;
 	public static final int gridH = 40;
 	public static final float gridSize = 50;

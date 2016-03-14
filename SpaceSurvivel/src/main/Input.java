@@ -87,7 +87,14 @@ public class Input {
 	}
 
 	public void mousePressed() {// ********************************************************
-
+		int xCoord = PApplet.floor((app.mouseX - game.xOffset) / game.zoom / Game.gridSize);
+		int yCoord = PApplet.floor((app.mouseY - game.yOffset) / game.zoom / Game.gridSize);
+		System.out.println("Input.mousePressed()" + "xcoord" + xCoord);
+		System.out.println("Input.mousePressed()" + "ycoord" + yCoord);
+		System.out.println("Input.mousePressed()" + "building" + game.buildings[xCoord][yCoord]);
+		if (game.buildings[xCoord][yCoord] != null) {
+			game.buildings[xCoord][yCoord].startGui();
+		}
 	}
 
 	public void mouseReleased() {// ********************************************************
@@ -103,8 +110,10 @@ public class Input {
 	}
 
 	public void mouseWheelMoved(MouseEvent event) {// ********************************************************
-		if (event.getCount()==1 && game.zoom>=0.5) game.zoom-=0.1;
-		if (event.getCount()==-1 && game.zoom<=1.5) game.zoom+=0.1;
+		if (event.getCount() == 1 && game.zoom >= 0.5)
+			game.zoom -= 0.1;
+		if (event.getCount() == -1 && game.zoom <= 1.5)
+			game.zoom += 0.1;
 	}
 
 	public void keyEvent(KeyEvent event) {

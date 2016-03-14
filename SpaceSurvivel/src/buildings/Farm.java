@@ -36,5 +36,8 @@ public class Farm extends Building {
 			app.rect(x*Game.gridSize, y*Game.gridSize-15, Game.gridSize*((BuildingWork) getState()).getProgress(), 5);
 		}
 	}
-
+@Override
+public void startGui() {
+	game.app.rect(10,10,20,10);
+}
 }
