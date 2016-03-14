@@ -6,7 +6,10 @@ import java.util.HashMap;
 
 import buildings.GUIpannel;
 import processing.core.PApplet;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 //commentar
 public class Game {
 	public PApplet app;
