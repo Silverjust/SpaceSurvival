@@ -1,12 +1,12 @@
 package states;
 
 import buildings.Building;
-import main.Entity;
+import buildings.Entity;
+import buildings.Human;
+import buildings.Unit;
 import main.Game;
 import main.Helper;
 import main.Helper.Timer;
-import main.Human;
-import main.Unit;
 
 public class HumanWork extends State {
 	private Timer timer;

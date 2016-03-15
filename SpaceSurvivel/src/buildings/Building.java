@@ -1,6 +1,5 @@
 package buildings;
 
-import main.Entity;
 import main.Game;
 import states.BuildingWork;
 

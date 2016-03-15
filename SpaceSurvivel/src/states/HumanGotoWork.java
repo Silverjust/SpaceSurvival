@@ -1,8 +1,8 @@
 package states;
 
-import main.Entity;
-import main.Human;
-import main.Unit;
+import buildings.Entity;
+import buildings.Human;
+import buildings.Unit;
 import processing.core.PApplet;
 
 public class HumanGotoWork extends State {

@@ -1,7 +1,8 @@
-package main;
+package buildings;
 
 import java.lang.reflect.Constructor;
-import buildings.GUIpannel;
+
+import main.Game;
 import processing.core.PApplet;
 import states.BuildingWork;
 import states.State;

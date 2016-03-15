@@ -2,7 +2,7 @@ package main;
 
 public enum ResNames {
 
-	METALL("Metall");
+	METALL("Metall"),WASSER("Wasser"),NAHRUNG("Nahrung");
 
 	private String name;
 

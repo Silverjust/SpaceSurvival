@@ -1,7 +1,7 @@
 package states;
 
-import main.Entity;
-import main.Unit;
+import buildings.Entity;
+import buildings.Unit;
 
 public class HumanWait extends State {
 	@Override

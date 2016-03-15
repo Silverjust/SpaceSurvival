@@ -1,5 +1,6 @@
-package main;
+package buildings;
 
+import main.Game;
 import processing.core.PApplet;
 
 public abstract class Unit extends Entity {

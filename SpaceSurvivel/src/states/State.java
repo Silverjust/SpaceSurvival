@@ -1,6 +1,6 @@
 package states;
 
-import main.Entity;
+import buildings.Entity;
 
 public class State {
 	public boolean needsWorker() {

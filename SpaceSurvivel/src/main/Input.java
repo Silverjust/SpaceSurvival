@@ -33,7 +33,7 @@ public class Input {
 
 	public void update() {// ********************************************************
 		int rimSize = 10;
-		if (app.focused && !isMPressedOutOfFocus) {
+		if (app.focused && !isMPressedOutOfFocus&&game.pannel==null) {
 			if (Helper.isMouseOver(app, -5, -5, rimSize, app.height) && game.xOffset < 0)
 				game.xOffset += screenSpeed;
 			if (Helper.isMouseOver(app, app.width - rimSize, -5, app.width, app.height)
@@ -115,7 +115,7 @@ public class Input {
 	}
 
 	public void keyEvent(KeyEvent event) {
-		if (true) {
+		if (game.pannel==null) {
 			switch (event.getAction()) {
 			case KeyEvent.PRESS:
 				keyPressed();
@@ -133,7 +133,7 @@ public class Input {
 	}
 
 	public void mouseEvent(MouseEvent event) {
-		if (true) {
+		if (game.pannel==null) {
 			switch (event.getAction()) {
 			case MouseEvent.PRESS:
 				mousePressed();

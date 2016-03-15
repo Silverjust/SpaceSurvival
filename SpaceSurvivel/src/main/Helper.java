@@ -1,6 +1,9 @@
 package main;
 
 import java.util.ArrayList;
+
+import buildings.Entity;
+import buildings.Unit;
 import processing.core.PApplet;
 
 public class Helper {

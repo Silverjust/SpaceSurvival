@@ -1,5 +1,6 @@
-package main;
+package buildings;
 
+import main.Game;
 import processing.core.PApplet;
 import states.BuildingWork;
 import states.HumanCarry;

@@ -1,5 +1,7 @@
 package main;
 
+import buildings.Entity;
+
 public class Updater {
 
 	private Game game;

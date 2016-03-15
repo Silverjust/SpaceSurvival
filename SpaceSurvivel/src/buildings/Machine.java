@@ -2,9 +2,7 @@ package buildings;
 
 import states.BuildingWait;
 import states.BuildingWork;
-import main.Entity;
 import main.Game;
-import main.Human;
 
 public abstract class Machine extends Building {
 

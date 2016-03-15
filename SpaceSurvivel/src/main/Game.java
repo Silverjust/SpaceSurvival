@@ -4,7 +4,10 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import buildings.Entity;
 import buildings.GUIpannel;
+import buildings.Human;
+import buildings.Unit;
 import processing.core.PApplet;
 public class Game {
 	public PApplet app;
@@ -86,6 +89,10 @@ public class Game {
 			entity.draw(app);
 		}
 		app.popMatrix();
+		
+		if (pannel != null) {
+			pannel.update();
+		}
 
 	}
 

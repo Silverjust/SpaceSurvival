@@ -2,9 +2,9 @@ package states;
 
 import java.util.ArrayList;
 
-import main.Entity;
-import main.Human;
-import main.Unit;
+import buildings.Entity;
+import buildings.Human;
+import buildings.Unit;
 
 public class BuildingWork extends State {
 
