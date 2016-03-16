@@ -16,6 +16,7 @@ public class Farm extends Machine {
 		build = new BuildingWork().setWorkers(2).setW(100);
 		busy = new BuildingWork().setWorkers(1).setW(200);
 		broken = new BuildingWait();
+		wait = new BuildingWait();
 		setState(build, this);
 	}
 
@@ -51,23 +52,42 @@ public class Farm extends Machine {
 
 		private GButton close;
 		private GButton repair;
+		private GButton stop;
+
 		public Pannel() {
 			close = new GButton(game.app, 100, 100, 200, 100, "close");
 			close.addEventHandler(this, "handleButtonEvents");
 			repair = new GButton(game.app, 100, 200, 200, 100, "repair");
 			repair.addEventHandler(this, "handleButtonEvents");
+			stop = new GButton(game.app, 100, 300, 200, 100, "stop");
+			stop.addEventHandler(this, "handleButtonEvents");
 		}
 
 		public void handleButtonEvents(GButton button, GEvent event) {
 			if (button == close)
 				game.disposePannel();
+			if (button == stop) {
+
+				if (getState() == wait) {
+					setState(busy, this);
+					stop.setText("stop");
+				} else {
+					setState(wait, this);
+					stop.setText("start");
+				}
+			}
 		}
 
 		@Override
 		public void dispose() {
 			close.dispose();
 			repair.dispose();
+			stop.dispose();
 		}
 
+		@Override
+		public void update() {
+			// game.app.rect(500, 500, 500, 200);
+		}
 	}
 }

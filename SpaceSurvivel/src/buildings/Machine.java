@@ -8,6 +8,7 @@ public abstract class Machine extends Building {
 
 	protected BuildingWork busy;
 	protected BuildingWait broken;
+	protected BuildingWait wait;
 	public Machine(Game game, int x, int y) {
 		super(game,x,y);
 		
