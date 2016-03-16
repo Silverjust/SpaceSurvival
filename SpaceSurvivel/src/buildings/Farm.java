@@ -7,12 +7,12 @@ import main.Game;
 import g4p_controls.GButton;
 import g4p_controls.GCheckbox;
 import g4p_controls.GEvent;
+import g4p_controls.GTextArea;
 
 public class Farm extends Machine {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
-		collect = new BuildingWork().setWorkers(2).setW(100);
 		build = new BuildingWork().setWorkers(2).setW(100);
 		busy = new BuildingWork().setWorkers(1).setW(200);
 		broken = new BuildingWait();
@@ -50,19 +50,23 @@ public class Farm extends Machine {
 	public class Pannel extends GUIpannel {
 
 		private GButton close;
-
+		private GButton repair;
 		public Pannel() {
-			close = new GButton(game.app, 100, 100, 200, 100);
+			close = new GButton(game.app, 100, 100, 200, 100, "close");
 			close.addEventHandler(this, "handleButtonEvents");
+			repair = new GButton(game.app, 100, 200, 200, 100, "repair");
+			repair.addEventHandler(this, "handleButtonEvents");
 		}
 
 		public void handleButtonEvents(GButton button, GEvent event) {
-			game.disposePannel();
+			if (button == close)
+				game.disposePannel();
 		}
 
 		@Override
 		public void dispose() {
 			close.dispose();
+			repair.dispose();
 		}
 
 	}
