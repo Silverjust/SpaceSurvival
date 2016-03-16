@@ -8,6 +8,7 @@ import g4p_controls.GButton;
 import g4p_controls.GCheckbox;
 import g4p_controls.GEvent;
 import g4p_controls.GTextArea;
+import guiElements.GUIpannel;
 
 public class Farm extends Machine {
 

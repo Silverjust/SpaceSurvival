@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import buildings.Entity;
-import buildings.GUIpannel;
 import buildings.Human;
 import buildings.Unit;
+import guiElements.GUIpannel;
 import processing.core.PApplet;
 public class Game {
 	public PApplet app;

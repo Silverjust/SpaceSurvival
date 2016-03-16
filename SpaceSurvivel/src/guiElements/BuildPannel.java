@@ -1,6 +1,5 @@
 package guiElements;
 
-import buildings.GUIpannel;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import main.Game;
