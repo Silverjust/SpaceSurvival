@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.Toolkit;
+
+import guiElements.BuildPannel;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.event.KeyEvent;
@@ -56,6 +58,9 @@ public class Input {
 			shiftMode = true;
 		}
 
+		if (app.key == 'e') {
+			game.pannel = new BuildPannel(game);
+		}
 		if (app.focused && !isMPressedOutOfFocus) {
 			if (app.key == 'a' && game.xOffset < 0)
 				game.xOffset += screenSpeed;
