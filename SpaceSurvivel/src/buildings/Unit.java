@@ -7,8 +7,8 @@ public abstract class Unit extends Entity {
 
 	protected float x;
 	protected float y;
-	protected float xt;
-	protected float yt;
+	public float xt;
+	public float yt;
 	protected float speed;
 	public boolean canMove;
 

@@ -2,7 +2,6 @@ package buildings;
 
 import main.Game;
 import processing.core.PApplet;
-import states.BuildingWork;
 import states.HumanCarry;
 import states.HumanGotoWork;
 import states.HumanWait;
@@ -11,10 +10,10 @@ import states.State;
 
 public class Human extends Unit {
 
-	protected boolean hasWork;
+	public boolean hasWork;
 	public HumanWork work;
-	State carry;
-	HumanGotoWork gotoWork;
+	public State carry;
+	public HumanGotoWork gotoWork;
 	public HumanWait wait;
 
 	public Human(Game game, int x, int y) {
@@ -49,17 +48,6 @@ public class Human extends Unit {
 	public float getW() {
 		// TODO calculate W
 		return 10;
-	}
-
-	public void setTarget(Entity b) {
-if(b.getState().needsWorker()){
-	((BuildingWork)b.getState()).registerAsWorker(this);
-		hasWork = true;
-		setState(gotoWork, this);
-		gotoWork.setTarget(b);
-		xt = b.getX();
-		yt = b.getY();}
-
 	}
 
 	private void createRandomTarget() {

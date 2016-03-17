@@ -15,11 +15,4 @@ public class State {
 	public void update(Entity e) {
 	}
 
-	/** empty */
-	public boolean needsWorker() {
-		return false;
-	}
-
-
-
 }

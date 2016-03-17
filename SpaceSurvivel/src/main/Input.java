@@ -95,8 +95,8 @@ public class Input {
 		//System.out.println("Input.mousePressed()" + "xcoord" + xCoord);
 		//System.out.println("Input.mousePressed()" + "ycoord" + yCoord);
 		//System.out.println("Input.mousePressed()" + "building" + game.buildings[xCoord][yCoord]);
-		if (game.buildings[xCoord][yCoord] != null) {
-			game.buildings[xCoord][yCoord].startGui();
+		if (game.getBuildings()[xCoord][yCoord] != null) {
+			game.getBuildings()[xCoord][yCoord].startGui();
 		}
 	}
 

@@ -1,5 +1,7 @@
 package buildings;
 
+import components.ResNames;
+import components.RessourceGroup;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import guiElements.GUIpannel;
@@ -12,7 +14,9 @@ public class Farm extends Machine {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
-		build = new BuildingWork().setWorkers(2).setW(100);
+		RessourceGroup buildRes = new RessourceGroup();
+		buildRes.addToRessource(ResNames.METALL, 100);
+		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
 		busy = new BuildingWork().setWorkers(1).setW(200);
 		broken = new BuildingWait();
 		wait = new BuildingWait();

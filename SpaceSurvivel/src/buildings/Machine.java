@@ -18,9 +18,6 @@ public abstract class Machine extends Building {
 
 	@Override
 	public void update() {
-		if (getState().needsWorker()) {
-			callWorker();
-		}
 		super.update();
 	}
 
@@ -28,14 +25,6 @@ public abstract class Machine extends Building {
 	public void Statefinished(BuildingWork work) {
 		if (work == build) {
 			setState(busy, this);
-		}
-	}
-
-	public void callWorker() {
-		for (Entity e : game.getEntities()) {
-			if (e instanceof Human && !((Human) e).hasWork() && getState().needsWorker()) {
-				((Human) e).setTarget(this);
-			}
 		}
 	}
 
