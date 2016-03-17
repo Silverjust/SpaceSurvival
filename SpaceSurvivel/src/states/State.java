@@ -3,14 +3,11 @@ package states;
 import buildings.Entity;
 
 public class State {
-	public boolean needsWorker() {
-
-		return false;
+	/** empty */
+	public void onStart(Entity e) {
 	}
 
 	/** empty */
-	public void onStart(Entity e) {
-	}/** empty */
 	public void onEnd(Entity e) {
 	}
 
@@ -18,8 +15,11 @@ public class State {
 	public void update(Entity e) {
 	}
 
-	
+	/** empty */
+	public boolean needsWorker() {
+		return false;
+	}
 
-	
+
 
 }

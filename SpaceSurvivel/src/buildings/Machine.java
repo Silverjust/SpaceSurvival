@@ -9,9 +9,10 @@ public abstract class Machine extends Building {
 	protected BuildingWork busy;
 	protected BuildingWait broken;
 	protected BuildingWait wait;
+
 	public Machine(Game game, int x, int y) {
-		super(game,x,y);
-		
+		super(game, x, y);
+
 		this.game = game;
 	}
 
@@ -36,5 +37,10 @@ public abstract class Machine extends Building {
 				((Human) e).setTarget(this);
 			}
 		}
+	}
+
+	/** empty */
+	public void addOutput() {
+
 	}
 }

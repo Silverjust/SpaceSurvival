@@ -1,14 +1,12 @@
 package buildings;
 
+import g4p_controls.GButton;
+import g4p_controls.GEvent;
+import guiElements.GUIpannel;
+import main.Game;
 import processing.core.PApplet;
 import states.BuildingWait;
 import states.BuildingWork;
-import main.Game;
-import g4p_controls.GButton;
-import g4p_controls.GCheckbox;
-import g4p_controls.GEvent;
-import g4p_controls.GTextArea;
-import guiElements.GUIpannel;
 
 public class Farm extends Machine {
 
@@ -46,7 +44,7 @@ public class Farm extends Machine {
 
 	@Override
 	public void startGui() {
-		game.pannel = new Pannel();
+		game.pannel = new Pannel(this);
 	}
 
 	public class Pannel extends GUIpannel {
@@ -54,13 +52,20 @@ public class Farm extends Machine {
 		private GButton close;
 		private GButton repair;
 		private GButton stop;
+		private Entity outer;
 
-		public Pannel() {
+		public Pannel(Entity outer) {
+			this.outer = outer;
 			close = new GButton(game.app, 100, 100, 200, 100, "close");
 			close.addEventHandler(this, "handleButtonEvents");
 			repair = new GButton(game.app, 100, 200, 200, 100, "repair");
 			repair.addEventHandler(this, "handleButtonEvents");
-			stop = new GButton(game.app, 100, 300, 200, 100, "stop");
+			stop = new GButton(game.app, 100, 300, 200, 100);
+			if (getState() != wait)
+				stop.setText("stop");
+			else
+				stop.setText("start");
+
 			stop.addEventHandler(this, "handleButtonEvents");
 		}
 
@@ -70,7 +75,7 @@ public class Farm extends Machine {
 			if (button == stop) {
 
 				if (getState() == wait) {
-					setState(busy, this);
+					wait.continueState(outer);
 					stop.setText("stop");
 				} else {
 					setState(wait, this);

@@ -1,11 +1,11 @@
 package buildings;
 
+import components.ResNames;
+import components.RessourceHandler;
 import main.Game;
-import main.RessourceHandler;
 import processing.core.PApplet;
 import states.BuildingWait;
 import states.BuildingWork;
-import main.ResNames;
 
 public class Storage extends Building {
 

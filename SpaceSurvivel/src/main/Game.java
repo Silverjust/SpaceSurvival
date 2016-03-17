@@ -2,11 +2,11 @@ package main;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import buildings.Entity;
 import buildings.Human;
 import buildings.Unit;
+import components.ResNames;
+import components.RessourceHandler;
 import guiElements.GUIpannel;
 import processing.core.PApplet;
 public class Game {

@@ -12,6 +12,7 @@ public class BuildingWork extends State {
 	private int workerNeeded = 1;
 	private int Wmax;
 	private float W = 0;
+	ArrayList<Slot> in = new ArrayList<Slot>(), out = new ArrayList<Slot>();
 
 	public BuildingWork() {
 		super();
@@ -27,8 +28,36 @@ public class BuildingWork extends State {
 		return this;
 	}
 
+	@Override
+	public void onStart(Entity e) {
+		inputHasMin();
+		super.onStart(e);
+	}
+
 	public void addW(float w) {
-		W += w;
+		if (inputHasMin())
+			W += w;
+	}
+
+	private boolean inputHasMin() {
+		boolean hasMin = false;
+		if (!in.isEmpty()) {
+			for (Slot slot : in) {
+				if (slot.hasMin())
+					hasMin = true;
+			}
+		} else
+			hasMin = true;
+		if (hasMin)
+			return true;
+		callCarrier(in);
+		return false;
+	}
+
+	private void callCarrier(ArrayList<Slot> slots) {
+		// TODO make carrier (free human) transport stuff either from storage to
+		// machine or from machine to storage
+
 	}
 
 	@Override
@@ -40,10 +69,15 @@ public class BuildingWork extends State {
 	public void update(Entity e) {
 		if (W >= Wmax) {
 			W = 0;
+			for (Slot slot : out) {
+				slot.add(slot.getMin());
+				callCarrier(out);
+			}
 			e.Statefinished(this);
 		}
 	}
 
+	@Deprecated
 	public void addWorker(Entity e) {
 
 	}
@@ -60,7 +94,7 @@ public class BuildingWork extends State {
 	@Override
 	public void onEnd(Entity e) {
 		for (Unit unit : workers) {
-			unit.setState(((Human)unit).wait, this);
+			unit.setState(((Human) unit).wait, this);
 		}
 		workers.clear();
 	}

@@ -47,7 +47,7 @@ public class Human extends Unit {
 	}
 
 	public float getW() {
-		// TODO Auto-generated method stub
+		// TODO calculate W
 		return 10;
 	}
 
