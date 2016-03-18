@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import buildings.Entity;
 import buildings.Human;
 import buildings.Unit;
+import components.ResNames;
 import components.RessourceGroup;
 import components.Slot;
 import main.Game;
@@ -42,6 +43,15 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	@Override
+	public void onStart(Entity e) {
+		if (!inputHasMin())
+			callGetter(e);
+		else if (needsWorker())
+			callWorker(e);
+	
+	}
+
+	@Override
 	public void onEnd(Entity e) {
 		for (Unit unit : workers) {
 			unit.setState(((Human) unit).wait, this);
@@ -50,16 +60,8 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	@Override
-	public void onStart(Entity e) {
-		if (!inputHasMin())
-			callGetter(e);
-		else if (needsWorker())
-			callWorker(e);
-
-	}
-
-	@Override
 	public void update(Entity e) {
+		//System.out.println("BuildingWork.onStart()"+in.getText());
 		if (!inputHasMin())
 			callGetter(e);
 		else if (needsWorker())
@@ -100,22 +102,24 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	private void callGetter(Entity e) {
-		System.out.println("BuildingWork.callGetter()");
-		for (Entity entity : e.game.getEntities()) {
-			if (entity instanceof Human && !((Human) entity).hasWork()) {
-				Human human = (Human) entity;
-				for (int i = 0; i < Game.gridW; i++) {
-					for (int j = 0; j < Game.gridH; j++) {
-						Entity building = e.game.getBuildings()[i][j];
-						if (building != null && building.getState() instanceof Storing
-								&& ((Storing) building.getState()).getOutput().contains(in.getMin())) {
-							//TODO is pure?
-							((HumanCarry) human.carry).setTargets(building, e, human);
-							entity.setState(human.carry, this);
+		ResNames[] res = in.getMin().getRessources();
+		for (int n = 0; n < res.length; n++) {
+			//System.out.println("BuildingWork.callGetter()");
+			for (Entity entity : e.game.getEntities()) {
+				if (entity instanceof Human && !((Human) entity).hasWork()) {
+					Human human = (Human) entity;
+					for (int i = 0; i < Game.gridW; i++) {
+						for (int j = 0; j < Game.gridH; j++) {
+							Entity building = e.game.getBuildings()[i][j];
+							if (building != null && building.getState() instanceof Storing
+									&& ((Storing) building.getState()).getOutput().containsPure(in.getMin().get(res[n]))) {
+								((HumanCarry) human.carry).setTargets(building, e, human,in.getMin().get(res[n]));
+								entity.setState(human.carry, this);
+							} 
 						}
 					}
 				}
-			}
+			} 
 		}
 	}
 

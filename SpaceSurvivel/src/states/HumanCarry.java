@@ -3,6 +3,7 @@ package states;
 import buildings.Entity;
 import buildings.Human;
 import buildings.Unit;
+import components.Ressource;
 import components.Slot;
 import processing.core.PApplet;
 
@@ -11,6 +12,11 @@ public class HumanCarry extends State implements Storing {
 	private boolean isCarrieing;
 	private Entity target2;
 	private Slot storage;
+	private Ressource targetAmount;
+
+	public HumanCarry() {
+		storage = new Slot();
+	}
 
 	@Override
 	public void onStart(Entity e) {
@@ -20,33 +26,46 @@ public class HumanCarry extends State implements Storing {
 	@Override
 	public void update(Entity e) {
 		if (isCarrieing) {
+			Slot output = ((Storing) target1.getState()).getOutput();
 			if (e instanceof Human && PApplet.dist(e.getX(), e.getY(), target1.getX(), target1.getY()) < 1
-					&& ((Storing) target1.getState()).getOutput()
-							.contains(((Storing) target2.getState()).getInput().getMin())) {
-				storage.give(((Storing) target1.getState()).getOutput(),
-						((Storing) target2.getState()).getInput().getMin());
+					&& output.containsPure(targetAmount)) {
+				storage.give(output, targetAmount);
+				//System.out.println("HumanCarry.update()load");
+				isCarrieing = false;
+				((Human) e).setXt(target2.getX());
+				((Human) e).setYt(target2.getY());
+			}
+		} else {
+			Slot input = ((Storing) target2.getState()).getInput();
+			if (e instanceof Human && PApplet.dist(e.getX(), e.getY(), target2.getX(), target2.getY()) < 1) {
+				input.give(storage, targetAmount);
+				//System.out.println("HumanCarry.update()unload" + input.getText());
+				isCarrieing = true;
+				((Human) e).setHasWork(false);
+				((Human) e).setState(((Human) e).wait, this);
 			}
 		}
 	}
 
-	public void setTargets(Entity target1, Entity target2, Human human) {
-		human.hasWork = true;
+	public void setTargets(Entity target1, Entity target2, Human human, Ressource targetAmount) {
+
+		human.setHasWork(true);
 		this.target1 = target1;
 		this.target2 = target2;
-		human.xt = target1.getX();
-		human.yt = target1.getY();
-
+		this.targetAmount = targetAmount;
+		isCarrieing = true;
+		human.setXt(target1.getX());
+		human.setYt(target1.getY());
+		//System.out.println("HumanCarry.setTargets()" + human.hasWork());
 	}
 
 	@Override
 	public Slot getInput() {
-		// TODO Auto-generated method stub
-		return null;
+		return storage;
 	}
 
 	@Override
 	public Slot getOutput() {
-		// TODO Auto-generated method stub
-		return null;
+		return storage;
 	}
 }

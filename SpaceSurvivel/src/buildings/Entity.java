@@ -26,7 +26,7 @@ public abstract class Entity {
 		if (a == null)
 			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
 		a.onStart(this);
-		System.out.println("Entity.setState()" + a + o);
+		//System.out.println("Entity.setState()" + a + o);
 		this.state = a;
 	}
 

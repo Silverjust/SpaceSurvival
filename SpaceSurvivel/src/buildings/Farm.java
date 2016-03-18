@@ -9,6 +9,7 @@ import main.Game;
 import processing.core.PApplet;
 import states.BuildingWait;
 import states.BuildingWork;
+import states.Storing;
 
 public class Farm extends Machine {
 
@@ -17,7 +18,7 @@ public class Farm extends Machine {
 		RessourceGroup buildRes = new RessourceGroup();
 		buildRes.addToRessource(ResNames.METALL, 100);
 		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
-		busy = new BuildingWork().setWorkers(1).setW(200);
+		busy = new BuildingWork().setWorkers(1).setW(200).setInput(buildRes);
 		broken = new BuildingWait();
 		wait = new BuildingWait();
 		setState(build, this);
@@ -97,7 +98,8 @@ public class Farm extends Machine {
 
 		@Override
 		public void update() {
-			// game.app.rect(500, 500, 500, 200);
+			if (getState() instanceof Storing)
+				game.app.text(((Storing) getState()).getInput().getText(), 500, 500);
 		}
 	}
 }

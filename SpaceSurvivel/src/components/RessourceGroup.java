@@ -14,6 +14,7 @@ public class RessourceGroup {
 	}
 
 	public void addToRessource(ResNames res, float amount) {
+		//System.out.println("RessourceGroup.addToRessource()" + res.getName() + " " + amount);
 		if (!ressources.containsKey(res))
 			ressources.put(res, new Ressource(res));
 		ressources.get(res).addAmount(amount);
@@ -48,6 +49,10 @@ public class RessourceGroup {
 			res.put(key, r);
 		}
 		return new RessourceGroup(res);
+	}
+
+	public Ressource get(ResNames resNames) {
+		return ressources.get(resNames);
 	}
 
 }

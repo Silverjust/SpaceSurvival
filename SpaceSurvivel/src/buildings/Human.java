@@ -10,11 +10,13 @@ import states.State;
 
 public class Human extends Unit {
 
-	public boolean hasWork;
+	private boolean hasWork;
 	public HumanWork work;
 	public State carry;
 	public HumanGotoWork gotoWork;
 	public HumanWait wait;
+	private int number;
+	static int totalNumber;
 
 	public Human(Game game, int x, int y) {
 		super(game, x, y);
@@ -28,10 +30,15 @@ public class Human extends Unit {
 	}
 
 	@Override
-	public void update() {
+	public void onSpawn() {
+		totalNumber++;
+		number = totalNumber;
+	}
 
+	@Override
+	public void update() {
 		super.update();
-		if (canMove) {
+		if (getState() == wait) {
 			if (PApplet.dist(x, y, xt, yt) < 0.5) {
 				createRandomTarget();
 			}
@@ -41,7 +48,8 @@ public class Human extends Unit {
 	public void draw(PApplet app) {
 		app.fill(100);
 		app.ellipse(x * Game.gridSize + 25, y * Game.gridSize + 25, 40, 40);
-		app.text(getStateName(), x * Game.gridSize + 25, y * Game.gridSize + 25);
+		app.line(x * Game.gridSize + 25, y * Game.gridSize + 25, xt * Game.gridSize + 25, yt * Game.gridSize + 25);
+		app.text(getStateName() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
 
 	}
 
@@ -51,13 +59,18 @@ public class Human extends Unit {
 	}
 
 	private void createRandomTarget() {
-		hasWork = false;
-		xt = game.app.random(0, 64);
-		yt = game.app.random(0, 64);
+		setHasWork(false);
+		setXt(game.app.random(0, 64));
+		setYt(game.app.random(0, 64));
 	}
 
 	public boolean hasWork() {
 		return hasWork;
+	}
+
+	public void setHasWork(boolean hasWork) {
+		System.out.println("Human.setHasWork()" + hasWork + " ");
+		this.hasWork = hasWork;
 	}
 
 }

@@ -29,10 +29,10 @@ public class HumanGotoWork extends State {
 
 	public void setTarget(Entity target, Human human) {
 		((BuildingWork) target.getState()).registerAsWorker(human);
-		human.hasWork = true;
+		human.setHasWork(true);
 		this.target = target;
-		human.xt = target.getX();
-		human.yt = target.getY();
+		human.setXt(target.getX());
+		human.setYt(target.getY());
 
 	}
 }

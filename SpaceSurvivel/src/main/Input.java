@@ -35,7 +35,7 @@ public class Input {
 
 	public void update() {// ********************************************************
 		int rimSize = 10;
-		if (app.focused && !isMPressedOutOfFocus&&game.pannel==null) {
+		if (app.focused && !isMPressedOutOfFocus && game.pannel == null) {
 			if (Helper.isMouseOver(app, -5, -5, rimSize, app.height) && game.xOffset < 0)
 				game.xOffset += screenSpeed;
 			if (Helper.isMouseOver(app, app.width - rimSize, -5, app.width, app.height)
@@ -92,9 +92,10 @@ public class Input {
 	public void mousePressed() {// ********************************************************
 		int xCoord = PApplet.floor((app.mouseX - game.xOffset) / game.zoom / Game.gridSize);
 		int yCoord = PApplet.floor((app.mouseY - game.yOffset) / game.zoom / Game.gridSize);
-		//System.out.println("Input.mousePressed()" + "xcoord" + xCoord);
-		//System.out.println("Input.mousePressed()" + "ycoord" + yCoord);
-		//System.out.println("Input.mousePressed()" + "building" + game.buildings[xCoord][yCoord]);
+		// System.out.println("Input.mousePressed()" + "xcoord" + xCoord);
+		// System.out.println("Input.mousePressed()" + "ycoord" + yCoord);
+		// System.out.println("Input.mousePressed()" + "building" +
+		// game.buildings[xCoord][yCoord]);
 		if (game.getBuildings()[xCoord][yCoord] != null) {
 			game.getBuildings()[xCoord][yCoord].startGui();
 		}
@@ -120,7 +121,11 @@ public class Input {
 	}
 
 	public void keyEvent(KeyEvent event) {
-		if (game.pannel==null) {
+		if (event.getAction() == KeyEvent.PRESS && app.key == PConstants.ESC) {
+			app.key = 0;
+			game.disposePannel();
+		}
+		if (game.pannel == null) {
 			switch (event.getAction()) {
 			case KeyEvent.PRESS:
 				keyPressed();
@@ -131,14 +136,12 @@ public class Input {
 			default:
 				break;
 			}
-			if (app.key == PConstants.ESC) {
-				app.key = 0;
-			}
+
 		}
 	}
 
 	public void mouseEvent(MouseEvent event) {
-		if (game.pannel==null) {
+		if (game.pannel == null) {
 			switch (event.getAction()) {
 			case MouseEvent.PRESS:
 				mousePressed();

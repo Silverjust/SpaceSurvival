@@ -22,17 +22,23 @@ public class Slot {
 		return hasMin;
 	}
 
-	public void add(RessourceGroup res) {
-		amount.add(res);
-
-	}
-
 	public RessourceGroup getMin() {
 		return min;
 	}
 
 	public void setMin(RessourceGroup res) {
 		min = res;
+	}
+
+	public void add(RessourceGroup res) {
+		amount.add(res);
+	}
+
+	public void give(Slot from, RessourceGroup amount) {
+		from.add(amount.inv());
+		add(amount);
+		System.out.println("Slot.give()");
+
 	}
 
 	public boolean contains(RessourceGroup testAmount) {
@@ -44,13 +50,43 @@ public class Slot {
 					contains = false;
 			}
 		}
-		System.out.println("Slot.contains()" + contains);
+		// System.out.println("Slot.contains()" + contains);
 		return contains;
 	}
 
-	public void give(Slot from, RessourceGroup amount) {
-		from.add(amount.inv());
-		add(amount);
+	public boolean containsPure(Ressource ressource) {
+		if (!amount.isEmpty())
+			if (amount.getAmount(ressource.getName()) > ressource.getAmount())
+				return true;
+		return false;
 
+	}
+
+	public String getText() {
+		String s = "Ressources:\n";
+		ResNames[] res = min.getRessources();
+		if (res.length > 0) {
+			for (int i = 0; i < res.length; i++) {
+				s += res[i].getName() + ": " + amount.getAmount(res[i]) + "/" + min.getAmount(res[i]) + "\n";
+			}
+		} else {
+			ResNames[] res2 = amount.getRessources();
+			for (int i = 0; i < res2.length; i++) {
+				s += res2[i].getName() + ": " + amount.getAmount(res2[i]) + "\n";
+			}
+		}
+		return s;
+
+	}
+
+	public void give(Slot output, Ressource res) {
+		output.getRes().addToRessource(res.getName(), -res.getAmount());
+		amount.addToRessource(res.getName(), res.getAmount());
+		//System.out.println("Slot.give()" + output.getRes().getAmount(res.getName()));
+		//System.out.println("Slot.give()" + amount.getAmount(res.getName()));
+	}
+
+	public RessourceGroup getRes() {
+		return amount;
 	}
 }

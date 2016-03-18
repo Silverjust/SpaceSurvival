@@ -47,9 +47,9 @@ public class Game {
 
 		build("farm", 11, 11);
 		build("storage", 20, 11);
-		getEntities().add(new Human(this, 15, 15));
-		getEntities().add(new Human(this, 16, 15));
-		getEntities().add(new Human(this, 17, 15));
+		updater.add(new Human(this, 15, 15));
+		updater.add(new Human(this, 16, 15));
+		updater.add(new Human(this, 17, 15));
 		ressourceHandler.addToRessource(ResNames.METALL, 500);
 		System.out.println("Game.Game()");
 	}
@@ -132,7 +132,8 @@ public class Game {
 	}
 
 	public void disposePannel() {
-		pannel.dispose();
+		if (pannel != null)
+			pannel.dispose();
 		pannel = null;
 	}
 
