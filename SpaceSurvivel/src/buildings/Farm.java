@@ -1,21 +1,26 @@
 package buildings;
 
+import components.ResNames;
+import components.RessourceGroup;
+import g4p_controls.GButton;
+import g4p_controls.GEvent;
+import guiElements.GUIpannel;
+import main.Game;
 import processing.core.PApplet;
 import states.BuildingWait;
 import states.BuildingWork;
-import main.Game;
-import g4p_controls.GButton;
-import g4p_controls.GCheckbox;
-import g4p_controls.GEvent;
-import g4p_controls.GTextArea;
+import states.Storing;
 
 public class Farm extends Machine {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
-		build = new BuildingWork().setWorkers(2).setW(100);
-		busy = new BuildingWork().setWorkers(1).setW(200);
+		RessourceGroup buildRes = new RessourceGroup();
+		buildRes.addToRessource(ResNames.METALL, 100);
+		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
+		busy = new BuildingWork().setWorkers(1).setW(200).setInput(buildRes);
 		broken = new BuildingWait();
+		wait = new BuildingWait();
 		setState(build, this);
 	}
 
@@ -44,30 +49,62 @@ public class Farm extends Machine {
 
 	@Override
 	public void startGui() {
-		game.pannel = new Pannel();
+		game.pannel = new Pannel(this);
 	}
 
 	public class Pannel extends GUIpannel {
 
 		private GButton close;
 		private GButton repair;
-		public Pannel() {
+		private GButton stop;
+		private Entity outer;
+
+		public Pannel(Entity outer) {
+			this.outer = outer;
 			close = new GButton(game.app, 100, 100, 200, 100, "close");
 			close.addEventHandler(this, "handleButtonEvents");
 			repair = new GButton(game.app, 100, 200, 200, 100, "repair");
 			repair.addEventHandler(this, "handleButtonEvents");
+			if (getState() != broken) {
+				repair.setAlpha(100);
+				repair.setEnabled(false);
+			}
+			stop = new GButton(game.app, 100, 300, 200, 100);
+			if (getState() != wait)
+				stop.setText("stop");
+			else
+				stop.setText("start");
+
+			stop.addEventHandler(this, "handleButtonEvents");
 		}
 
 		public void handleButtonEvents(GButton button, GEvent event) {
 			if (button == close)
 				game.disposePannel();
+			if (button == stop) {
+
+				if (getState() == wait) {
+					System.out.println("Farm.Pannel.handleButtonEvents()");
+					wait.continueState(outer);
+					stop.setText("stop");
+				} else {
+					setState(wait, this);
+					stop.setText("start");
+				}
+			}
 		}
 
 		@Override
 		public void dispose() {
 			close.dispose();
 			repair.dispose();
+			stop.dispose();
 		}
 
+		@Override
+		public void update() {
+			if (getState() instanceof Storing)
+				game.app.text(((Storing) getState()).getInput().getText(), 500, 500);
+		}
 	}
 }

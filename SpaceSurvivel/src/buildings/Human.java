@@ -2,7 +2,6 @@ package buildings;
 
 import main.Game;
 import processing.core.PApplet;
-import states.BuildingWork;
 import states.HumanCarry;
 import states.HumanGotoWork;
 import states.HumanWait;
@@ -11,11 +10,13 @@ import states.State;
 
 public class Human extends Unit {
 
-	protected boolean hasWork;
+	private boolean hasWork;
 	public HumanWork work;
-	State carry;
-	HumanGotoWork gotoWork;
+	public State carry;
+	public HumanGotoWork gotoWork;
 	public HumanWait wait;
+	private int number;
+	static int totalNumber;
 
 	public Human(Game game, int x, int y) {
 		super(game, x, y);
@@ -29,10 +30,15 @@ public class Human extends Unit {
 	}
 
 	@Override
-	public void update() {
+	public void onSpawn() {
+		totalNumber++;
+		number = totalNumber;
+	}
 
+	@Override
+	public void update() {
 		super.update();
-		if (canMove) {
+		if (getState() == wait) {
 			if (PApplet.dist(x, y, xt, yt) < 0.5) {
 				createRandomTarget();
 			}
@@ -42,34 +48,29 @@ public class Human extends Unit {
 	public void draw(PApplet app) {
 		app.fill(100);
 		app.ellipse(x * Game.gridSize + 25, y * Game.gridSize + 25, 40, 40);
-		app.text(getStateName(), x * Game.gridSize + 25, y * Game.gridSize + 25);
+		app.line(x * Game.gridSize + 25, y * Game.gridSize + 25, xt * Game.gridSize + 25, yt * Game.gridSize + 25);
+		app.text(getStateName() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
 
 	}
 
 	public float getW() {
-		// TODO Auto-generated method stub
+		// TODO calculate W
 		return 10;
 	}
 
-	public void setTarget(Entity b) {
-if(b.getState().needsWorker()){
-	((BuildingWork)b.getState()).registerAsWorker(this);
-		hasWork = true;
-		setState(gotoWork, this);
-		gotoWork.setTarget(b);
-		xt = b.getX();
-		yt = b.getY();}
-
-	}
-
 	private void createRandomTarget() {
-		hasWork = false;
-		xt = game.app.random(0, 64);
-		yt = game.app.random(0, 64);
+		setHasWork(false);
+		setXt(game.app.random(0, 64));
+		setYt(game.app.random(0, 64));
 	}
 
 	public boolean hasWork() {
 		return hasWork;
+	}
+
+	public void setHasWork(boolean hasWork) {
+		System.out.println("Human.setHasWork()" + hasWork + " ");
+		this.hasWork = hasWork;
 	}
 
 }

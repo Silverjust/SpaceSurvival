@@ -8,17 +8,16 @@ public abstract class Machine extends Building {
 
 	protected BuildingWork busy;
 	protected BuildingWait broken;
+	protected BuildingWait wait;
+
 	public Machine(Game game, int x, int y) {
-		super(game,x,y);
-		
+		super(game, x, y);
+
 		this.game = game;
 	}
 
 	@Override
 	public void update() {
-		if (getState().needsWorker()) {
-			callWorker();
-		}
 		super.update();
 	}
 
@@ -29,11 +28,8 @@ public abstract class Machine extends Building {
 		}
 	}
 
-	public void callWorker() {
-		for (Entity e : game.getEntities()) {
-			if (e instanceof Human && !((Human) e).hasWork() && getState().needsWorker()) {
-				((Human) e).setTarget(this);
-			}
-		}
+	/** empty */
+	public void addOutput() {
+
 	}
 }

@@ -1,13 +1,12 @@
-package main;
+package components;
 
 public class Ressource {
-	String name;
+	private ResNames name;
 	private float amount;
 
-	public Ressource(ResNames metall) {
-		this.name = metall.getName();
+	public Ressource(ResNames name) {
+		this.name = name;
 		this.amount = 0;
-
 	}
 
 	public float getAmount() {
@@ -16,6 +15,10 @@ public class Ressource {
 
 	public void addAmount(float amount) {
 		this.amount += amount;
+	}
+
+	public ResNames getName() {
+		return name;
 	}
 
 }

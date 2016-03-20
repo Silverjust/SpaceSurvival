@@ -1,7 +1,5 @@
 package buildings;
 
-import java.lang.reflect.Constructor;
-
 import main.Game;
 import processing.core.PApplet;
 import states.BuildingWork;
@@ -9,7 +7,7 @@ import states.State;
 
 public abstract class Entity {
 
-	protected Game game;
+	public Game game;
 	private State state;
 
 	public Entity(Game game) {
@@ -28,6 +26,7 @@ public abstract class Entity {
 		if (a == null)
 			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
 		a.onStart(this);
+		//System.out.println("Entity.setState()" + a + o);
 		this.state = a;
 	}
 
@@ -55,7 +54,7 @@ public abstract class Entity {
 
 	/** empty */
 	public void startGui() {
-
+		System.out.println(this.getClass().getSimpleName() + " has no Gui");
 	}
 
 }

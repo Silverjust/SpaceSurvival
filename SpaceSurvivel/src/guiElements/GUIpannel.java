@@ -1,4 +1,4 @@
-package buildings;
+package guiElements;
 
 public abstract class GUIpannel {
 	/** empty */

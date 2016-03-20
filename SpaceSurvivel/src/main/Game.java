@@ -2,13 +2,16 @@ package main;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import buildings.Building;
 import buildings.Entity;
-import buildings.GUIpannel;
 import buildings.Human;
 import buildings.Unit;
+import components.ResNames;
+import components.RessourceGroup;
+import guiElements.GUIpannel;
 import processing.core.PApplet;
+
 public class Game {
 	public PApplet app;
 	public static final int gridW = 50;
@@ -17,14 +20,10 @@ public class Game {
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
-	Entity[][] buildings = new Entity[gridW][gridH];
 	private boolean[][] isInside = new boolean[gridW][gridH];
 	private boolean[][] isUsed = new boolean[gridW][gridH];
 
-	private ArrayList<Unit> entities = new ArrayList<Unit>();
-	ArrayList<Unit> toAdd = new ArrayList<Unit>();
-	ArrayList<Unit> toRemove = new ArrayList<Unit>();
-	private RessourceHandler ressourceHandler = new RessourceHandler();
+	private RessourceGroup ressourceHandler = new RessourceGroup();
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
@@ -48,9 +47,9 @@ public class Game {
 
 		build("farm", 11, 11);
 		build("storage", 20, 11);
-		getEntities().add(new Human(this, 15, 15));
-		getEntities().add(new Human(this, 16, 15));
-		getEntities().add(new Human(this, 17, 15));
+		updater.add(new Human(this, 15, 15));
+		updater.add(new Human(this, 16, 15));
+		updater.add(new Human(this, 17, 15));
 		ressourceHandler.addToRessource(ResNames.METALL, 500);
 		System.out.println("Game.Game()");
 	}
@@ -80,8 +79,8 @@ public class Game {
 		}
 		for (int i = 0; i < gridW; i++) {
 			for (int j = 0; j < gridH; j++) {
-				if (buildings[i][j] != null)
-					buildings[i][j].draw(app);
+				if (getBuildings()[i][j] != null)
+					getBuildings()[i][j].draw(app);
 			}
 		}
 		for (Entity entity : getEntities()) {
@@ -89,7 +88,7 @@ public class Game {
 			entity.draw(app);
 		}
 		app.popMatrix();
-		
+
 		if (pannel != null) {
 			pannel.update();
 		}
@@ -103,9 +102,9 @@ public class Game {
 			System.out.println("build " + name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Entity b;
-			b = (Entity) ctor.newInstance(new Object[] { this, i, j });
-			buildings[i][j] = b;
+			Building b;
+			b = (Building) ctor.newInstance(new Object[] { this, i, j });
+			getBuildings()[i][j] = b;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,18 +117,24 @@ public class Game {
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
 			Unit e;
 			e = (Unit) ctor.newInstance(new Object[] { this, i, j });
-			toAdd.add(e);
+			updater.add(e);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public ArrayList<Unit> getEntities() {
-		return entities;
+		return updater.getEntities();
+	}
+
+	public Building[][] getBuildings() {
+		return updater.getBuildings();
 	}
 
 	public void disposePannel() {
-		pannel.dispose();
+		if (pannel != null)
+			pannel.dispose();
 		pannel = null;
 	}
+
 }
