@@ -48,7 +48,7 @@ public class BuildingWork extends State implements Storing {
 			callGetter(e);
 		else if (needsWorker())
 			callWorker(e);
-	
+
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class BuildingWork extends State implements Storing {
 
 	@Override
 	public void update(Entity e) {
-		//System.out.println("BuildingWork.onStart()"+in.getText());
+		// System.out.println("BuildingWork.onStart()"+in.getText());
 		if (!inputHasMin())
 			callGetter(e);
 		else if (needsWorker())
@@ -95,7 +95,7 @@ public class BuildingWork extends State implements Storing {
 	private void callWorker(Entity e) {
 		for (Entity entity : e.game.getEntities()) {
 			if (entity instanceof Human && !((Human) entity).hasWork() && needsWorker()) {
-				((Human) entity).gotoWork.setTarget(e, ((Human) entity));
+				((Human) entity).gotoWork.setTarget(e, this, ((Human) entity));
 				((Human) entity).setState(((Human) entity).gotoWork, this);
 			}
 		}
@@ -104,7 +104,7 @@ public class BuildingWork extends State implements Storing {
 	private void callGetter(Entity e) {
 		ResNames[] res = in.getMin().getRessources();
 		for (int n = 0; n < res.length; n++) {
-			//System.out.println("BuildingWork.callGetter()");
+			// System.out.println("BuildingWork.callGetter()");
 			for (Entity entity : e.game.getEntities()) {
 				if (entity instanceof Human && !((Human) entity).hasWork()) {
 					Human human = (Human) entity;
@@ -112,14 +112,15 @@ public class BuildingWork extends State implements Storing {
 						for (int j = 0; j < Game.gridH; j++) {
 							Entity building = e.game.getBuildings()[i][j];
 							if (building != null && building.getState() instanceof Storing
-									&& ((Storing) building.getState()).getOutput().containsPure(in.getMin().get(res[n]))) {
-								((HumanCarry) human.carry).setTargets(building, e, human,in.getMin().get(res[n]));
+									&& ((Storing) building.getState()).getOutput()
+											.containsPure(in.getMin().get(res[n]))) {
+								((HumanCarry) human.carry).setTargets(building, e, human, in.getMin().get(res[n]));
 								entity.setState(human.carry, this);
-							} 
+							}
 						}
 					}
 				}
-			} 
+			}
 		}
 	}
 

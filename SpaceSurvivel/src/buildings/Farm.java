@@ -65,6 +65,10 @@ public class Farm extends Machine {
 			close.addEventHandler(this, "handleButtonEvents");
 			repair = new GButton(game.app, 100, 200, 200, 100, "repair");
 			repair.addEventHandler(this, "handleButtonEvents");
+			if (getState() != broken) {
+				repair.setAlpha(100);
+				repair.setEnabled(false);
+			}
 			stop = new GButton(game.app, 100, 300, 200, 100);
 			if (getState() != wait)
 				stop.setText("stop");
@@ -80,6 +84,7 @@ public class Farm extends Machine {
 			if (button == stop) {
 
 				if (getState() == wait) {
+					System.out.println("Farm.Pannel.handleButtonEvents()");
 					wait.continueState(outer);
 					stop.setText("stop");
 				} else {

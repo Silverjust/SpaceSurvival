@@ -27,8 +27,8 @@ public class HumanGotoWork extends State {
 		((Unit) e).canMove = true;
 	}
 
-	public void setTarget(Entity target, Human human) {
-		((BuildingWork) target.getState()).registerAsWorker(human);
+	public void setTarget(Entity target,BuildingWork work, Human human) {
+		work.registerAsWorker(human);
 		human.setHasWork(true);
 		this.target = target;
 		human.setXt(target.getX());
