@@ -17,8 +17,10 @@ public class Farm extends Machine {
 		super(game, x, y);
 		RessourceGroup buildRes = new RessourceGroup();
 		buildRes.addToRessource(ResNames.METALL, 100);
+		RessourceGroup resOut = new RessourceGroup();
+		resOut.addToRessource(ResNames.WASSER, 100);
 		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
-		busy = new BuildingWork().setWorkers(1).setW(200).setInput(buildRes);
+		busy = new BuildingWork().setWorkers(1).setW(200).setInput(buildRes).setOutput(resOut);
 		broken = new BuildingWait();
 		wait = new BuildingWait();
 		setState(build, this);
@@ -103,8 +105,10 @@ public class Farm extends Machine {
 
 		@Override
 		public void update() {
-			if (getState() instanceof Storing)
-				game.app.text(((Storing) getState()).getInput().getText(), 500, 500);
+			if (getState() instanceof Storing) {
+				game.app.text(((Storing) getState()).getInput().getText(), 500, 200);
+				game.app.text(((Storing) getState()).getOutput().getText(), 1200, 200);
+			}
 		}
 	}
 }

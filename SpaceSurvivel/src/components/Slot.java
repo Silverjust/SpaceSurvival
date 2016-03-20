@@ -67,7 +67,7 @@ public class Slot {
 		ResNames[] res = min.getRessources();
 		if (res.length > 0) {
 			for (int i = 0; i < res.length; i++) {
-				s += res[i].getName() + ": " + amount.getAmount(res[i]) + "/" + min.getAmount(res[i]) + "\n";
+				s += res[i].getName() + ": " + amount.getAmount(res[i]) + "(" + min.getAmount(res[i]) + ")\n";
 			}
 		} else {
 			ResNames[] res2 = amount.getRessources();

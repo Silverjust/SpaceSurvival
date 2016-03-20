@@ -38,7 +38,7 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	public BuildingWork setOutput(RessourceGroup res) {
-		in.setMin(res);
+		out.setMin(res);
 		return this;
 	}
 
@@ -68,7 +68,7 @@ public class BuildingWork extends State implements Storing {
 			callWorker(e);
 		if (W >= Wmax) {
 			W = 0;
-
+			in.add(in.getMin().inv());
 			out.add(out.getMin());
 			callTaker(out);
 
