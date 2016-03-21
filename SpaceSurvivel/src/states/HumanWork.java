@@ -19,7 +19,7 @@ public class HumanWork extends State {
 	@Override
 	public void update(Entity e) {
 		if (timer.isNotOnCooldown()) {
-			((BuildingWork) ((Building) target).getState()).addW(target, ((Human) e).getW());
+			((BuildingWork) ((Building) target).getState()).addW(e, target, ((Human) e).getW());
 			timer.startCooldown();
 		}
 	}

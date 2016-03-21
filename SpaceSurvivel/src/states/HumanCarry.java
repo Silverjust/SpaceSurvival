@@ -30,19 +30,24 @@ public class HumanCarry extends State implements Storing {
 			if (e instanceof Human && PApplet.dist(e.getX(), e.getY(), target1.getX(), target1.getY()) < 1
 					&& output.containsPure(targetAmount)) {
 				storage.give(output, targetAmount);
-				//System.out.println("HumanCarry.update()load");
+				// System.out.println("HumanCarry.update()load");
 				isCarrieing = false;
 				((Human) e).setXt(target2.getX());
 				((Human) e).setYt(target2.getY());
 			}
 		} else {
-			Slot input = ((Storing) target2.getState()).getInput();
-			if (e instanceof Human && PApplet.dist(e.getX(), e.getY(), target2.getX(), target2.getY()) < 1) {
-				input.give(storage, targetAmount);
-				//System.out.println("HumanCarry.update()unload" + input.getText());
-				isCarrieing = true;
-				((Human) e).setHasWork(false);
-				((Human) e).setState(((Human) e).wait, this);
+			if (target2.getState()  instanceof Storing) {
+				Slot input = ((Storing) target2.getState()).getInput();
+				if (e instanceof Human && PApplet.dist(e.getX(), e.getY(), target2.getX(), target2.getY()) < 1) {
+					input.give(storage, targetAmount);
+					// System.out.println("HumanCarry.update()unload" +
+					// input.getText());
+					if (((BuildingWork) target2.getState()).getCarriers().contains(((Human) e)))
+						((BuildingWork) target2.getState()).getCarriers().remove(((Human) e));
+					isCarrieing = true;
+					((Human) e).setHasWork(false);
+					((Human) e).setState(((Human) e).wait, this);
+				} 
 			}
 		}
 	}
@@ -56,7 +61,7 @@ public class HumanCarry extends State implements Storing {
 		isCarrieing = true;
 		human.setXt(target1.getX());
 		human.setYt(target1.getY());
-		//System.out.println("HumanCarry.setTargets()" + human.hasWork());
+		// System.out.println("HumanCarry.setTargets()" + human.hasWork());
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class Slot {
 		if (!min.isEmpty()) {
 			ResNames[] res = min.getRessources();
 			for (int i = 0; i < res.length; i++) {
-				if (min.getAmount(res[i]) < amount.getAmount(res[i]))
+				if (min.getAmount(res[i]) <= amount.getAmount(res[i]))
 					hasMin = true;
 			}
 		} else
