@@ -28,6 +28,7 @@ public class Game {
 	Updater updater;
 	public GameTime gameTime;
 	public GUIpannel pannel;
+	public Aimer aimer;
 
 	public Game(PApplet app) {
 		this.app = app;

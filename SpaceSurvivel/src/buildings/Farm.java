@@ -63,15 +63,15 @@ public class Farm extends Machine {
 
 		public Pannel(Entity outer) {
 			this.outer = outer;
-			close = new GButton(game.app, 100, 100, 200, 100, "close");
+			close = new GButton(game.app, game.app.width * 0.1f, game.app.height * 0.1f, game.app.width * 0.1f,game.app.height * 0.1f, "close");
 			close.addEventHandler(this, "handleButtonEvents");
-			repair = new GButton(game.app, 100, 200, 200, 100, "repair");
+			repair = new GButton(game.app, game.app.width*0.1f,game.app.height*0.2f,game.app.width*0.1f,game.app.height*0.1f, "repair");
 			repair.addEventHandler(this, "handleButtonEvents");
 			if (getState() != broken) {
 				repair.setAlpha(100);
 				repair.setEnabled(false);
 			}
-			stop = new GButton(game.app, 100, 300, 200, 100);
+			stop = new GButton(game.app, game.app.width*0.1f,game.app.height*0.3f,game.app.width*0.1f,game.app.height*0.1f);
 			if (getState() != wait)
 				stop.setText("stop");
 			else
@@ -109,6 +109,8 @@ public class Farm extends Machine {
 				game.app.text(((Storing) getState()).getInput().getText(), 500, 200);
 				game.app.text(((Storing) getState()).getOutput().getText(), 1200, 200);
 			}
+			game.app.fill(255, 100);
+			game.app.rect(game.app.width * 0.1f, game.app.height * 0.1f, game.app.width * 0.8f, game.app.height * 0.8f);
 		}
 	}
 }

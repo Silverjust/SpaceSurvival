@@ -69,7 +69,6 @@ public class Human extends Unit {
 	}
 
 	public void setHasWork(boolean hasWork) {
-		System.out.println("Human.setHasWork()" + hasWork + " ");
 		this.hasWork = hasWork;
 	}
 
