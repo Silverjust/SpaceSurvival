@@ -2,6 +2,7 @@ package guiElements;
 
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
+import main.Aimer;
 import main.Game;
 
 public class BuildPannel extends GUIpannel {
@@ -17,7 +18,9 @@ public class BuildPannel extends GUIpannel {
 	}
 	public void handleButtonEvents(GButton button, GEvent event) {
 		if (button == farm) {
-			game.build("farm", 15, 15);
+			System.out.println("BuildPannel.handleButtonEvents()");
+			game.aimer= new Aimer("farm",game);
+			game.disposePannel();
 	}
 		if (button == close) {
 			game.disposePannel();

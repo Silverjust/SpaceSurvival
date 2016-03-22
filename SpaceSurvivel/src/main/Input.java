@@ -99,6 +99,11 @@ public class Input {
 		if (game.getBuildings()[xCoord][yCoord] != null) {
 			game.getBuildings()[xCoord][yCoord].startGui();
 		}
+		System.out.println("Input.mousePressed()"+game.aimer);
+		if (game.aimer != null) {
+			System.out.println("Input.mousePressed()");
+		game.aimer.click(xCoord,yCoord);
+		}
 	}
 
 	public void mouseReleased() {// ********************************************************
