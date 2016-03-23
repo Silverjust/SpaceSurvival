@@ -47,6 +47,16 @@ public class Input {
 					&& -game.yOffset + app.height <= main.Game.gridSize * main.Game.gridH * game.zoom)
 				game.yOffset -= screenSpeed;
 		}
+		if (app.focused && !isMPressedOutOfFocus) {
+			if (app.key == 'a' && game.xOffset < 0)
+				game.xOffset += screenSpeed;
+			if (app.key == 'd' && -game.xOffset + app.width <= main.Game.gridSize * main.Game.gridW * game.zoom)
+				game.xOffset -= screenSpeed;
+			if (app.key == 'w' && game.yOffset < 0)
+				game.yOffset += screenSpeed;
+			if (app.key == 's' && -game.yOffset + app.height <= main.Game.gridSize * main.Game.gridH * game.zoom)
+				game.yOffset -= screenSpeed;
+		}
 	}
 
 	public void keyPressed() {// ********************************************************
@@ -61,16 +71,7 @@ public class Input {
 		if (app.key == 'e') {
 			game.pannel = new BuildPannel(game);
 		}
-		if (app.focused && !isMPressedOutOfFocus) {
-			if (app.key == 'a' && game.xOffset < 0)
-				game.xOffset += screenSpeed;
-			if (app.key == 'd' && -game.xOffset + app.width <= main.Game.gridSize * main.Game.gridW * game.zoom)
-				game.xOffset -= screenSpeed;
-			if (app.key == 'w' && game.yOffset < 0)
-				game.yOffset += screenSpeed;
-			if (app.key == 's' && -game.yOffset + app.height <= main.Game.gridSize * main.Game.gridH * game.zoom)
-				game.yOffset -= screenSpeed;
-		}
+
 		// System.out.println(app.key);
 
 	}
@@ -84,6 +85,7 @@ public class Input {
 		if (app.keyCode == shiftKey) {
 			shiftMode = false;
 		}
+		app.key = 0;
 	}
 
 	public void mouseClicked() {// ********************************************************
@@ -98,11 +100,11 @@ public class Input {
 		// game.buildings[xCoord][yCoord]);
 		if (game.getBuildings()[xCoord][yCoord] != null) {
 			game.getBuildings()[xCoord][yCoord].startGui();
+		} else {
+			game.pannel = new BuildPannel(game);
 		}
-		System.out.println("Input.mousePressed()"+game.aimer);
 		if (game.aimer != null) {
-			System.out.println("Input.mousePressed()");
-		game.aimer.click(xCoord,yCoord);
+			game.aimer.click(xCoord, yCoord);
 		}
 	}
 

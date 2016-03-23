@@ -1,35 +1,49 @@
 package guiElements;
 
+import java.util.ArrayList;
+
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import main.Aimer;
+import main.ContentListHandler;
 import main.Game;
+import main.Helper;
 
-public class BuildPannel extends GUIpannel {
-	private GButton close;
-	private GButton farm;
+public class BuildPannel extends StandardPannel {
+	private ArrayList<GButton> buildings = new ArrayList<GButton>();
+	private ArrayList<String> name = new ArrayList<String>();
 	private Game game;
+
 	public BuildPannel(Game game) {
+		super(game);
 		this.game = game;
-		farm = new GButton(game.app, 1400, 100, 100, 100, "Farm");
-		farm.addEventHandler(this, "handleButtonEvents");
-		close= new GButton(game.app, 1400, 200, 200, 100, "close");
-		close.addEventHandler(this, "handleButtonEvents");
+		float i = 0;
+		for (Object o : ContentListHandler.getContent().keys()) {
+			GButton button = Helper.createButton(game.app, 0.2f, 0.2f + i, 0.1f, 0.1f, (String) o);
+			button.addEventHandler(this, "handleButtonEvents");
+			name.add((String) o);
+			buildings.add(button);
+			i += 0.1f;
+		}
+
 	}
+
 	public void handleButtonEvents(GButton button, GEvent event) {
-		if (button == farm) {
-			System.out.println("BuildPannel.handleButtonEvents()");
-			game.aimer= new Aimer("farm",game);
-			game.disposePannel();
+		for (GButton b : buildings) {
+			if (button == b) {
+				game.aimer = new Aimer(name.get(buildings.indexOf(b)), game);
+				game.disposePannel();
+			}
+		}
+		super.handleButtonEvents(button, event);
 	}
-		if (button == close) {
-			game.disposePannel();
-	}
-}
+
 	@Override
 	public void dispose() {
-		close.dispose();
-		farm.dispose();
+		for (GButton button : buildings) {
+			button.dispose();
+		}
+		super.dispose();
 	}
 
 }

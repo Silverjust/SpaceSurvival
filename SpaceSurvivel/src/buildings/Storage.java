@@ -1,15 +1,16 @@
 package buildings;
 
-import buildings.Farm.Pannel;
 import components.ResNames;
 import components.RessourceGroup;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
-import guiElements.GUIpannel;
+import guiElements.StandardPannel;
 import main.Game;
+import main.Helper;
 import processing.core.PApplet;
 import states.BuildingWait;
 import states.BuildingWork;
+import states.State;
 import states.StorageWait;
 import states.Storing;
 
@@ -17,11 +18,13 @@ public class Storage extends Building {
 
 	RessourceGroup resHandler;
 	private StorageWait wait;
+	public State broken;
 
 	public Storage(Game game, int x, int y) {
 		super(game, x, y);
 		build = new BuildingWork();
 		wait = new StorageWait();
+		broken = new BuildingWait();
 		resHandler = new RessourceGroup();
 
 		RessourceGroup res = new RessourceGroup();
@@ -46,35 +49,40 @@ public class Storage extends Building {
 
 	@Override
 	public void startGui() {
-		game.pannel = new Pannel();
+		game.pannel = new Pannel(this);
 	}
 
-	public class Pannel extends GUIpannel {
-
-		private GButton close;
+	public class Pannel extends StandardPannel {
 		private GButton repair;
 
-
-		public Pannel() {
-			close = new GButton(game.app, 100, 100, 200, 100, "close");
-			close.addEventHandler(this, "handleButtonEvents");
+		public Pannel(Entity outer) {
+			super(outer.game);
+			repair = Helper.createButton(game.app, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
+			repair.addEventHandler(this, "handleButtonEvents");
+			if (getState() != broken) {
+				repair.setAlpha(100);
+				repair.setEnabled(false);
+			}
 		}
 
 		public void handleButtonEvents(GButton button, GEvent event) {
-			if (button == close)
+			if (button == repair)
 				game.disposePannel();
+			else
+				super.handleButtonEvents(button, event);
 
 		}
 
 		@Override
 		public void dispose() {
-			close.dispose();
-
+			repair.dispose();
+			super.dispose();
 		}
 
 		@Override
 		public void update() {
 			game.app.text(wait.getInput().getText(), 500, 200);
+			super.update();
 		}
 	}
 }

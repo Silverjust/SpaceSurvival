@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import buildings.Entity;
 import buildings.Unit;
+import g4p_controls.GButton;
 import processing.core.PApplet;
 
 public class Helper {
@@ -72,6 +73,13 @@ public class Helper {
 
 		}
 		return i;
+	}
+
+	/** creates a GButton coords in percent of window */
+	public static GButton createButton(PApplet app, float x, float y, float w, float h, String name) {
+		float b = 0.005f;
+		return new GButton(app, app.width * (x + b), app.height * (y + b), app.width * (w - 2 * b),
+				app.height * (h - 2 * b), name);
 	}
 
 	static public class Timer {

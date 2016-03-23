@@ -62,7 +62,6 @@ public class BuildingWork extends State implements Storing {
 
 	@Override
 	public void update(Entity e) {
-		System.out.println("BuildingWork.onStart()" + workers);
 		if (!inputHasMin())
 			callGetter(e);
 		else if (needsWorker())
