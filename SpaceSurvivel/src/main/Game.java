@@ -15,7 +15,6 @@ import processing.core.PImage;
 import states.Storing;
 import buildings.Storage;
 
-
 public class Game {
 	public PApplet app;
 	public static final int gridW = 50;
