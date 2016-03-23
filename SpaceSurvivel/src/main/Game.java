@@ -11,6 +11,7 @@ import components.ResNames;
 import components.RessourceGroup;
 import guiElements.GUIpannel;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Game {
 	public PApplet app;
@@ -23,12 +24,15 @@ public class Game {
 	private boolean[][] isInside = new boolean[gridW][gridH];
 	private boolean[][] isUsed = new boolean[gridW][gridH];
 
-	private RessourceGroup ressourceHandler = new RessourceGroup();
+	private RessourceGroup ressourceGroup = new RessourceGroup();
+	private PImage img;
+
+	public GUIpannel pannel;
+	public Aimer aimer;
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
-	public GUIpannel pannel;
-	public Aimer aimer;
+	public ImageManager imgManager;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -45,14 +49,17 @@ public class Game {
 		ContentListHandler.setup(app);
 		ContentListHandler.load();
 		gameTime = new GameTime(this);
+		imgManager = new ImageManager(app);
 
 		build("farm", 11, 11);
 		build("storage", 20, 11);
 		updater.add(new Human(this, 15, 15));
 		updater.add(new Human(this, 16, 15));
 		updater.add(new Human(this, 17, 15));
-		ressourceHandler.addToRessource(ResNames.METALL, 500);
+		ressourceGroup.addToRessource(ResNames.METALL, 500);
 		System.out.println("Game.Game()");
+
+		img = imgManager.load("map/", "background");
 	}
 
 	public void update() {
@@ -61,6 +68,13 @@ public class Game {
 
 		app.clear();
 		app.background(0, 0, 100);
+
+		app.pushMatrix();
+		app.translate(xOffset / 10, yOffset /10);
+		app.scale(zoom*10);
+		app.image(img, 0, 0,app.width/5,app.height/5);
+		app.popMatrix();
+
 		app.pushMatrix();
 		app.translate(xOffset, yOffset);
 		app.scale(zoom);
