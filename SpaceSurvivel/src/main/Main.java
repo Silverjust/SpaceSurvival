@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.JFrame;
 
+import g4p_controls.G4P;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -35,7 +36,8 @@ public class Main extends PApplet {
 		font = createFont("Aharoni Fett", 40);
 		// System.out.println(font.ascent());
 		textFont(font);
-		noSmooth();
+		G4P.messagesEnabled(false);
+		//noSmooth();
 
 		game = new Game(this);
 		commands = new Commands(game);
