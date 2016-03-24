@@ -10,7 +10,7 @@ import states.State;
 public abstract class Entity {
 
 	public Game game;
-	private ArrayList<State> state = new ArrayList<State>();
+	private ArrayList<State> states = new ArrayList<State>();
 
 	public Entity(Game game) {
 		this.game = game;
@@ -23,26 +23,29 @@ public abstract class Entity {
 	public abstract void draw(PApplet app);
 
 	public void setState(State a, Object o) {
-		if (!state.isEmpty())
+		if (!states.isEmpty())
 			getState().onEnd(this);
-		if (a == null)
+		if (a == null) {
 			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
+			return;
+		}
 		a.onStart(this);
 		// System.out.println("Entity.setState()" + a + o);
-		this.state.add(a);
+		this.states.add(a);
 	}
 
 	public abstract float getX();
 
 	public abstract float getY();
 
-	/** empty */
-	public void Statefinished(BuildingWork work) {
-
+	public State getState() {
+		if (states.isEmpty())
+			return null;
+		return states.get(0);
 	}
 
-	public State getState() {
-		return state;
+	public State endState() {
+		return states.remove(0);
 	}
 
 	/** empty */
@@ -51,7 +54,7 @@ public abstract class Entity {
 	}
 
 	protected String getStateName() {
-		return state.getClass().getSimpleName();
+		return states.getClass().getSimpleName();
 	}
 
 	/** empty */

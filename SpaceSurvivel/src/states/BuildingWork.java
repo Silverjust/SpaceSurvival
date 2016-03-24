@@ -33,6 +33,11 @@ public class BuildingWork extends State implements Storing {
 		return this;
 	}
 
+	public BuildingWork setRepeat(boolean b) {
+		repeat = b;
+		return this;
+	}
+
 	public BuildingWork setInput(RessourceGroup res) {
 		in.setMin(res);
 		return this;
@@ -71,18 +76,20 @@ public class BuildingWork extends State implements Storing {
 			in.add(in.getMin().inv());
 			out.add(out.getMin());
 			callTaker(out);
-
-			e.Statefinished(this);
+			e.endState();
+			if (repeat)
+				e.setState(this, this);
 		}
 	}
 
 	public void addW(Entity worker, Entity target, float w) {
 		if (inputHasMin())
 			W += w;
-		else{
+		else {
 			callGetter(target);
 			worker.setState(((Human) worker).wait, this);
-			workers.remove(worker);}
+			workers.remove(worker);
+		}
 	}
 
 	/** test if this has enough ressources to produce output */
