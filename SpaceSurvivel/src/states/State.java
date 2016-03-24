@@ -3,6 +3,9 @@ package states;
 import buildings.Entity;
 
 public class State {
+
+	protected boolean repeat;
+
 	/** empty */
 	public void onStart(Entity e) {
 	}

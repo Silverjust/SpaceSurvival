@@ -22,7 +22,7 @@ public class Farm extends Machine {
 		resOut.addToRessource(ResNames.WASSER, 100);
 
 		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
-		busy = new BuildingWork().setWorkers(1).setW(200).setInput(buildRes).setOutput(resOut);
+		busy = new BuildingWork().setWorkers(1).setW(200).setRepeat(true).setInput(buildRes).setOutput(resOut);
 		broken = new BuildingWait();
 		wait = new BuildingWait();
 		setState(build, this);

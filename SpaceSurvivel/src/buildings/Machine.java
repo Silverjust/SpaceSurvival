@@ -1,12 +1,12 @@
 package buildings;
 
 import states.BuildingWait;
-import states.BuildingWork;
+import states.Storing;
 import main.Game;
 
 public abstract class Machine extends Building {
 
-	protected BuildingWork busy;
+	protected Storing busy;
 	protected BuildingWait broken;
 	protected BuildingWait wait;
 
@@ -19,13 +19,6 @@ public abstract class Machine extends Building {
 	@Override
 	public void update() {
 		super.update();
-	}
-
-	@Override
-	public void Statefinished(BuildingWork work) {
-		if (work == build) {
-			setState(busy, this);
-		}
 	}
 
 	/** empty */

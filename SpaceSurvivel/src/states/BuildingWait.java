@@ -5,17 +5,15 @@ import states.State;
 
 public class BuildingWait extends State {
 
-	private State previousState;
-
 	public BuildingWait() {
 	}
 
 	@Override
 	public void onStart(Entity e) {
-		previousState = e.getState();
+		e.setState(e.getState(), this);
 	}
 
 	public void continueState(Entity e) {
-		e.setState(previousState, this);
+		e.endState();
 	}
 }
