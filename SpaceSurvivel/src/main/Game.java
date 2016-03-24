@@ -12,6 +12,9 @@ import components.RessourceGroup;
 import guiElements.GUIpannel;
 import processing.core.PApplet;
 import processing.core.PImage;
+import states.Storing;
+import buildings.Storage;
+
 
 public class Game {
 	public PApplet app;
@@ -52,7 +55,17 @@ public class Game {
 		imgManager = new ImageManager(app);
 
 		build("farm", 11, 11);
+		
 		build("storage", 20, 11);
+		RessourceGroup res = new RessourceGroup();
+		res.addToRessource(ResNames.METALL, 10000);
+		((Storing)((Storage)getBuildings()[20][11]).wait).getInput().add(res);
+		
+		build("storage", 20, 13);
+		RessourceGroup res1 = new RessourceGroup();
+		res1.addToRessource(ResNames.BIOMÜLL, 1000);
+		((Storing)((Storage)getBuildings()[20][11]).wait).getInput().add(res1);
+		
 		updater.add(new Human(this, 15, 15));
 		updater.add(new Human(this, 16, 15));
 		updater.add(new Human(this, 17, 15));

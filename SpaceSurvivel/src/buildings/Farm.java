@@ -18,11 +18,13 @@ public class Farm extends Machine {
 		super(game, x, y);
 		RessourceGroup buildRes = new RessourceGroup();
 		buildRes.addToRessource(ResNames.METALL, 100);
+		RessourceGroup resInput = new RessourceGroup();
+		resInput.addToRessource(ResNames.DÜNGER, 100);
 		RessourceGroup resOut = new RessourceGroup();
-		resOut.addToRessource(ResNames.WASSER, 100);
+		resOut.addToRessource(ResNames.NAHRUNG, 100);
 
 		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
-		busy = new BuildingWork().setWorkers(1).setW(200).setInput(buildRes).setOutput(resOut);
+		busy = new BuildingWork().setWorkers(1).setW(200).setInput(resInput).setOutput(resOut);
 		broken = new BuildingWait();
 		wait = new BuildingWait();
 		setState(build, this);

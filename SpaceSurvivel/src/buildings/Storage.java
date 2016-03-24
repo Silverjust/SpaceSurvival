@@ -17,7 +17,7 @@ import states.Storing;
 public class Storage extends Building {
 
 	RessourceGroup resHandler;
-	private StorageWait wait;
+	public StorageWait wait;
 	public State broken;
 
 	public Storage(Game game, int x, int y) {
@@ -27,9 +27,9 @@ public class Storage extends Building {
 		broken = new BuildingWait();
 		resHandler = new RessourceGroup();
 
-		RessourceGroup res = new RessourceGroup();
-		res.addToRessource(ResNames.METALL, 1000);
-		((Storing) wait).getInput().add(res);
+//		RessourceGroup res = new RessourceGroup();
+//		res.addToRessource(ResNames.METALL, 1000);
+//		((Storing) wait).getInput().add(res);
 		setState(wait, this);
 	}
 
