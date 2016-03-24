@@ -2,15 +2,10 @@ package buildings;
 
 import components.ResNames;
 import components.RessourceGroup;
-import g4p_controls.GButton;
-import g4p_controls.GEvent;
-import guiElements.StandardPannel;
 import main.Game;
-import main.Helper;
 import processing.core.PApplet;
 import states.Wait;
 import states.BuildingWork;
-import states.Storing;
 
 public class Farm extends Machine {
 
@@ -24,7 +19,7 @@ public class Farm extends Machine {
 		resOut.addToRessource(ResNames.NAHRUNG, 100);
 
 		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
-		busy = new BuildingWork().setWorkers(1).setW(200).setRepeat(true).setInput(buildRes).setOutput(resOut);
+		busy = new BuildingWork().setWorkers(1).setW(200).setRepeat(true).setInput(resInput).setOutput(resOut);
 		broken = new Wait();
 		wait = new Wait();
 		setState(build, this);
@@ -58,58 +53,5 @@ public class Farm extends Machine {
 		game.pannel = new Pannel(this);
 	}
 
-	public class Pannel extends StandardPannel {
-
-		private GButton repair;
-		private GButton stop;
-		public Pannel(Entity outer) {
-			super(outer.game);
-			repair = Helper.createButton(game.app, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
-			repair.addEventHandler(this, "handleButtonEvents");
-			if (getState() != broken) {
-				repair.setAlpha(100);
-				repair.setEnabled(false);
-			}
-			stop = Helper.createButton(game.app, 0.1f, 0.3f, 0.1f, 0.1f, "");
-			if (getState() != wait)
-				stop.setText("stop");
-			else
-				stop.setText("start");
-
-			stop.addEventHandler(this, "handleButtonEvents");
-		}
-
-		@Override
-		public void handleButtonEvents(GButton button, GEvent event) {
-			if (button == stop) {
-				if (getState() == wait) {
-					System.out.println("Farm.Pannel.handleButtonEvents()");
-					endState();
-					stop.setText("stop");
-				} else {
-					setState(wait, this);
-					stop.setText("start");
-				}
-			} else
-				super.handleButtonEvents(button, event);
-		}
-
-		
-
-		@Override
-		public void dispose() {
-			repair.dispose();
-			stop.dispose();
-			super.dispose();
-		}
-
-		@Override
-		public void update() {
-			super.update();
-			if (getState() instanceof Storing) {
-				game.app.text(((Storing) getState()).getInput().getText(), 500, 200);
-				game.app.text(((Storing) getState()).getOutput().getText(), 1200, 200);
-			}
-		}
-	}
+	
 }
