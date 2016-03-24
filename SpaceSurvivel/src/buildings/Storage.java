@@ -8,7 +8,7 @@ import guiElements.StandardPannel;
 import main.Game;
 import main.Helper;
 import processing.core.PApplet;
-import states.BuildingWait;
+import states.Wait;
 import states.BuildingWork;
 import states.State;
 import states.StorageWait;
@@ -17,14 +17,13 @@ import states.Storing;
 public class Storage extends Building {
 
 	RessourceGroup resHandler;
-	private StorageWait wait;
 	public State broken;
 
 	public Storage(Game game, int x, int y) {
 		super(game, x, y);
 		build = new BuildingWork();
 		wait = new StorageWait();
-		broken = new BuildingWait();
+		broken = new Wait();
 		resHandler = new RessourceGroup();
 
 		RessourceGroup res = new RessourceGroup();
@@ -82,7 +81,7 @@ public class Storage extends Building {
 		@Override
 		public void update() {
 			super.update();
-			game.app.text(wait.getInput().getText(), 500, 200);
+			game.app.text(((Storing) wait).getInput().getText(), 500, 200);
 			
 		}
 	}

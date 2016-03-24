@@ -46,7 +46,7 @@ public class HumanCarry extends State implements Storing {
 						((BuildingWork) target2.getState()).getCarriers().remove(((Human) e));
 					isCarrieing = true;
 					((Human) e).setHasWork(false);
-					((Human) e).setState(((Human) e).wait, this);
+					e.endState();
 				} 
 			}
 		}

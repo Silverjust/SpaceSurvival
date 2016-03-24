@@ -14,7 +14,6 @@ public class Human extends Unit {
 	public HumanWork work;
 	public State carry;
 	public HumanGotoWork gotoWork;
-	public HumanWait wait;
 	private int number;
 	static int totalNumber;
 
@@ -49,7 +48,7 @@ public class Human extends Unit {
 		app.fill(100);
 		app.ellipse(x * Game.gridSize + 25, y * Game.gridSize + 25, 40, 40);
 		app.line(x * Game.gridSize + 25, y * Game.gridSize + 25, xt * Game.gridSize + 25, yt * Game.gridSize + 25);
-		app.text(getStateName() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
+		app.text(getStateNames() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
 
 	}
 

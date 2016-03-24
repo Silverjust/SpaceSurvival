@@ -43,7 +43,7 @@ public class BuildingWork extends State implements Storing {
 		return this;
 	}
 
-	public Storing setOutput(RessourceGroup res) {
+	public BuildingWork setOutput(RessourceGroup res) {
 		out.setMin(res);
 		return this;
 	}
@@ -60,7 +60,7 @@ public class BuildingWork extends State implements Storing {
 	@Override
 	public void onEnd(Entity e) {
 		for (Unit unit : workers) {
-			unit.setState(((Human) unit).wait, this);
+			unit.endState();
 		}
 		workers.clear();
 	}
@@ -76,9 +76,9 @@ public class BuildingWork extends State implements Storing {
 			in.add(in.getMin().inv());
 			out.add(out.getMin());
 			callTaker(out);
-			e.endState();
 			if (repeat)
-				e.setState(this, this);
+				e.addState(this, this);
+			e.endState();
 		}
 	}
 
@@ -86,9 +86,10 @@ public class BuildingWork extends State implements Storing {
 		if (inputHasMin())
 			W += w;
 		else {
-			callGetter(target);
-			worker.setState(((Human) worker).wait, this);
+			worker.setState(worker.wait, this);
+			((Human) worker).setHasWork(false);
 			workers.remove(worker);
+			callGetter(target);
 		}
 	}
 
@@ -147,17 +148,11 @@ public class BuildingWork extends State implements Storing {
 
 	}
 
-	@Deprecated
-	public void addWorker(Entity e) {
-
-	}
-
 	public float getProgress() {
 		if (Wmax == 0)
 			return 1;
 		if (W > Wmax)
 			return 1;
-
 		return W / Wmax;
 	}
 

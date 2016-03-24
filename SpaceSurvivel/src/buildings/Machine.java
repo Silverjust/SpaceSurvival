@@ -1,15 +1,13 @@
 package buildings;
 
-import states.BuildingWait;
-import states.Storing;
+import states.Wait;
+import states.State;
 import main.Game;
 
 public abstract class Machine extends Building {
 
-	protected Storing busy;
-	protected BuildingWait broken;
-	protected BuildingWait wait;
-
+	protected State busy;
+	protected Wait broken;
 	public Machine(Game game, int x, int y) {
 		super(game, x, y);
 

@@ -8,7 +8,7 @@ import guiElements.StandardPannel;
 import main.Game;
 import main.Helper;
 import processing.core.PApplet;
-import states.BuildingWait;
+import states.Wait;
 import states.BuildingWork;
 import states.Storing;
 
@@ -23,9 +23,10 @@ public class Farm extends Machine {
 
 		build = new BuildingWork().setWorkers(2).setW(100).setInput(buildRes);
 		busy = new BuildingWork().setWorkers(1).setW(200).setRepeat(true).setInput(buildRes).setOutput(resOut);
-		broken = new BuildingWait();
-		wait = new BuildingWait();
+		broken = new Wait();
+		wait = new Wait();
 		setState(build, this);
+		addState(busy, this);
 	}
 
 	@Override
@@ -41,8 +42,7 @@ public class Farm extends Machine {
 			app.fill(100);
 		app.rect(x * Game.gridSize + 5, y * Game.gridSize + 5, 40, 40);
 		if (getState() instanceof BuildingWork) {
-			app.text(getStateName() + ((BuildingWork) getState()).getProgress(), x * Game.gridSize + 5,
-					y * Game.gridSize + 5);
+			app.text(getStateNames(), x * Game.gridSize + 5, y * Game.gridSize + 5);
 			app.fill(180, 150);
 			app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
 			app.fill(0, 255, 0);
@@ -60,12 +60,8 @@ public class Farm extends Machine {
 
 		private GButton repair;
 		private GButton stop;
-		private Entity outer;
-
 		public Pannel(Entity outer) {
 			super(outer.game);
-			this.outer = outer;
-
 			repair = Helper.createButton(game.app, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
 			repair.addEventHandler(this, "handleButtonEvents");
 			if (getState() != broken) {
@@ -86,7 +82,7 @@ public class Farm extends Machine {
 			if (button == stop) {
 				if (getState() == wait) {
 					System.out.println("Farm.Pannel.handleButtonEvents()");
-					wait.continueState(outer);
+					endState();
 					stop.setText("stop");
 				} else {
 					setState(wait, this);
@@ -95,6 +91,8 @@ public class Farm extends Machine {
 			} else
 				super.handleButtonEvents(button, event);
 		}
+
+		
 
 		@Override
 		public void dispose() {

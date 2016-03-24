@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import main.Game;
 import processing.core.PApplet;
-import states.BuildingWork;
+import states.Wait;
 import states.State;
 
 public abstract class Entity {
 
 	public Game game;
 	private ArrayList<State> states = new ArrayList<State>();
+	public Wait wait;
 
 	public Entity(Game game) {
 		this.game = game;
@@ -22,6 +23,17 @@ public abstract class Entity {
 
 	public abstract void draw(PApplet app);
 
+	public void addState(State a, Object o) {
+		if (a == null) {
+			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
+			return;
+		}
+		//System.out.println("Entity.addState()" + a.getClass().getSimpleName() + " "+o.getClass().getSimpleName());
+		if (states.isEmpty())
+			states.get(0).onStart(this);
+		states.add(a);
+	}
+
 	public void setState(State a, Object o) {
 		if (!states.isEmpty())
 			getState().onEnd(this);
@@ -30,13 +42,9 @@ public abstract class Entity {
 			return;
 		}
 		a.onStart(this);
-		// System.out.println("Entity.setState()" + a + o);
-		this.states.add(a);
+		//System.out.println("Entity.setState()" + a.getClass().getSimpleName() + " "+o.getClass().getSimpleName());
+		states.add(0, a);
 	}
-
-	public abstract float getX();
-
-	public abstract float getY();
 
 	public State getState() {
 		if (states.isEmpty())
@@ -44,9 +52,23 @@ public abstract class Entity {
 		return states.get(0);
 	}
 
-	public State endState() {
-		return states.remove(0);
+	public void endState() {
+		if (!states.isEmpty())
+			getState().onEnd(this);
+		states.remove(0);
+		if (states.isEmpty())
+			states.add(wait);
+
+		if (states.get(0) == null) {
+			System.out.println("Entity.endState()");
+			return;
+		}
+		states.get(0).onStart(this);
 	}
+
+	public abstract float getX();
+
+	public abstract float getY();
 
 	/** empty */
 	public void onSpawn() {
@@ -54,7 +76,15 @@ public abstract class Entity {
 	}
 
 	protected String getStateName() {
-		return states.getClass().getSimpleName();
+		return getState().getClass().getSimpleName();
+	}
+
+	protected String getStateNames() {
+		String s = "";
+		for (State state : states) {
+			s += state.getClass().getSimpleName() + "\n";
+		}
+		return s;
 	}
 
 	/** empty */
