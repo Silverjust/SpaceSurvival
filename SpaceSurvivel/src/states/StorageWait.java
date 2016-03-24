@@ -2,7 +2,7 @@ package states;
 
 import components.Slot;
 
-public class StorageWait extends BuildingWait implements Storing {
+public class StorageWait extends Wait implements Storing {
 
 	private Slot store;
 

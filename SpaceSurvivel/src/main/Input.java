@@ -71,6 +71,13 @@ public class Input {
 		if (app.key == 'e') {
 			game.pannel = new BuildPannel(game);
 		}
+		if (app.key == 'p') {
+			if (game.updater.pause)
+				game.gameTime.endPause();
+			else
+				game.gameTime.startPause();
+
+		}
 
 		// System.out.println(app.key);
 

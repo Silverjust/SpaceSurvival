@@ -1,7 +1,5 @@
 package main;
 
-import buildings.Building;
-
 public class Aimer {
 	public String building;
 	public Game game;
