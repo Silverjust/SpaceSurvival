@@ -22,7 +22,7 @@ public class Game {
 	float xOffset = 0;
 	float yOffset = 0;
 	private boolean[][] isInside = new boolean[gridW][gridH];
-	private boolean[][] isUsed = new boolean[gridW][gridH];
+	public boolean[][] isUsed = new boolean[gridW][gridH];
 
 	private RessourceGroup ressourceGroup = new RessourceGroup();
 	private PImage img;
@@ -70,9 +70,9 @@ public class Game {
 		app.background(0, 0, 100);
 
 		app.pushMatrix();
-		app.translate(xOffset / 10, yOffset /10);
-		app.scale(zoom*10);
-		app.image(img, 0, 0,app.width/5,app.height/5);
+		app.translate(xOffset / 10, yOffset / 10);
+		app.scale(zoom * 10);
+		app.image(img, 0, 0, app.width / 5, app.height / 5);
 		app.popMatrix();
 
 		app.pushMatrix();
@@ -111,18 +111,33 @@ public class Game {
 	}
 
 	public void build(String name, int i, int j) {
-
 		try {
 			name = ContentListHandler.getContent().getString(name);
 			System.out.println("build " + name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Building b;
-			b = (Building) ctor.newInstance(new Object[] { this, i, j });
-			getBuildings()[i][j] = b;
+			Building b = (Building) ctor.newInstance(new Object[] { this, i, j });
+			if (isSpaceFor(b)) {
+				getBuildings()[i][j] = b;
+				b.onSpawn();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean isSpaceFor(Building b) {
+		boolean[][] area = b.getArea();
+		int x = (int) b.getX();
+		int y = (int) b.getY();
+		for (int i = 0; i < area[0].length; i++) {
+			for (int j = 0; j < area.length; j++) {
+				System.out.println("Game.isSpaceFor()" + area[i][j] + isUsed[i + x][j + y]);
+				if ((x + i >= isUsed[0].length || y + j >= isUsed.length) || area[i][j] == isUsed[i + x][j + y])
+					return false;
+			}
+		}
+		return true;
 	}
 
 	public void spawn(String name, int i, int j) {

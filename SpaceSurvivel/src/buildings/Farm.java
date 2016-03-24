@@ -105,11 +105,11 @@ public class Farm extends Machine {
 
 		@Override
 		public void update() {
+			super.update();
 			if (getState() instanceof Storing) {
 				game.app.text(((Storing) getState()).getInput().getText(), 500, 200);
 				game.app.text(((Storing) getState()).getOutput().getText(), 1200, 200);
 			}
-			super.update();
 		}
 	}
 }
