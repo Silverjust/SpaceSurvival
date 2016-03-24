@@ -81,8 +81,9 @@ public class Storage extends Building {
 
 		@Override
 		public void update() {
-			game.app.text(wait.getInput().getText(), 500, 200);
 			super.update();
+			game.app.text(wait.getInput().getText(), 500, 200);
+			
 		}
 	}
 }

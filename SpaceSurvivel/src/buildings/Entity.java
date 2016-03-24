@@ -1,5 +1,7 @@
 package buildings;
 
+import java.util.ArrayList;
+
 import main.Game;
 import processing.core.PApplet;
 import states.BuildingWork;
@@ -8,7 +10,7 @@ import states.State;
 public abstract class Entity {
 
 	public Game game;
-	private State state;
+	private ArrayList<State> state = new ArrayList<State>();
 
 	public Entity(Game game) {
 		this.game = game;
@@ -21,13 +23,13 @@ public abstract class Entity {
 	public abstract void draw(PApplet app);
 
 	public void setState(State a, Object o) {
-		if (state != null)
-			state.onEnd(this);
+		if (!state.isEmpty())
+			getState().onEnd(this);
 		if (a == null)
 			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
 		a.onStart(this);
-		//System.out.println("Entity.setState()" + a + o);
-		this.state = a;
+		// System.out.println("Entity.setState()" + a + o);
+		this.state.add(a);
 	}
 
 	public abstract float getX();
