@@ -2,6 +2,7 @@
 "entities":
 	{
 	"farm":"buildings.Farm",
-	"storage":"buildings.Storage"
+	"storage":"buildings.Storage",
+	"kompost":"buildings.Kompostierer"
 	}
 }

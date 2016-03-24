@@ -64,7 +64,7 @@ public class Game {
 		build("storage", 20, 13);
 		RessourceGroup res1 = new RessourceGroup();
 		res1.addToRessource(ResNames.BIOMÜLL, 1000);
-		((Storing)((Storage)getBuildings()[20][11]).wait).getInput().add(res1);
+		((Storing)((Storage)getBuildings()[20][13]).wait).getInput().add(res1);
 		
 		updater.add(new Human(this, 15, 15));
 		updater.add(new Human(this, 16, 15));
