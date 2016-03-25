@@ -54,17 +54,17 @@ public class Game {
 		imgManager = new ImageManager(app);
 
 		build("farm", 11, 11);
-		
+
 		build("storage", 20, 11);
 		RessourceGroup res = new RessourceGroup();
 		res.addToRessource(ResNames.METALL, 10000);
-		((Storing)((Storage)getBuildings()[20][11]).wait).getInput().add(res);
-		
+		((Storing) ((Storage) getBuildings()[20][11]).wait).getInput().add(res);
+
 		build("storage", 20, 13);
 		RessourceGroup res1 = new RessourceGroup();
 		res1.addToRessource(ResNames.BIOMÜLL, 1000);
-		((Storing)((Storage)getBuildings()[20][13]).wait).getInput().add(res1);
-		
+		((Storing) ((Storage) getBuildings()[20][13]).wait).getInput().add(res1);
+
 		updater.add(new Human(this, 15, 15));
 		updater.add(new Human(this, 16, 15));
 		updater.add(new Human(this, 17, 15));
@@ -107,19 +107,40 @@ public class Game {
 		for (int i = 0; i < gridW; i++) {
 			for (int j = 0; j < gridH; j++) {
 				if (getBuildings()[i][j] != null)
-					getBuildings()[i][j].draw(app);
+					getBuildings()[i][j].draw();
 			}
 		}
 		for (Entity entity : getEntities()) {
 
-			entity.draw(app);
+			entity.draw();
 		}
 		app.popMatrix();
 
 		if (pannel != null) {
 			pannel.update();
 		}
+		if (aimer != null) {
+			aimer.update();
+		}
 
+	}
+
+	/**
+	 * only for theoretical use, do not place in game
+	 * 
+	 * @return
+	 */
+	public Building create(String name) {
+		try {
+			name = ContentListHandler.getContent().getString(name);
+			Class<?> clazz = Class.forName(name);
+			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
+			return (Building) ctor.newInstance(new Object[] { this, 0, 0 });
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void build(String name, int i, int j) {

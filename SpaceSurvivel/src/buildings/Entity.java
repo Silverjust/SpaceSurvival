@@ -21,14 +21,19 @@ public abstract class Entity {
 		getState().update(this);
 	}
 
-	public abstract void draw(PApplet app);
+	public void draw() {
+		drawAt(game.app, getX() * Game.gridSize, getY() * Game.gridSize);
+	}
+
+	public abstract void drawAt(PApplet app, float x, float y);
 
 	public void addState(State a, Object o) {
 		if (a == null) {
 			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
 			return;
 		}
-		//System.out.println("Entity.addState()" + a.getClass().getSimpleName() + " "+o.getClass().getSimpleName());
+		// System.out.println("Entity.addState()" + a.getClass().getSimpleName()
+		// + " "+o.getClass().getSimpleName());
 		if (states.isEmpty())
 			states.get(0).onStart(this);
 		states.add(a);
@@ -42,7 +47,8 @@ public abstract class Entity {
 			return;
 		}
 		a.onStart(this);
-		//System.out.println("Entity.setState()" + a.getClass().getSimpleName() + " "+o.getClass().getSimpleName());
+		// System.out.println("Entity.setState()" + a.getClass().getSimpleName()
+		// + " "+o.getClass().getSimpleName());
 		states.add(0, a);
 	}
 

@@ -32,21 +32,25 @@ public class Kompostierer extends Machine {
 	}
 
 	@Override
-	public void draw(PApplet app) {
+	public void draw() {
+		super.draw();
+		if (getState() instanceof BuildingWork) {
+			game.app.text(getStateNames(), x * Game.gridSize + 5, y * Game.gridSize + 5);
+			game.app.fill(180, 150);
+			game.app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
+			game.app.fill(0, 255, 0);
+			game.app.rect(x * Game.gridSize, y * Game.gridSize - 15,
+					Game.gridSize * ((BuildingWork) getState()).getProgress(), 5);
+		}
+	}
+
+	@Override
+	public void drawAt(PApplet app, float x, float y) {
 		if (getState() == build)
 			app.fill(10);
 		else
 			app.fill(100, 50, 0);
-		app.rect(x * Game.gridSize + 5, y * Game.gridSize + 5, 40, 40);
-		if (getState() instanceof BuildingWork) {
-			app.text(getStateName() + ((BuildingWork) getState()).getProgress(), x * Game.gridSize + 5,
-					y * Game.gridSize + 5);
-			app.fill(180, 150);
-			app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
-			app.fill(0, 255, 0);
-			app.rect(x * Game.gridSize, y * Game.gridSize - 15,
-					Game.gridSize * ((BuildingWork) getState()).getProgress(), 5);
-		}
+		app.rect(x + 5, y + 5, 40, 40);
 	}
 
 	@Override

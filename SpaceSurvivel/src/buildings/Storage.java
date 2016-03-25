@@ -26,16 +26,29 @@ public class Storage extends Building {
 		broken = new Wait();
 		resHandler = new RessourceGroup();
 
-//		RessourceGroup res = new RessourceGroup();
-//		res.addToRessource(ResNames.METALL, 1000);
-//		((Storing) wait).getInput().add(res);
+		// RessourceGroup res = new RessourceGroup();
+		// res.addToRessource(ResNames.METALL, 1000);
+		// ((Storing) wait).getInput().add(res);
 		setState(wait, this);
 	}
 
 	@Override
-	public void draw(PApplet app) {
+	public void draw() {
+		super.draw();
+		if (getState() instanceof BuildingWork) {
+			game.app.text(getStateNames(), x * Game.gridSize + 5, y * Game.gridSize + 5);
+			game.app.fill(180, 150);
+			game.app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
+			game.app.fill(0, 255, 0);
+			game.app.rect(x * Game.gridSize, y * Game.gridSize - 15,
+					Game.gridSize * ((BuildingWork) getState()).getProgress(), 5);
+		}
+	}
+
+	@Override
+	public void drawAt(PApplet app, float x, float y) {
 		app.fill(200, 200, 0);
-		app.rect(x * Game.gridSize + 5, y * Game.gridSize + 5, 40, 40);
+		app.rect(x  + 5, y  + 5, 40, 40);
 	}
 
 	public void addToRessource(ResNames res, int amount) {
@@ -82,7 +95,7 @@ public class Storage extends Building {
 		public void update() {
 			super.update();
 			game.app.text(((Storing) wait).getInput().getText(), 500, 200);
-			
+
 		}
 	}
 }

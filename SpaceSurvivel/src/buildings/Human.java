@@ -44,12 +44,17 @@ public class Human extends Unit {
 		}
 	}
 
-	public void draw(PApplet app) {
-		app.fill(100);
-		app.ellipse(x * Game.gridSize + 25, y * Game.gridSize + 25, 40, 40);
-		app.line(x * Game.gridSize + 25, y * Game.gridSize + 25, xt * Game.gridSize + 25, yt * Game.gridSize + 25);
-		app.text(getStateNames() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
+	@Override
+	public void draw() {
+		super.draw();
+		game.app.line(x * Game.gridSize + 25, y * Game.gridSize + 25, xt * Game.gridSize + 25, yt * Game.gridSize + 25);
+		game.app.text(getStateNames() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
+	}
 
+	@Override
+	public void drawAt(PApplet app, float x, float y) {
+		app.fill(100);
+		app.ellipse(x  + 25, y  + 25, 40, 40);
 	}
 
 	public float getW() {
