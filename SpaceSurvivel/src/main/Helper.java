@@ -75,11 +75,15 @@ public class Helper {
 		return i;
 	}
 
-	/** creates a GButton coords in percent of window */
-	public static GButton createButton(PApplet app, float x, float y, float w, float h, String name) {
+	/**
+	 * creates a GButton coords in percent of window */
+	public static GButton createButton(PApplet app, Object handlerClass, float x, float y, float w, float h,
+			String name) {
 		float b = 0.005f;
-		return new GButton(app, app.width * (x + b), app.height * (y + b), app.width * (w - 2 * b),
+		GButton gButton = new GButton(app, app.width * (x + b), app.height * (y + b), app.width * (w - 2 * b),
 				app.height * (h - 2 * b), name);
+		gButton.addEventHandler(handlerClass, "handleButtonEvents");
+		return gButton;
 	}
 
 	static public class Timer {

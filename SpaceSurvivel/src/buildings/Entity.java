@@ -98,4 +98,12 @@ public abstract class Entity {
 		System.out.println(this.getClass().getSimpleName() + " has no Gui");
 	}
 
+	public void dispose() {
+
+	}
+
+	public void onEnd() {
+		endState();
+	}
+
 }

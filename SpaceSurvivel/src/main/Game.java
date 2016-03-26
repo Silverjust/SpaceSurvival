@@ -52,19 +52,19 @@ public class Game {
 		ContentListHandler.load();
 		gameTime = new GameTime(this);
 		imgManager = new ImageManager(app);
+		{
+			build("farm", 11, 11);
 
-		build("farm", 11, 11);
+			build("storage", 20, 11);
+			RessourceGroup res = new RessourceGroup();
+			res.addToRessource(ResNames.METALL, 10000);
+			((Storing) ((Storage) getBuildings()[20][11]).wait).getInput().add(res);
 
-		build("storage", 20, 11);
-		RessourceGroup res = new RessourceGroup();
-		res.addToRessource(ResNames.METALL, 10000);
-		((Storing) ((Storage) getBuildings()[20][11]).wait).getInput().add(res);
-
-		build("storage", 20, 13);
-		RessourceGroup res1 = new RessourceGroup();
-		res1.addToRessource(ResNames.BIOMÜLL, 1000);
-		((Storing) ((Storage) getBuildings()[20][13]).wait).getInput().add(res1);
-
+			build("storage", 20, 13);
+			RessourceGroup res1 = new RessourceGroup();
+			res1.addToRessource(ResNames.BIOMÜLL, 1000);
+			((Storing) ((Storage) getBuildings()[20][13]).wait).getInput().add(res1);
+		}
 		updater.add(new Human(this, 15, 15));
 		updater.add(new Human(this, 16, 15));
 		updater.add(new Human(this, 17, 15));
@@ -77,42 +77,43 @@ public class Game {
 	public void update() {
 		input.update();
 		updater.update();
+		{
+			app.clear();
+			app.background(0, 0, 100);
 
-		app.clear();
-		app.background(0, 0, 100);
+			app.pushMatrix();
+			app.translate(xOffset / 10, yOffset / 10);
+			app.scale(zoom * 10);
+			app.image(img, 0, 0, app.width / 5, app.height / 5);
+			app.popMatrix();
 
-		app.pushMatrix();
-		app.translate(xOffset / 10, yOffset / 10);
-		app.scale(zoom * 10);
-		app.image(img, 0, 0, app.width / 5, app.height / 5);
-		app.popMatrix();
-
-		app.pushMatrix();
-		app.translate(xOffset, yOffset);
-		app.scale(zoom);
-		// app.stroke(0);
-		app.fill(255);
-		for (int i = 0; i < gridW; i++) {
-			for (int j = 0; j < gridH; j++) {
-				if (isInside[i][j])
-					if (isUsed[i][j])
-						app.fill(150);
+			app.pushMatrix();
+			app.translate(xOffset, yOffset);
+			app.scale(zoom);
+			// app.stroke(0);
+			app.fill(255);
+			for (int i = 0; i < gridW; i++) {
+				for (int j = 0; j < gridH; j++) {
+					if (isInside[i][j])
+						if (isUsed[i][j])
+							app.fill(150);
+						else
+							app.fill(200);
 					else
-						app.fill(200);
-				else
-					app.fill(255, 0);
-				app.rect(i * gridSize, j * gridSize, gridSize, gridSize);
+						app.fill(255, 0);
+					app.rect(i * gridSize, j * gridSize, gridSize, gridSize);
+				}
 			}
-		}
-		for (int i = 0; i < gridW; i++) {
-			for (int j = 0; j < gridH; j++) {
-				if (getBuildings()[i][j] != null)
-					getBuildings()[i][j].draw();
+			for (int i = 0; i < gridW; i++) {
+				for (int j = 0; j < gridH; j++) {
+					if (getBuildings()[i][j] != null)
+						getBuildings()[i][j].draw();
+				}
 			}
-		}
-		for (Entity entity : getEntities()) {
+			for (Entity entity : getEntities()) {
 
-			entity.draw();
+				entity.draw();
+			}
 		}
 		app.popMatrix();
 
@@ -143,15 +144,22 @@ public class Game {
 		return null;
 	}
 
-	public void build(String name, int i, int j) {
+	public void build(String name, int x, int y) {
 		try {
 			name = ContentListHandler.getContent().getString(name);
 			System.out.println("build " + name);
 			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
-			Building b = (Building) ctor.newInstance(new Object[] { this, i, j });
+			Building b = (Building) ctor.newInstance(new Object[] { this, x, y });
 			if (isSpaceFor(b)) {
-				getBuildings()[i][j] = b;
+				for (int i = 0; i < b.getArea()[0].length; i++) {
+					for (int j = 0; j < b.getArea().length; j++) {
+						if (!(x + i >= isUsed[0].length || y + j >= isUsed.length) && b.getArea()[i][j]) {
+							isUsed[x + i][y + j] = true;
+							getBuildings()[x + i][y + j] = b;
+						}
+					}
+				}
 				b.onSpawn();
 			}
 		} catch (Exception e) {
@@ -165,12 +173,27 @@ public class Game {
 		int y = (int) b.getY();
 		for (int i = 0; i < area[0].length; i++) {
 			for (int j = 0; j < area.length; j++) {
-				System.out.println("Game.isSpaceFor()" + area[i][j] + isUsed[i + x][j + y]);
 				if ((x + i >= isUsed[0].length || y + j >= isUsed.length) || area[i][j] == isUsed[i + x][j + y])
 					return false;
 			}
 		}
 		return true;
+	}
+
+	public void destroyBuilding(Building b) {
+		boolean[][] area = b.getArea();
+		int x = (int) b.getX();
+		int y = (int) b.getY();
+		for (int i = 0; i < area[0].length; i++) {
+			for (int j = 0; j < area.length; j++) {
+				if ((x + i < isUsed[0].length || y + j < isUsed.length) && area[i][j]) {
+					isUsed[x + i][y + j] = false;
+					getBuildings()[x + i][y + j] = null;
+				}
+			}
+		}
+		b.onEnd();
+		b.dispose();
 	}
 
 	public void spawn(String name, int i, int j) {

@@ -55,7 +55,7 @@ public class Kompostierer extends Machine {
 
 	@Override
 	public void startGui() {
-		game.pannel = new Pannel(this);
+		game.pannel = new MachinePannel(this);
 	}
 
 }

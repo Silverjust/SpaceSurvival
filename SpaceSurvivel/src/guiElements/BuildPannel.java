@@ -19,8 +19,7 @@ public class BuildPannel extends StandardPannel {
 		this.game = game;
 		float i = 0;
 		for (Object o : ContentListHandler.getContent().keys()) {
-			GButton button = Helper.createButton(game.app, 0.2f, 0.2f + i, 0.1f, 0.1f, (String) o);
-			button.addEventHandler(this, "handleButtonEvents");
+			GButton button = Helper.createButton(game.app, this, 0.2f, 0.2f + i, 0.1f, 0.1f, (String) o);
 			name.add((String) o);
 			buildings.add(button);
 			i += 0.1f;

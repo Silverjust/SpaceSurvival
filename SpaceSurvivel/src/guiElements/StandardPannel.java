@@ -8,13 +8,12 @@ import processing.core.PApplet;
 
 public class StandardPannel extends GUIpannel {
 	private GButton close;
-	private Game game;
+	protected Game game;
 
 	public StandardPannel(Game game) {
 		PApplet app = game.app;
 		this.game = game;
-		close = Helper.createButton(app, 0.1f, 0.1f, 0.1f, 0.1f, "close");
-		close.addEventHandler(this, "handleButtonEvents");
+		close = Helper.createButton(app, this, 0.1f, 0.1f, 0.1f, 0.1f, "close");
 	}
 
 	@Override

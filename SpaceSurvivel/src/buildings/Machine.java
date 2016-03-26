@@ -1,8 +1,8 @@
 package buildings;
 
-
 import states.Storing;
 import states.Wait;
+import states.BuildingWork;
 import states.State;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
@@ -14,6 +14,7 @@ public abstract class Machine extends Building {
 
 	protected State busy;
 	protected Wait broken;
+
 	public Machine(Game game, int x, int y) {
 		super(game, x, y);
 
@@ -30,26 +31,28 @@ public abstract class Machine extends Building {
 
 	}
 
-	public class Pannel extends StandardPannel {
+	public class MachinePannel extends StandardPannel {
 
 		private GButton repair;
 		private GButton stop;
+		private GButton destroy;
+		private Entity outer;
 
-		public Pannel(Entity outer) {
+		public MachinePannel(Entity outer) {
 			super(outer.game);
-			repair = Helper.createButton(game.app, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
-			repair.addEventHandler(this, "handleButtonEvents");
+			this.outer = outer;
+			repair = Helper.createButton(game.app, this, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
 			if (getState() != broken) {
 				repair.setAlpha(100);
 				repair.setEnabled(false);
 			}
-			stop = Helper.createButton(game.app, 0.1f, 0.3f, 0.1f, 0.1f, "");
+			stop = Helper.createButton(game.app, this, 0.1f, 0.3f, 0.1f, 0.1f, "");
 			if (getState() != wait)
 				stop.setText("stop");
 			else
 				stop.setText("start");
 
-			stop.addEventHandler(this, "handleButtonEvents");
+			destroy = Helper.createButton(game.app, this, 0.1f, 0.4f, 0.1f, 0.1f, "destroy");
 		}
 
 		@Override
@@ -63,6 +66,10 @@ public abstract class Machine extends Building {
 					setState(wait, this);
 					stop.setText("start");
 				}
+			} else if (button == destroy) {
+				System.out.println("Machine.MachinePannel.handleButtonEvents()");
+				game.destroyBuilding((Building) outer);
+				game.disposePannel();
 			} else
 				super.handleButtonEvents(button, event);
 		}
@@ -71,6 +78,7 @@ public abstract class Machine extends Building {
 		public void dispose() {
 			repair.dispose();
 			stop.dispose();
+			destroy.dispose();
 			super.dispose();
 		}
 
@@ -83,4 +91,6 @@ public abstract class Machine extends Building {
 			}
 		}
 	}
+
+	
 }

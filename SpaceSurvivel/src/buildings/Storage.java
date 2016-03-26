@@ -69,8 +69,7 @@ public class Storage extends Building {
 
 		public Pannel(Entity outer) {
 			super(outer.game);
-			repair = Helper.createButton(game.app, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
-			repair.addEventHandler(this, "handleButtonEvents");
+			repair = Helper.createButton(game.app, this, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
 			if (getState() != broken) {
 				repair.setAlpha(100);
 				repair.setEnabled(false);
