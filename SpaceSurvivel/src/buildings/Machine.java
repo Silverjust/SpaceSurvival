@@ -2,7 +2,6 @@ package buildings;
 
 import states.Storing;
 import states.Wait;
-import states.BuildingWork;
 import states.State;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
@@ -86,6 +85,7 @@ public abstract class Machine extends Building {
 		public void update() {
 			super.update();
 			if (getState() instanceof Storing) {
+				game.app.fill(10);
 				game.app.text(((Storing) getState()).getInput().getText(), 500, 200);
 				game.app.text(((Storing) getState()).getOutput().getText(), 1200, 200);
 			}

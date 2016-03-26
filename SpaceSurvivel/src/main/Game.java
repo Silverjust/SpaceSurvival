@@ -23,7 +23,7 @@ public class Game {
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
-	private boolean[][] isInside = new boolean[gridW][gridH];
+	public boolean[][] isInside = new boolean[gridW][gridH];
 	public boolean[][] isUsed = new boolean[gridW][gridH];
 
 	private RessourceGroup ressourceGroup = new RessourceGroup();
@@ -186,7 +186,7 @@ public class Game {
 		int y = (int) b.getY();
 		for (int i = 0; i < area[0].length; i++) {
 			for (int j = 0; j < area.length; j++) {
-				if ((x + i < isUsed[0].length || y + j < isUsed.length) && area[i][j]) {
+				if ((x + i < isUsed[0].length && y + j < isUsed.length) && area[i][j]) {
 					isUsed[x + i][y + j] = false;
 					getBuildings()[x + i][y + j] = null;
 				}

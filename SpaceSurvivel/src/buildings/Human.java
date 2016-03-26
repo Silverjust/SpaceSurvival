@@ -54,7 +54,7 @@ public class Human extends Unit {
 	@Override
 	public void drawAt(PApplet app, float x, float y) {
 		app.fill(100);
-		app.ellipse(x  + 25, y  + 25, 40, 40);
+		app.ellipse(x + 25, y + 25, 40, 40);
 	}
 
 	public float getW() {
@@ -64,8 +64,19 @@ public class Human extends Unit {
 
 	private void createRandomTarget() {
 		setHasWork(false);
-		setXt(game.app.random(0, 64));
-		setYt(game.app.random(0, 64));
+		float x = 0, y = 0;
+		boolean b = true;
+		while (b) {
+			x = game.app.random(0, Game.gridW);
+			y = game.app.random(0, Game.gridH);
+			if (x >= game.isInside.length || y >= game.isInside[0].length)
+				b = true;
+			else {
+				b = !game.isInside[(int) x][(int) y];
+			}
+		}
+		setXt(x);
+		setYt(y);
 	}
 
 	public boolean hasWork() {

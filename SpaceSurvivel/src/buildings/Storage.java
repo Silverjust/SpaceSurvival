@@ -36,6 +36,7 @@ public class Storage extends Building {
 	public void draw() {
 		super.draw();
 		if (getState() instanceof BuildingWork) {
+			game.app.fill(10);
 			game.app.text(getStateNames(), x * Game.gridSize + 5, y * Game.gridSize + 5);
 			game.app.fill(180, 150);
 			game.app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
