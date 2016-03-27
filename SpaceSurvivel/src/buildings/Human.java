@@ -19,6 +19,7 @@ public class Human extends Unit {
 
 	public Human(Game game, int x, int y) {
 		super(game, x, y);
+		ingameName="human";
 		speed = 0.3f;
 		wait = new HumanWait();
 		work = new HumanWork(game);

@@ -11,6 +11,7 @@ public class Kompostierer extends Machine {
 
 	public Kompostierer(Game game, int x, int y) {
 		super(game, x, y);
+		ingameName="kompost";
 		RessourceGroup buildRes = new RessourceGroup();
 		buildRes.addToRessource(ResNames.METALL, 100);
 		RessourceGroup resInput = new RessourceGroup();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import buildings.Building;
 import buildings.Entity;
+import buildings.Farm;
 import buildings.Human;
 import buildings.Unit;
 import components.ResNames;
@@ -13,7 +14,7 @@ import guiElements.GUIpannel;
 import processing.core.PApplet;
 import processing.core.PImage;
 import states.Storing;
-import buildings.Storage;
+import buildings.Lager;
 
 public class Game {
 	public PApplet app;
@@ -35,6 +36,7 @@ public class Game {
 	Updater updater;
 	public GameTime gameTime;
 	public ImageManager imgManager;
+	public ContentListHandler contentListHandler;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -48,22 +50,22 @@ public class Game {
 
 		input = new Input(this);
 		updater = new Updater(this);
-		ContentListHandler.setup(app);
-		ContentListHandler.load();
+		contentListHandler = new ContentListHandler(this);
+		contentListHandler.load();
 		gameTime = new GameTime(this);
-		imgManager = new ImageManager(app);
+		imgManager = new ImageManager(this);
 		{
-			build("farm", 11, 11);
+			build(Farm.class, 11, 11);
 
-			build("storage", 20, 11);
+			build(Lager.class, 20, 11);
 			RessourceGroup res = new RessourceGroup();
 			res.addToRessource(ResNames.METALL, 10000);
-			((Storing) ((Storage) getBuildings()[20][11]).wait).getInput().add(res);
+			((Storing) ((Lager) getBuildings()[20][11]).wait).getInput().add(res);
 
-			build("storage", 20, 13);
+			build(Lager.class, 20, 13);
 			RessourceGroup res1 = new RessourceGroup();
 			res1.addToRessource(ResNames.BIOMÜLL, 1000);
-			((Storing) ((Storage) getBuildings()[20][13]).wait).getInput().add(res1);
+			((Storing) ((Lager) getBuildings()[20][13]).wait).getInput().add(res1);
 		}
 		updater.add(new Human(this, 15, 15));
 		updater.add(new Human(this, 16, 15));
@@ -126,30 +128,20 @@ public class Game {
 
 	}
 
-	/**
-	 * only for theoretical use, do not place in game
-	 * 
-	 * @return
-	 */
-	public Building create(String name) {
+	/** only for theoretical use, do not place in game */
+	public Building create(Class<?> c) {
 		try {
-			name = ContentListHandler.getContent().getString(name);
-			Class<?> clazz = Class.forName(name);
-			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
+			Constructor<?> ctor = c.getConstructor(Game.class, int.class, int.class);
 			return (Building) ctor.newInstance(new Object[] { this, 0, 0 });
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public void build(String name, int x, int y) {
+	public void build(Class<?> c, int x, int y) {
 		try {
-			name = ContentListHandler.getContent().getString(name);
-			System.out.println("build " + name);
-			Class<?> clazz = Class.forName(name);
-			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
+			Constructor<?> ctor = c.getConstructor(Game.class, int.class, int.class);
 			Building b = (Building) ctor.newInstance(new Object[] { this, x, y });
 			if (isSpaceFor(b)) {
 				for (int i = 0; i < b.getArea()[0].length; i++) {
@@ -161,6 +153,7 @@ public class Game {
 					}
 				}
 				b.onSpawn();
+				System.out.println("build " + b.getIngameName());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,10 +189,8 @@ public class Game {
 		b.dispose();
 	}
 
-	public void spawn(String name, int i, int j) {
+	public void spawn(Class<?> clazz, int i, int j) {
 		try {
-			name = ContentListHandler.getContent().getString(name);
-			Class<?> clazz = Class.forName(name);
 			Constructor<?> ctor = clazz.getConstructor(Game.class, int.class, int.class);
 			Unit e;
 			e = (Unit) ctor.newInstance(new Object[] { this, i, j });

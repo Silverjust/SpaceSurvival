@@ -14,13 +14,14 @@ import states.State;
 import states.StorageWait;
 import states.Storing;
 
-public class Storage extends Building {
+public class Lager extends Building {
 
 	RessourceGroup resHandler;
 	public State broken;
 
-	public Storage(Game game, int x, int y) {
+	public Lager(Game game, int x, int y) {
 		super(game, x, y);
+		ingameName="lager";
 		build = new BuildingWork();
 		wait = new StorageWait();
 		broken = new Wait();

@@ -23,10 +23,12 @@ public class Commands {
 					String[] c = PApplet.splitTokens(command, " ");
 					switch (c[0]) {
 					case "build":
-						game.build(c[1],Integer.parseInt(c[2]), Integer.parseInt(c[3]));
+						game.build(game.contentListHandler.getEntitie(c[1]).getClass(), Integer.parseInt(c[2]),
+								Integer.parseInt(c[3]));
 						break;
 					case "spawn":
-						game.spawn(c[1],Integer.parseInt(c[2]), Integer.parseInt(c[3]));
+						game.spawn(game.contentListHandler.getEntitie(c[1]).getClass(), Integer.parseInt(c[2]),
+								Integer.parseInt(c[3]));
 						break;
 
 					default:
@@ -37,7 +39,7 @@ public class Commands {
 				} catch (Exception e) {
 					noError = false;
 					e.printStackTrace();
-					
+
 				}
 			}
 			game.app.delay(100);

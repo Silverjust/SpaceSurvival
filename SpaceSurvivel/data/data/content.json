@@ -1,8 +1,9 @@
 {
-"entities":
+	"entities": 
 	{
-	"farm":"buildings.Farm",
-	"storage":"buildings.Storage",
-	"kompost":"buildings.Kompostierer"
+		"farm": "buildings.Farm",
+		"storage": "buildings.Storage",
+		"kompost": "buildings.Kompostierer",
+		"human": "buildings.human"
 	}
 }

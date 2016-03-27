@@ -15,32 +15,20 @@ public class ImageManager {
 
 	public ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
 	private boolean dispose = false;
-	private PApplet app;
+	private Game game;
 
-	public ImageManager(PApplet app) {
-		this.app = app;
+	public ImageManager(Game game) {
+		this.game = game;
 	}
 
 	public boolean requestAllImages() {
 		try {
+			classes.addAll(game.contentListHandler.getEntities());
 			
-
-			if (stateOfLoading() != 1) {
-
-				ContentListHandler.getContent().keys();
-				for (Object o : ContentListHandler.getContent().keys()) {
-					String s = ContentListHandler.getContent().getString((String) o);
-					classes.add(Class.forName(s));
-				}
-			}
-
-			// PApplet.printArray(classes);
-
 			for (Class<?> c : classes) {
 				Method m = c.getDeclaredMethod("loadImages");
-				m.invoke(null);
+				m.invoke(null, this);
 			}
-
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,24 +54,6 @@ public class ImageManager {
 		return (float) (loadedImages) / nImagesToLoad;
 	}
 
-	public PImage[][] load(String path, String name, char animation, byte directions, byte iterations) {
-		if (dispose)
-			return null;
-		PImage[][] imageArray = new PImage[directions][iterations];
-		for (int d = 0; d < directions || directions == 0 && d == 0; d++) {
-			for (int i = 0; i < iterations || iterations == 0 && i == 0; i++) {
-				nImagesToLoad++;
-				String s = dataPath + path + name + (animation != 0 ? "_" + animation : "")
-						+ (directions != 0 ? "_" + d : "") + (iterations != 0 ? "_" + PApplet.nf(i, 4) : "") + ".png";
-				System.out.println(s);
-				s = getPath(s);
-				imageArray[d][i] = app.requestImage(s);
-				imagesToLoad.add(imageArray[d][i]);
-			}
-		}
-		return imageArray;
-	}
-
 	public PImage[] load(String path, String name, char animation, byte iterations) {
 		if (dispose)
 			return null;
@@ -94,7 +64,7 @@ public class ImageManager {
 					+ (iterations != 0 ? "_" + PApplet.nf(i, 4) : "") + ".png";
 			System.out.println(s);
 			s = getPath(s);
-			imageArray[i] = app.requestImage(s);
+			imageArray[i] = game.app.requestImage(s);
 			imagesToLoad.add(imageArray[i]);
 		}
 
@@ -109,7 +79,7 @@ public class ImageManager {
 		String s = dataPath + path + name + (animation != 0 ? "_" + animation : "") + ".png";
 		System.out.println(s);
 		s = getPath(s);
-		image = app.requestImage(s);
+		image = game.app.requestImage(s);
 		imagesToLoad.add(image);
 		return image;
 	}
@@ -122,7 +92,7 @@ public class ImageManager {
 		String s = dataPath + path + name + ".png";
 		System.out.println(s);
 		s = getPath(s);
-		image = app.requestImage(s);
+		image = game.app.requestImage(s);
 		imagesToLoad.add(image);
 		return image;
 	}
@@ -130,7 +100,7 @@ public class ImageManager {
 	private String getPath(String path) {
 
 		try {
-			path = app.getClass().getClassLoader().getResource(path).getFile();
+			path = game.app.getClass().getClassLoader().getResource(path).getFile();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

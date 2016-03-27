@@ -12,9 +12,11 @@ public abstract class Entity {
 	public Game game;
 	private ArrayList<State> states = new ArrayList<State>();
 	public Wait wait;
+	protected String ingameName;
 
 	public Entity(Game game) {
 		this.game = game;
+		ingameName=game.contentListHandler.getNameFor(this);
 	}
 
 	public void update() {
@@ -104,6 +106,10 @@ public abstract class Entity {
 
 	public void onEnd() {
 		endState();
+	}
+
+	public String getIngameName() {
+		return ingameName;
 	}
 
 }

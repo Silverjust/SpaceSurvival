@@ -1,26 +1,48 @@
 package main;
 
-import processing.core.PApplet;
-import processing.data.JSONObject;
+import java.util.ArrayList;
+import buildings.Building;
+import buildings.Entity;
+import buildings.Farm;
+import buildings.Human;
+import buildings.Kompostierer;
+import buildings.Lager;
 
 public class ContentListHandler {
-	public static String path = "data/content.json";
-	static JSONObject contentList;
-	static JSONObject entityList;
+	public String path = "data/content.json";
+	ArrayList<Class<?>> entityList = new ArrayList<Class<?>>();
+	private Game game;
 
-	private static PApplet app;
-
-	public static void setup(PApplet app_) {
-		app = app_;
+	public ContentListHandler(Game game) {
+		this.game = game;
 	}
 
-	public static void load() {
-		contentList = app.loadJSONObject(path);
-		entityList = contentList.getJSONObject("entities");
+	public void load() {
+		entityList.add(Farm.class);
+		entityList.add(Kompostierer.class);
+		entityList.add(Lager.class);
+		entityList.add(Human.class);
+
+		
 	}
 
-	public static JSONObject getContent() {
+	public ArrayList<Class<?>> getEntities() {
 		return entityList;
+	}
+
+	public Building getEntitie(String key) {
+		for (Class<?> c : entityList) {
+			Building e = game.create(c);
+			if (e.getIngameName() == key)
+				return e;
+		}
+		return null;
+
+	}
+
+	public String getNameFor(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

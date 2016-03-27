@@ -11,6 +11,7 @@ public class Farm extends Machine {
 
 	public Farm(Game game, int x, int y) {
 		super(game, x, y);
+		ingameName="farm";
 		RessourceGroup buildRes = new RessourceGroup();
 		buildRes.addToRessource(ResNames.METALL, 100);
 		RessourceGroup resInput = new RessourceGroup();

@@ -3,20 +3,18 @@ package main;
 import buildings.Building;
 
 public class Aimer {
-	public String name;
 	Building building;
 	public Game game;
 
-	public Aimer(String building, Game game) {
-		this.name = building;
+	public Aimer(Class<?> c, Game game) {
 		this.game = game;
-		this.building = game.create(name);
+		this.building = game.create(c);
 		this.building.endState();
 	}
 
 	public void click(int x, int y) {
 		System.out.println("Aimer.click()");
-		game.build(name, x, y);
+		game.build(building.getClass(), x, y);
 		game.aimer = null;
 	}
 
