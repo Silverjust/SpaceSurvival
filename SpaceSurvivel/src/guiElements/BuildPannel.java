@@ -30,7 +30,6 @@ public class BuildPannel extends StandardPannel {
 			buildings.add(button);
 			i += 0.1f;
 		}
-
 	}
 
 	public void setupBuildEntities() {

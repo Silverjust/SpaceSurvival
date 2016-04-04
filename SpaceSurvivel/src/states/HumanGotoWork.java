@@ -16,8 +16,7 @@ public class HumanGotoWork extends State {
 			if (((BuildingWork) target.getState()).getWorkers().contains(e)) {
 				((Human) e).work.setTarget(target);
 				e.endState();
-				e.setState(((Human) e).work, this);
-
+				e.insertState(((Human) e).work, this);
 			} else {
 				e.endState();
 			}

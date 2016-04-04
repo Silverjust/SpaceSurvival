@@ -41,7 +41,7 @@ public abstract class Entity {
 		states.add(a);
 	}
 
-	public void setState(State a, Object o) {
+	public void insertState(State a, Object o) {
 		if (!states.isEmpty())
 			getState().onEnd(this);
 		if (a == null) {

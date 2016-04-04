@@ -62,7 +62,7 @@ public abstract class Machine extends Building {
 					endState();
 					stop.setText("stop");
 				} else {
-					setState(wait, this);
+					insertState(wait, this);
 					stop.setText("start");
 				}
 			} else if (button == destroy) {

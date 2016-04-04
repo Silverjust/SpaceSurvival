@@ -21,7 +21,7 @@ public class Lager extends Building {
 
 	public Lager(Game game, int x, int y) {
 		super(game, x, y);
-		ingameName="lager";
+		ingameName = "lager";
 		build = new BuildingWork();
 		wait = new StorageWait();
 		broken = new Wait();
@@ -30,7 +30,7 @@ public class Lager extends Building {
 		// RessourceGroup res = new RessourceGroup();
 		// res.addToRessource(ResNames.METALL, 1000);
 		// ((Storing) wait).getInput().add(res);
-		setState(wait, this);
+		insertState(wait, this);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class Lager extends Building {
 	@Override
 	public void drawAt(PApplet app, float x, float y) {
 		app.fill(200, 200, 0);
-		app.rect(x  + 5, y  + 5, 40, 40);
+		app.rect(x + 5, y + 5, 40, 40);
 	}
 
 	public void addToRessource(ResNames res, int amount) {
@@ -95,6 +95,7 @@ public class Lager extends Building {
 		@Override
 		public void update() {
 			super.update();
+			game.app.fill(10);
 			game.app.text(((Storing) wait).getInput().getText(), 500, 200);
 
 		}

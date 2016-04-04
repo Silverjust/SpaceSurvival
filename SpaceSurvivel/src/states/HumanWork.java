@@ -20,6 +20,7 @@ public class HumanWork extends State {
 	public void update(Entity e) {
 		if (timer.isNotOnCooldown()) {
 			((BuildingWork) ((Building) target).getState()).addW(e, target, ((Human) e).getW());
+			((Human) e).consumeFood(1);
 			timer.startCooldown();
 		}
 	}

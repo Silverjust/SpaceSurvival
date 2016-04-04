@@ -23,7 +23,7 @@ public class Kompostierer extends Machine {
 		busy = new BuildingWork().setW(200).setRepeat(true).setInput(resInput).setOutput(resOut);
 		broken = new Wait();
 		wait = new Wait();
-		setState(build, this);
+		insertState(build, this);
 		addState(busy, this);
 	}
 

@@ -24,7 +24,7 @@ public class Farm extends Machine {
 		broken = new Wait();
 		wait = new Wait();
 		setAreaSqare(2, 2);
-		setState(build, this);
+		insertState(build, this);
 		addState(busy, this);
 	}
 

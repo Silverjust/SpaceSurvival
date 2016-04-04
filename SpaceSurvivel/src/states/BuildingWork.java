@@ -86,7 +86,7 @@ public class BuildingWork extends State implements Storing {
 		if (inputHasMin())
 			W += w;
 		else {
-			worker.setState(worker.wait, this);
+			worker.insertState(worker.wait, this);
 			((Human) worker).setHasWork(false);
 			workers.remove(worker);
 			callGetter(target);
@@ -108,7 +108,7 @@ public class BuildingWork extends State implements Storing {
 			if (entity instanceof Human && !human.hasWork() && needsWorker()) {
 				workers.add(human);
 				human.gotoWork.setTarget(e, human);
-				human.setState(human.gotoWork, this);
+				human.insertState(human.gotoWork, this);
 			}
 		}
 	}
@@ -128,7 +128,7 @@ public class BuildingWork extends State implements Storing {
 									&& !enoughCarrierOTW()) {
 								carriers.add(human);
 								((HumanCarry) human.carry).setTargets(building, e, human, in.getMin().get(res[n]));
-								entity.setState(human.carry, this);
+								entity.insertState(human.carry, this);
 							}
 						}
 					}

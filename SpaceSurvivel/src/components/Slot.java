@@ -55,8 +55,9 @@ public class Slot {
 	}
 
 	public boolean containsPure(Ressource ressource) {
+		System.out.println("Slot.containsPure()");
 		if (!amount.isEmpty())
-			if (amount.getAmount(ressource.getName()) > ressource.getAmount())
+			if (amount.getAmount(ressource.getName()) >= ressource.getAmount())
 				return true;
 		return false;
 
@@ -80,10 +81,12 @@ public class Slot {
 	}
 
 	public void give(Slot output, Ressource res) {
-		output.getRes().addToRessource(res.getName(), -res.getAmount());
+		if (output != null)
+			output.getRes().addToRessource(res.getName(), -res.getAmount());
 		amount.addToRessource(res.getName(), res.getAmount());
-		//System.out.println("Slot.give()" + output.getRes().getAmount(res.getName()));
-		//System.out.println("Slot.give()" + amount.getAmount(res.getName()));
+		// System.out.println("Slot.give()" +
+		// output.getRes().getAmount(res.getName()));
+		// System.out.println("Slot.give()" + amount.getAmount(res.getName()));
 	}
 
 	public RessourceGroup getRes() {

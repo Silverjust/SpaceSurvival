@@ -9,6 +9,11 @@ public class Ressource {
 		this.amount = 0;
 	}
 
+	public Ressource(ResNames name, float amount) {
+		this.name = name;
+		this.amount = amount;
+	}
+
 	public float getAmount() {
 		return amount;
 	}

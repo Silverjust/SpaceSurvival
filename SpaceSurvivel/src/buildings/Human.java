@@ -3,6 +3,7 @@ package buildings;
 import main.Game;
 import processing.core.PApplet;
 import states.HumanCarry;
+import states.HumanEat;
 import states.HumanGotoWork;
 import states.HumanWait;
 import states.HumanWork;
@@ -16,17 +17,23 @@ public class Human extends Unit {
 	public HumanGotoWork gotoWork;
 	private int number;
 	static int totalNumber;
+	private float foodMax, food;
+	private State eat;
 
 	public Human(Game game, int x, int y) {
 		super(game, x, y);
-		ingameName="human";
+		ingameName = "human";
 		speed = 0.3f;
 		wait = new HumanWait();
 		work = new HumanWork(game);
 		carry = new HumanCarry();
 		gotoWork = new HumanGotoWork();
+		eat = new HumanEat();
+
+		food = 200;
+		foodMax = 250;
 		createRandomTarget();
-		setState(wait, this);
+		insertState(wait, this);
 	}
 
 	@Override
@@ -43,6 +50,9 @@ public class Human extends Unit {
 				createRandomTarget();
 			}
 		}
+		if (getState() != eat && food < foodMax / 2) {
+			insertState(eat, this);
+		}
 	}
 
 	@Override
@@ -50,6 +60,10 @@ public class Human extends Unit {
 		super.draw();
 		game.app.line(x * Game.gridSize + 25, y * Game.gridSize + 25, xt * Game.gridSize + 25, yt * Game.gridSize + 25);
 		game.app.text(getStateNames() + " " + number, x * Game.gridSize + 25, y * Game.gridSize + 25);
+		game.app.fill(180, 150);
+		game.app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize, 5);
+		game.app.fill(0, 255, 0);
+		game.app.rect(x * Game.gridSize, y * Game.gridSize - 15, Game.gridSize * (food / foodMax), 5);
 	}
 
 	@Override
@@ -86,6 +100,10 @@ public class Human extends Unit {
 
 	public void setHasWork(boolean hasWork) {
 		this.hasWork = hasWork;
+	}
+
+	public void consumeFood(int i) {
+		food -= i;
 	}
 
 }
