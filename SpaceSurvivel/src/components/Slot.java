@@ -55,7 +55,7 @@ public class Slot {
 	}
 
 	public boolean containsPure(Ressource ressource) {
-		System.out.println("Slot.containsPure()");
+		//System.out.println("Slot.containsPure()");
 		if (!amount.isEmpty())
 			if (amount.getAmount(ressource.getName()) >= ressource.getAmount())
 				return true;

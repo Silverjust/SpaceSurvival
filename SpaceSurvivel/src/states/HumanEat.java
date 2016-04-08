@@ -18,12 +18,11 @@ public class HumanEat extends State {
 	}
 
 	public void goToFood(Entity e) {
-		System.out.println("HumanEat.goToFood()");
 		for (int i = 0; i < Game.gridW; i++) {
 			for (int j = 0; j < Game.gridH; j++) {
 				Building b = e.game.getBuildings()[i][j];
 				if (b != null
-						&& ((Storing) b.getState()).getOutput().containsPure(new Ressource(ResNames.NAHRUNG, 100))) {
+						&& ((Storing) b.getState()).getOutput().containsPure(new Ressource(ResNames.NAHRUNG, 10))) {
 					System.out.println("HumanEat.onStart()" + ((Storing) b.getState()).getOutput().getText());
 					((Human) e).setXt(b.getX());
 					((Human) e).setYt(b.getY());
@@ -35,10 +34,11 @@ public class HumanEat extends State {
 
 	@Override
 	public void update(Entity e) {
-		if (target != null){
+		if (target != null) {
 			if (PApplet.dist(e.getX(), e.getY(), target.getX(), target.getY()) < 1) {
-				((Storing) target.getState()).getOutput().give(null, new Ressource(ResNames.NAHRUNG, -100));
-				e.endState();
+				((Storing) target.getState()).getOutput().give(null, new Ressource(ResNames.NAHRUNG, -10));
+				((Human) e).consumeFood(-10);
+				
 			}
 		} else
 			goToFood(e);

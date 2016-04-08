@@ -17,7 +17,8 @@ public class Human extends Unit {
 	public HumanGotoWork gotoWork;
 	private int number;
 	static int totalNumber;
-	private float foodMax, food;
+	private float foodMax;
+	public float food;
 	private State eat;
 
 	public Human(Game game, int x, int y) {
@@ -50,8 +51,11 @@ public class Human extends Unit {
 				createRandomTarget();
 			}
 		}
-		if (getState() != eat && food < foodMax / 2) {
+		if (getState() != eat && food < foodMax *0.1) {
 			insertState(eat, this);
+		}
+		if (getState() == eat && food >= foodMax) {
+			endState();
 		}
 	}
 
