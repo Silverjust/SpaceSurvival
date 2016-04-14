@@ -22,6 +22,10 @@ public class Main extends PApplet {
 	private Game game;
 	private Commands commands;
 
+	ImageManager imgManager;
+	ContentListHandler contentListHandler;
+	private boolean loading = true;
+
 	@Override
 	public void setup() {
 		size(displayWidth, displayHeight, P2D);
@@ -37,16 +41,30 @@ public class Main extends PApplet {
 		// System.out.println(font.ascent());
 		textFont(font);
 		G4P.messagesEnabled(false);
-		//noSmooth();
+		// noSmooth();
 
+		contentListHandler = new ContentListHandler();
+		contentListHandler.load();
+		imgManager = new ImageManager(this);
+		imgManager.requestAllImages();
 		game = new Game(this);
 		commands = new Commands(game);
 		thread("commands");
+
 	}
 
 	@Override
 	public void draw() {
-		game.update();
+		if (loading) {
+			background(10);
+			for (int i = 0; i < 100; i++) {
+				fill(250);
+				rect(random(width), random(height), 4, 4);
+			}
+			if (imgManager.stateOfLoading() >= 1)
+				loading = false;
+		} else
+			game.update();
 	}
 
 	@Override

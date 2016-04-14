@@ -22,13 +22,14 @@ public class Game {
 	public static final int gridW = 50;
 	public static final int gridH = 40;
 	public static final float gridSize = 50;
+	private static final ImgTag background = new ImgTag();
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
 	public boolean[][] isInside = new boolean[gridW][gridH];
 	public boolean[][] isUsed = new boolean[gridW][gridH];
 
-	private RessourceGroup ressourceGroup = new RessourceGroup();
+	//private RessourceGroup ressourceGroup = new RessourceGroup();
 	private PImage img;
 
 	private GUIpannel pannel;
@@ -40,7 +41,11 @@ public class Game {
 	public ContentListHandler contentListHandler;
 	SidePannel sidePannel;
 
-	public Game(PApplet app) {
+	public static void loadImages(ImageManager m) {
+		m.load("map/background", background);
+	}
+
+	public Game(Main app) {
 		this.app = app;
 		for (int i = 0; i < gridW; i++) {
 			for (int j = 0; j < gridH; j++) {
@@ -52,12 +57,14 @@ public class Game {
 
 		input = new Input(this);
 		updater = new Updater(this);
-		contentListHandler = new ContentListHandler(this);
-		contentListHandler.load();
 		gameTime = new GameTime(this);
-		imgManager = new ImageManager(this);
 
+		contentListHandler = app.contentListHandler;
+		imgManager = app.imgManager;
+		
 		sidePannel = new SidePannel(this);
+		
+		img = imgManager.get(background);
 		{
 			build(Farm.class, 11, 11);
 
@@ -70,14 +77,13 @@ public class Game {
 			RessourceGroup res1 = new RessourceGroup();
 			res1.addToRessource(ResNames.BIOMÜLL, 3000);
 			((Storing) ((Lager) getBuildings()[20][13]).wait).getInput().add(res1);
+			updater.add(new Human(this, 15, 15));
+			updater.add(new Human(this, 16, 15));
+			updater.add(new Human(this, 17, 15));
 		}
-		updater.add(new Human(this, 15, 15));
-		updater.add(new Human(this, 16, 15));
-		updater.add(new Human(this, 17, 15));
-		ressourceGroup.addToRessource(ResNames.METALL, 500);
+
 		System.out.println("Game.Game()");
 
-		img = imgManager.load("map/", "background");
 	}
 
 	public void update() {

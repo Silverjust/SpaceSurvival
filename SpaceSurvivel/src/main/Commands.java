@@ -23,11 +23,11 @@ public class Commands {
 					String[] c = PApplet.splitTokens(command, " ");
 					switch (c[0]) {
 					case "build":
-						game.build(game.contentListHandler.getEntitie(c[1]).getClass(), Integer.parseInt(c[2]),
+						game.build(game.contentListHandler.getEntitie(c[1], game).getClass(), Integer.parseInt(c[2]),
 								Integer.parseInt(c[3]));
 						break;
 					case "spawn":
-						game.spawn(game.contentListHandler.getEntitie(c[1]).getClass(), Integer.parseInt(c[2]),
+						game.spawn(game.contentListHandler.getEntitie(c[1], game).getClass(), Integer.parseInt(c[2]),
 								Integer.parseInt(c[3]));
 						break;
 
