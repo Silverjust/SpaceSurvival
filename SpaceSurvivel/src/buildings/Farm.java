@@ -58,7 +58,7 @@ public class Farm extends Machine {
 
 	@Override
 	public void startGui() {
-		game.pannel = new MachinePannel(this);
+		game.setPannel(new MachinePannel(this));
 	}
 
 }

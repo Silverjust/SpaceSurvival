@@ -35,7 +35,7 @@ public class Input {
 
 	public void update() {// ********************************************************
 		int rimSize = 10;
-		if (app.focused && !isMPressedOutOfFocus && game.pannel == null) {
+		if (app.focused && !isMPressedOutOfFocus && game.getPannel() == null) {
 			if (Helper.isMouseOver(app, -5, -5, rimSize, app.height) && game.xOffset < 0)
 				game.xOffset += screenSpeed;
 			if (Helper.isMouseOver(app, app.width - rimSize, -5, app.width, app.height)
@@ -67,9 +67,11 @@ public class Input {
 		if (app.keyCode == shiftKey) {
 			shiftMode = true;
 		}
-
+		if (app.key == ' ') {
+			game.sidePannel.toggle();
+		}
 		if (app.key == 'e') {
-			game.pannel = new BuildPannel(game);
+			game.setPannel(new BuildPannel(game));
 		}
 		if (app.key == 'p') {
 			if (game.updater.pause)
@@ -107,9 +109,7 @@ public class Input {
 		// game.buildings[xCoord][yCoord]);
 		if (game.getBuildings()[xCoord][yCoord] != null) {
 			game.getBuildings()[xCoord][yCoord].startGui();
-		} else {
-			game.pannel = new BuildPannel(game);
-		}
+		} 
 		if (game.aimer != null) {
 			game.aimer.click(xCoord, yCoord);
 		}
@@ -139,7 +139,7 @@ public class Input {
 			app.key = 0;
 			game.disposePannel();
 		}
-		if (game.pannel == null) {
+		if (game.getPannel() == null) {
 			switch (event.getAction()) {
 			case KeyEvent.PRESS:
 				keyPressed();
@@ -155,7 +155,7 @@ public class Input {
 	}
 
 	public void mouseEvent(MouseEvent event) {
-		if (game.pannel == null) {
+		if (game.getPannel() == null) {
 			switch (event.getAction()) {
 			case MouseEvent.PRESS:
 				mousePressed();

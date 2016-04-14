@@ -63,7 +63,7 @@ public class Lager extends Building {
 
 	@Override
 	public void startGui() {
-		game.pannel = new Pannel(this);
+		game.setPannel(new Pannel(this));
 	}
 
 	public class Pannel extends StandardPannel {

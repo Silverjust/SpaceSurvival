@@ -11,6 +11,7 @@ import buildings.Unit;
 import components.ResNames;
 import components.RessourceGroup;
 import guiElements.GUIpannel;
+import guiElements.SidePannel;
 import processing.core.PApplet;
 import processing.core.PImage;
 import states.Storing;
@@ -30,13 +31,14 @@ public class Game {
 	private RessourceGroup ressourceGroup = new RessourceGroup();
 	private PImage img;
 
-	public GUIpannel pannel;
+	private GUIpannel pannel;
 	public Aimer aimer;
 	private Input input;
 	Updater updater;
 	public GameTime gameTime;
 	public ImageManager imgManager;
 	public ContentListHandler contentListHandler;
+	SidePannel sidePannel;
 
 	public Game(PApplet app) {
 		this.app = app;
@@ -54,6 +56,8 @@ public class Game {
 		contentListHandler.load();
 		gameTime = new GameTime(this);
 		imgManager = new ImageManager(this);
+
+		sidePannel = new SidePannel(this);
 		{
 			build(Farm.class, 11, 11);
 
@@ -119,9 +123,10 @@ public class Game {
 		}
 		app.popMatrix();
 
-		if (pannel != null) {
-			pannel.update();
+		if (getPannel() != null) {
+			getPannel().update();
 		}
+		sidePannel.update();
 		if (aimer != null) {
 			aimer.update();
 		}
@@ -209,9 +214,20 @@ public class Game {
 	}
 
 	public void disposePannel() {
-		if (pannel != null)
-			pannel.dispose();
+		if (getPannel() != null)
+			getPannel().dispose();
 		pannel = null;
+	}
+
+	public GUIpannel getPannel() {
+		return pannel;
+	}
+
+	public void setPannel(GUIpannel pannel) {
+		if (this.pannel != null) {
+			disposePannel();
+		}
+		this.pannel = pannel;
 	}
 
 }

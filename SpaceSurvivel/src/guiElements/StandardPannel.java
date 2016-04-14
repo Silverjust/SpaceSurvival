@@ -18,8 +18,8 @@ public class StandardPannel extends GUIpannel {
 
 	@Override
 	public void update() {
-		game.app.fill(255, 100);
-		game.app.rect(game.app.width * 0.1f, game.app.height * 0.1f, game.app.width * 0.8f, game.app.height * 0.8f);
+		game.app.fill(200, 150);
+		game.app.rect(game.app.width * 0.1f, game.app.height * 0.1f, game.app.width * 0.7f, game.app.height * 0.8f);
 	}
 
 	@Override

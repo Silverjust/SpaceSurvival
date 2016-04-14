@@ -9,7 +9,7 @@ import processing.core.PFont;
 @SuppressWarnings("serial")
 public class Main extends PApplet {
 	public static void main(String args[]) {
-		boolean fullscreen = false;
+		boolean fullscreen = true;
 		fullscreen = true;
 		if (fullscreen) {
 			PApplet.main(new String[] { "--present", "main.Main" });
