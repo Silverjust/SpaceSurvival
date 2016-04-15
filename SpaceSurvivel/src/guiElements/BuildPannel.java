@@ -19,7 +19,7 @@ public class BuildPannel extends StandardPannel {
 	ArrayList<Class<?>> buildEntities = new ArrayList<Class<?>>();
 
 	public BuildPannel(Game game) {
-		super(game);
+		super(game, "Build");
 		this.game = game;
 		setupBuildEntities();
 		float i = 0;

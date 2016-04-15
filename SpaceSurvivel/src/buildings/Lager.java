@@ -70,7 +70,7 @@ public class Lager extends Building {
 		private GButton repair;
 
 		public Pannel(Entity outer) {
-			super(outer.game);
+			super(outer.game, getIngameName());
 			repair = Helper.createButton(game.app, this, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
 			if (getState() != broken) {
 				repair.setAlpha(100);

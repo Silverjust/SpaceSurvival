@@ -101,18 +101,21 @@ public class Input {
 	}
 
 	public void mousePressed() {// ********************************************************
-		int xCoord = PApplet.floor((app.mouseX - game.xOffset) / game.zoom / Game.gridSize);
-		int yCoord = PApplet.floor((app.mouseY - game.yOffset) / game.zoom / Game.gridSize);
-		// System.out.println("Input.mousePressed()" + "xcoord" + xCoord);
-		// System.out.println("Input.mousePressed()" + "ycoord" + yCoord);
-		// System.out.println("Input.mousePressed()" + "building" +
-		// game.buildings[xCoord][yCoord]);
-		if (game.getBuildings()[xCoord][yCoord] != null) {
-			game.getBuildings()[xCoord][yCoord].startGui();
-		} 
-		if (game.aimer != null) {
-			game.aimer.click(xCoord, yCoord);
+		int xCoord = ScreenToGrid(app.mouseX, game.xOffset, Game.gridW);
+		int yCoord = ScreenToGrid(app.mouseY, game.yOffset, Game.gridH);
+		if (xCoord != -1 && yCoord != -1) {
+			if (game.getBuildings()[xCoord][yCoord] != null) {
+				game.getBuildings()[xCoord][yCoord].startGui();
+			}
+			if (game.aimer != null) {
+				game.aimer.click(xCoord, yCoord);
+			}
 		}
+	}
+
+	public int ScreenToGrid(float screen, float offset, int max) {
+		int grid = PApplet.floor((screen - offset) / game.zoom / Game.gridSize);
+		return 0 < grid && grid < max ? grid : -1;
 	}
 
 	public void mouseReleased() {// ********************************************************

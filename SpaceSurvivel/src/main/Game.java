@@ -22,7 +22,6 @@ public class Game {
 	public static final int gridW = 50;
 	public static final int gridH = 40;
 	public static final float gridSize = 50;
-	private static final ImgTag background = new ImgTag();
 	float zoom = 1;
 	float xOffset = 0;
 	float yOffset = 0;
@@ -42,7 +41,7 @@ public class Game {
 	SidePannel sidePannel;
 
 	public static void loadImages(ImageManager m) {
-		m.load("map/background", background);
+		m.load("map/background", "background");
 	}
 
 	public Game(Main app) {
@@ -64,7 +63,7 @@ public class Game {
 		
 		sidePannel = new SidePannel(this);
 		
-		img = imgManager.get(background);
+		img = imgManager.get("background");
 		{
 			build(Farm.class, 11, 11);
 

@@ -38,7 +38,7 @@ public abstract class Machine extends Building {
 		private Entity outer;
 
 		public MachinePannel(Entity outer) {
-			super(outer.game);
+			super(outer.game, getIngameName());
 			this.outer = outer;
 			repair = Helper.createButton(game.app, this, 0.1f, 0.2f, 0.1f, 0.1f, "repair");
 			if (getState() != broken) {

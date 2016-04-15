@@ -10,7 +10,7 @@ import processing.core.PImage;
 
 public class ImageManager {
 	String dataPath = "data/";
-	public HashMap<ImgTag, PImage> images = new HashMap<ImgTag, PImage>();
+	public HashMap<String, PImage> images = new HashMap<String, PImage>();
 
 	public int nImagesToLoad;
 
@@ -45,7 +45,7 @@ public class ImageManager {
 	public float stateOfLoading() {
 		int loadedImages = 0;
 		boolean error = false;
-		for (ImgTag s : images.keySet()) {
+		for (String s : images.keySet()) {
 			PImage i = images.get(s);
 			if (i.width == -1) {
 				System.err.println("Image error");
@@ -61,7 +61,7 @@ public class ImageManager {
 		return (float) (loadedImages) / nImagesToLoad;
 	}
 
-	public PImage[] load(String path, String name, char animation, byte iterations, ImgTag tag) {
+	public PImage[] load(String path, String name, char animation, byte iterations, String tag) {
 		if (dispose)
 			return null;
 		PImage[] imageArray = new PImage[iterations];
@@ -76,7 +76,7 @@ public class ImageManager {
 		return imageArray;
 	}
 
-	public PImage load(String path, String name, char animation, ImgTag tag) {
+	public PImage load(String path, String name, char animation, String tag) {
 		if (dispose)
 			return null;
 		PImage image;
@@ -86,7 +86,7 @@ public class ImageManager {
 		return image;
 	}
 
-	public PImage load(String path, String name, ImgTag tag) {
+	public PImage load(String path, String name, String tag) {
 		if (dispose)
 			return null;
 		PImage image;
@@ -96,7 +96,7 @@ public class ImageManager {
 		return image;
 	}
 
-	public PImage load(String path, ImgTag tag) {
+	public PImage load(String path, String tag) {
 		if (dispose)
 			return null;
 		PImage image;
@@ -106,7 +106,7 @@ public class ImageManager {
 		return image;
 	}
 
-	private PImage request(String s, ImgTag tag) {
+	private PImage request(String s, String tag) {
 		PImage image;
 		System.out.println(s);
 		s = getPath(s);
@@ -164,8 +164,8 @@ public class ImageManager {
 		}
 	}
 
-	public PImage get(ImgTag key) {
-		PImage img = images.get(key);
+	public PImage get(String string) {
+		PImage img = images.get(string);
 		if (img == null)
 			System.out.println("ImageManager.get(): Warning img is null");
 		return img;

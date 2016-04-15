@@ -7,12 +7,19 @@ import main.Helper;
 
 public class SidePannel extends GUIpannel {
 	public boolean closed;
-	private GButton buildings;
+
 	private Game game;
 	private byte slider;
 
+	private GButton close;
+	private GButton open;
+	private GButton buildings;
+
 	public SidePannel(Game game) {
 		this.game = game;
+		open = Helper.createButton(game.app, this, 0.95f, 0.0f, 0.05f, 0.07f, "<");
+		open.setVisible(false);
+		close = Helper.createButton(game.app, this, 0.875f, 0.0f, 0.05f, 0.07f, ">");
 		buildings = Helper.createButton(game.app, this, 0.875f, 0.2f, 0.1f, 0.1f, "buildings");
 
 	}
@@ -25,7 +32,9 @@ public class SidePannel extends GUIpannel {
 	}
 
 	public void handleButtonEvents(GButton button, GEvent event) {
-		if (button == buildings) {
+		if (button == open || button == close) {
+			toggle();
+		} else if (button == buildings) {
 			game.setPannel(new BuildPannel(game));
 		}
 	}
@@ -47,6 +56,8 @@ public class SidePannel extends GUIpannel {
 
 	public void setButtonsVisible(boolean b) {
 		buildings.setVisible(b);
+		close.setVisible(b);
+		open.setVisible(!b);
 	}
 
 	@Override
