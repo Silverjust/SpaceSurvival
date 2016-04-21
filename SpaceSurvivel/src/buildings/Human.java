@@ -1,6 +1,7 @@
 package buildings;
 
 import main.Game;
+import main.Helper.Timer;
 import processing.core.PApplet;
 import states.HumanCarry;
 import states.HumanEat;
@@ -11,6 +12,8 @@ import states.State;
 
 public class Human extends Unit {
 
+	private static final int foodOverTime = 1;
+	public static final int foodOnWork = 2;
 	private boolean hasWork;
 	public HumanWork work;
 	public State carry;
@@ -20,6 +23,7 @@ public class Human extends Unit {
 	private float foodMax;
 	public float food;
 	private State eat;
+	private Timer foodTimer;
 
 	public Human(Game game, int x, int y) {
 		super(game, x, y);
@@ -30,7 +34,7 @@ public class Human extends Unit {
 		carry = new HumanCarry();
 		gotoWork = new HumanGotoWork();
 		eat = new HumanEat();
-
+		foodTimer = new Timer(game.gameTime, 500);
 		food = 200;
 		foodMax = 250;
 		createRandomTarget();
@@ -51,12 +55,18 @@ public class Human extends Unit {
 				createRandomTarget();
 			}
 		}
-		if (getState() != eat && food < foodMax *0.1) {
+		if (foodTimer.isNotOnCooldown()) {
+			food -= foodOverTime;
+			foodTimer.startCooldown();
+		}
+		if (getState() != eat && food < foodMax * 0.1) {
 			insertState(eat, this);
 		}
-		if (getState() == eat && food >= foodMax) {
-			endState();
-		}
+		
+	}
+
+	public boolean isSatt() {
+		return food >= foodMax;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public class BuildingWork extends State implements Storing {
 	private int Wmax;
 	private float W = 0;
 	Slot in = new Slot(), out = new Slot();
+	private boolean dontAcssesWorkers;
 
 	public BuildingWork() {
 		super();
@@ -59,9 +60,11 @@ public class BuildingWork extends State implements Storing {
 
 	@Override
 	public void onEnd(Entity e) {
+		dontAcssesWorkers = true;
 		for (Unit unit : workers) {
 			unit.endState();
 		}
+		dontAcssesWorkers = false;
 		workers.clear();
 	}
 
@@ -172,5 +175,10 @@ public class BuildingWork extends State implements Storing {
 
 	public ArrayList<Unit> getCarriers() {
 		return carriers;
+	}
+
+	public void removeWorker(Entity e) {
+		if(!dontAcssesWorkers)workers.remove(e);
+
 	}
 }

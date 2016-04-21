@@ -16,7 +16,7 @@ public abstract class Entity {
 
 	public Entity(Game game) {
 		this.game = game;
-		ingameName=game.contentListHandler.getNameFor(this);
+		ingameName = game.contentListHandler.getNameFor(this);
 	}
 
 	public void update() {
@@ -45,12 +45,11 @@ public abstract class Entity {
 		if (!states.isEmpty())
 			getState().onEnd(this);
 		if (a == null) {
-			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
+			System.out.println("Entity.setState() u stupid? " + o + " tried	 to setState null");
 			return;
 		}
 		a.onStart(this);
-		// System.out.println("Entity.setState()" + a.getClass().getSimpleName()
-		// + " "+o.getClass().getSimpleName());
+		//System.out.println("Entity.insertState()" + a.getClass().getSimpleName() + " " + o.getClass().getSimpleName());
 		states.add(0, a);
 	}
 

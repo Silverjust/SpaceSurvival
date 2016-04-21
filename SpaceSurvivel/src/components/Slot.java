@@ -55,10 +55,12 @@ public class Slot {
 	}
 
 	public boolean containsPure(Ressource ressource) {
-		//System.out.println("Slot.containsPure()");
-		if (!amount.isEmpty())
+		// System.out.println("Slot.containsPure()");
+		if (!amount.isEmpty()) {
 			if (amount.getAmount(ressource.getName()) >= ressource.getAmount())
 				return true;
+		} else if (ressource.getAmount() == 0)//leeres lager geht auch
+			return true;
 		return false;
 
 	}
