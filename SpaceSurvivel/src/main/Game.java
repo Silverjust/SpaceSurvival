@@ -28,7 +28,7 @@ public class Game {
 	public boolean[][] isInside = new boolean[gridW][gridH];
 	public boolean[][] isUsed = new boolean[gridW][gridH];
 
-	//private RessourceGroup ressourceGroup = new RessourceGroup();
+	// private RessourceGroup ressourceGroup = new RessourceGroup();
 	private PImage img;
 
 	private GUIpannel pannel;
@@ -39,6 +39,7 @@ public class Game {
 	public ImageManager imgManager;
 	public ContentListHandler contentListHandler;
 	SidePannel sidePannel;
+	private PathHandler pathHandler;
 
 	public static void loadImages(ImageManager m) {
 		m.load("map/background", "background");
@@ -57,12 +58,13 @@ public class Game {
 		input = new Input(this);
 		updater = new Updater(this);
 		gameTime = new GameTime(this);
+		pathHandler = new PathHandler(this);
 
 		contentListHandler = app.contentListHandler;
 		imgManager = app.imgManager;
-		
+
 		sidePannel = new SidePannel(this);
-		
+
 		img = imgManager.get("background");
 		{
 			build(Farm.class, 11, 11);
@@ -126,6 +128,7 @@ public class Game {
 				entity.draw();
 			}
 		}
+		pathHandler.draw();
 		app.popMatrix();
 
 		if (getPannel() != null) {
