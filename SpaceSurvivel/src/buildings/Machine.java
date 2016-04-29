@@ -16,7 +16,6 @@ public abstract class Machine extends Building {
 
 	public Machine(Game game, int x, int y) {
 		super(game, x, y);
-
 		this.game = game;
 	}
 

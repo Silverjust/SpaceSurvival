@@ -41,6 +41,15 @@ public class Slot {
 
 	}
 
+	public void give(Slot output, Ressource res) {
+		if (output != null)
+			output.getRes().addToRessource(res.getName(), -res.getAmount());
+		amount.addToRessource(res.getName(), res.getAmount());
+		// System.out.println("Slot.give()" +
+		// output.getRes().getAmount(res.getName()));
+		// System.out.println("Slot.give()" + amount.getAmount(res.getName()));
+	}
+
 	public boolean contains(RessourceGroup testAmount) {
 		boolean contains = true;
 		if (!amount.isEmpty()) {
@@ -57,12 +66,24 @@ public class Slot {
 	public boolean containsPure(Ressource ressource) {
 		// System.out.println("Slot.containsPure()");
 		if (!amount.isEmpty()) {
-			if (amount.getAmount(ressource.getName()) >= ressource.getAmount())
+			if (amount.getRessources().length == 1 && amount.getAmount(ressource.getName()) >= ressource.getAmount())
 				return true;
-		} else if (ressource.getAmount() == 0)//leeres lager geht auch
+		} else if (ressource.getAmount() == 0)// leeres lager geht auch
 			return true;
 		return false;
 
+	}
+
+	public boolean containsPure(ResNames name) {
+		if (!amount.isEmpty()) {
+			if (amount.getRessources().length == 1 && amount.getAmount(name) > 0)
+				return true;
+			else if (min.getRessources().length == 1 && amount.getAmount(name) > 0)
+				return true;
+		} else {
+			return true;
+		}
+		return false;
 	}
 
 	public String getText() {
@@ -80,15 +101,6 @@ public class Slot {
 		}
 		return s;
 
-	}
-
-	public void give(Slot output, Ressource res) {
-		if (output != null)
-			output.getRes().addToRessource(res.getName(), -res.getAmount());
-		amount.addToRessource(res.getName(), res.getAmount());
-		// System.out.println("Slot.give()" +
-		// output.getRes().getAmount(res.getName()));
-		// System.out.println("Slot.give()" + amount.getAmount(res.getName()));
 	}
 
 	public RessourceGroup getRes() {

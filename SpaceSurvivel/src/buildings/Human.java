@@ -12,8 +12,8 @@ import states.State;
 
 public class Human extends Unit {
 
-	private static final int foodOverTime = 1;
-	public static final int foodOnWork = 2;
+	private static final float foodOverTime = 0.1f;
+	public static final float foodOnWork = 0.1f;
 	private boolean hasWork;
 	public HumanWork work;
 	public State carry;
@@ -35,8 +35,8 @@ public class Human extends Unit {
 		gotoWork = new HumanGotoWork();
 		eat = new HumanEat();
 		foodTimer = new Timer(game.gameTime, 500);
-		food = 200;
-		foodMax = 250;
+		food = 19;
+		foodMax = 20;
 		createRandomTarget();
 		insertState(wait, this);
 	}
@@ -59,10 +59,10 @@ public class Human extends Unit {
 			food -= foodOverTime;
 			foodTimer.startCooldown();
 		}
-		if (getState() != eat && food < foodMax * 0.1) {
+		if (food < foodMax * 0.1 && !statesContains(eat)) {
 			insertState(eat, this);
 		}
-		
+
 	}
 
 	public boolean isSatt() {
@@ -103,7 +103,7 @@ public class Human extends Unit {
 			else {
 				b = !game.isInside[(int) x][(int) y];
 			}
-		}
+		} // System.out.println("Human.createRandomTarget()"+x+" "+y);
 		setXt(x);
 		setYt(y);
 	}
@@ -116,8 +116,12 @@ public class Human extends Unit {
 		this.hasWork = hasWork;
 	}
 
-	public void consumeFood(int i) {
-		food -= i;
+	public void consumeFood(float amount) {
+		food -= amount;
+	}
+
+	public float getHunger() {
+		return foodMax - food;
 	}
 
 }

@@ -9,6 +9,7 @@ import states.State;
 
 public abstract class Entity {
 
+	private static final boolean showStateChanges = false;
 	public Game game;
 	private ArrayList<State> states = new ArrayList<State>();
 	public Wait wait;
@@ -30,36 +31,36 @@ public abstract class Entity {
 	public abstract void drawAt(PApplet app, float x, float y);
 
 	public void addState(State a, Object o) {
+		State old = getState();
 		if (a == null) {
 			System.out.println("Entity.setState()   u stupid? " + o + " tried to setState null");
 			return;
 		}
-		// System.out.println("Entity.addState()" + a.getClass().getSimpleName()
-		// + " "+o.getClass().getSimpleName());
+		if (showStateChanges)
+			System.out.println("Entity.addState()" + a.getSimpleName() + " " + o.getClass().getSimpleName());
+		states.add(a);// adds a at end
 		if (states.isEmpty())
-			states.get(0).onStart(this);
-		states.add(a);
+			a.onStart(this, old);
 	}
 
 	public void insertState(State a, Object o) {
-		if (!states.isEmpty())
-			getState().onEnd(this);
+		State old = getState();
 		if (a == null) {
 			System.out.println("Entity.setState() u stupid? " + o + " tried	 to setState null");
 			return;
 		}
-		a.onStart(this);
-		//System.out.println("Entity.insertState()" + a.getClass().getSimpleName() + " " + o.getClass().getSimpleName());
-		states.add(0, a);
-	}
-
-	public State getState() {
-		if (states.isEmpty())
-			return null;
-		return states.get(0);
+		if (!states.isEmpty())
+			old.onEnd(this);
+		if (showStateChanges)
+			System.out.println("Entity.insertState()" + a.getSimpleName() + " by " + o.getClass().getSimpleName());
+		if (states.remove(a))// remove all lower states of a
+			System.out.println("Entity.insertState()removed lower state of " + a.getSimpleName());
+		states.add(0, a);// adds a at top
+		a.onStart(this, old);
 	}
 
 	public void endState() {
+		State old = getState();
 		if (!states.isEmpty())
 			getState().onEnd(this);
 		states.remove(0);
@@ -70,7 +71,17 @@ public abstract class Entity {
 			System.out.println("Entity.endState()");
 			return;
 		}
-		states.get(0).onStart(this);
+		states.get(0).onStart(this, old);
+	}
+
+	public State getState() {
+		if (states.isEmpty())
+			return null;
+		return states.get(0);
+	}
+
+	public boolean statesContains(State state) {
+		return states.contains(state);
 	}
 
 	public abstract float getX();

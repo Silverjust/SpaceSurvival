@@ -25,6 +25,7 @@ public class BuildPannel extends StandardPannel {
 		float i = 0;
 		for (Class<?> c : buildEntities) {
 			Building b = game.create(c);
+			System.out.println("BuildPannel.BuildPannel()"+b);
 			GButton button = Helper.createButton(game.app, this, 0.2f, 0.2f + i, 0.1f, 0.1f, b.getIngameName());
 			classes.add(c);
 			buildings.add(button);

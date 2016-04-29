@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import buildings.Entity;
 import buildings.Human;
+import buildings.Kompostierer;
 import buildings.Unit;
 import components.ResNames;
 import components.RessourceGroup;
@@ -50,12 +51,12 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	@Override
-	public void onStart(Entity e) {
-		if (!inputHasMin())
+	public void onStart(Entity e, State old) {
+		/*if (!inputHasMin())
 			callGetter(e);
 		else if (needsWorker())
 			callWorker(e);
-
+*/
 	}
 
 	@Override
@@ -130,6 +131,7 @@ public class BuildingWork extends State implements Storing {
 									&& ((Storing) building.getState()).getOutput().containsPure(in.getMin().get(res[n]))
 									&& !enoughCarrierOTW()) {
 								carriers.add(human);
+								//System.out.println("BuildingWork.callGetter()"+building.getX());
 								((HumanCarry) human.carry).setTargets(building, e, human, in.getMin().get(res[n]));
 								entity.insertState(human.carry, this);
 							}
@@ -178,7 +180,8 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	public void removeWorker(Entity e) {
-		if(!dontAcssesWorkers)workers.remove(e);
+		if (!dontAcssesWorkers)
+			workers.remove(e);
 
 	}
 }

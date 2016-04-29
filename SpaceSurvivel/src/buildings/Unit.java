@@ -43,6 +43,13 @@ public abstract class Unit extends Entity {
 
 	public void setXt(float xt) {
 		this.xt = xt;
+		if (xt == 0)
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	public float getYt() {

@@ -119,8 +119,9 @@ public class Game {
 			}
 			for (int i = 0; i < gridW; i++) {
 				for (int j = 0; j < gridH; j++) {
-					if (getBuildings()[i][j] != null)
+					if (getBuildings()[i][j] != null){
 						getBuildings()[i][j].draw();
+					if(getBuildings()[i][j].getX()==0)System.out.println("Game.update()found");}
 				}
 			}
 			for (Entity entity : getEntities()) {
@@ -128,7 +129,7 @@ public class Game {
 				entity.draw();
 			}
 		}
-		pathHandler.draw();
+		//pathHandler.draw();
 		app.popMatrix();
 
 		if (getPannel() != null) {

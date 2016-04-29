@@ -24,7 +24,7 @@ public class HumanGotoWork extends State {
 	}
 
 	@Override
-	public void onStart(Entity e) {
+	public void onStart(Entity e, State old) {
 		((Unit) e).canMove = true;
 	}
 

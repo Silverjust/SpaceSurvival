@@ -7,7 +7,7 @@ public class State {
 	protected boolean repeat;
 
 	/** empty */
-	public void onStart(Entity e) {
+	public void onStart(Entity e, State old) {
 	}
 
 	/** empty */
@@ -16,6 +16,10 @@ public class State {
 
 	/** empty */
 	public void update(Entity e) {
+	}
+
+	public String getSimpleName() {
+		return this.getClass().getSimpleName();
 	}
 
 }

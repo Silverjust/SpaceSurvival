@@ -30,6 +30,10 @@ public class Commands {
 						game.spawn(game.contentListHandler.getEntitie(c[1], game).getClass(), Integer.parseInt(c[2]),
 								Integer.parseInt(c[3]));
 						break;
+					case "info":
+						System.out.println("at " + c[1] + " " + c[2] + " is "
+								+ game.getBuildings()[Integer.parseInt(c[1])][Integer.parseInt(c[2])].getIngameName());
+						break;
 
 					default:
 						noError = false;
