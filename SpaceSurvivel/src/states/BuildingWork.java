@@ -20,7 +20,7 @@ public class BuildingWork extends State implements Storing {
 	private float W = 0;
 	Slot in = new Slot(), out = new Slot();
 	private boolean dontAcssesWorkers;
-
+	
 	public BuildingWork() {
 		super();
 	}
@@ -52,11 +52,10 @@ public class BuildingWork extends State implements Storing {
 
 	@Override
 	public void onStart(Entity e, State old) {
-		/*if (!inputHasMin())
-			callGetter(e);
-		else if (needsWorker())
-			callWorker(e);
-*/
+		/*
+		 * if (!inputHasMin()) callGetter(e); else if (needsWorker())
+		 * callWorker(e);
+		 */
 	}
 
 	@Override
@@ -93,6 +92,7 @@ public class BuildingWork extends State implements Storing {
 			worker.insertState(worker.wait, this);
 			((Human) worker).setHasWork(false);
 			workers.remove(worker);
+
 			callGetter(target);
 		}
 	}
@@ -118,28 +118,27 @@ public class BuildingWork extends State implements Storing {
 	}
 
 	private void callGetter(Entity e) {
-		ResNames[] res = in.getMin().getRessources();
-		for (int n = 0; n < res.length; n++) {
-			// System.out.println("BuildingWork.callGetter()");
-			for (Entity entity : e.game.getEntities()) {
-				if (entity instanceof Human && !((Human) entity).hasWork()) {
-					Human human = (Human) entity;
-					for (int i = 0; i < Game.gridW; i++) {
-						for (int j = 0; j < Game.gridH; j++) {
-							Entity building = e.game.getBuildings()[i][j];
-							if (building != null && building.getState() instanceof Storing
-									&& ((Storing) building.getState()).getOutput().containsPure(in.getMin().get(res[n]))
-									&& !enoughCarrierOTW()) {
-								carriers.add(human);
-								//System.out.println("BuildingWork.callGetter()"+building.getX());
-								((HumanCarry) human.carry).setTargets(building, e, human, in.getMin().get(res[n]));
-								entity.insertState(human.carry, this);
-							}
-						}
-					}
-				}
-			}
+		for (ResNames name : in.getMin().getRessources()) {
+			new HumanGetQuest().requestMin(in.getMin().get(name), e,carriers);
 		}
+		/*
+		 * ResNames[] res = in.getMin().getRessources(); for (int n = 0; n <
+		 * res.length; n++) { //
+		 * System.out.println("BuildingWork.callGetter()"); for (Entity entity :
+		 * e.game.getEntities()) { if (entity instanceof Human && !((Human)
+		 * entity).hasWork()) { Human human = (Human) entity; for (int i = 0; i
+		 * < Game.gridW; i++) { for (int j = 0; j < Game.gridH; j++) { Entity
+		 * building = e.game.getBuildings()[i][j]; if (building != null &&
+		 * building.getState() instanceof Storing && ((Storing)
+		 * building.getState()).getOutput().containsPure(in.getMin().get(res[n])
+		 * ) && !enoughCarrierOTW()) { carriers.add(human);
+		 * //System.out.println("BuildingWork.callGetter()"+building.getX());
+		 * ((HumanCarry) human.carry).setTargets(building, e, human,
+		 * in.getMin().get(res[n])); entity.insertState(human.carry, this); } }
+		 * } } }
+		 * 
+		 * }
+		 */
 	}
 
 	/** tests if there are already enough ressources on the way (unfinished) */
@@ -178,7 +177,7 @@ public class BuildingWork extends State implements Storing {
 	public ArrayList<Unit> getCarriers() {
 		return carriers;
 	}
-
+	
 	public void removeWorker(Entity e) {
 		if (!dontAcssesWorkers)
 			workers.remove(e);

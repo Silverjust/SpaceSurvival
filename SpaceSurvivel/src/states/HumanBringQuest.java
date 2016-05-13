@@ -17,6 +17,11 @@ public class HumanBringQuest extends State {
 		slot = new Slot();
 	}
 
+	@Override
+	public void onStart(Entity e, State old) {
+		((Human) e).setHasWork(true);
+	}
+
 	public void update(Entity e) {
 		if (target != null) {
 			if (PApplet.dist(e.getX(), e.getY(), target.getX(), target.getY()) < 1) {
